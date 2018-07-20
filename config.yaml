@@ -1,0 +1,7 @@
+baseURL: http://example.org/
+languageCode: en-gb
+title: My New Hugo Quiz
+theme: simple
+metaDataFormat: yaml
+params:
+  copyright: Copyright 2018 Cat LeBlanc
