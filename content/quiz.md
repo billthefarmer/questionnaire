@@ -1,5 +1,5 @@
 ---
-title: Your Entrepreneurial Design Profile
+title: Breakfast Quiz
 date: 2018-07-18T15:04:26+01:00
 intro: Start
 questions:
@@ -13,5 +13,5 @@ questions:
       - a: Eggs and bacon
         n: 1
 ---
-### Quiz
+
 {{< quiz >}}

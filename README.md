@@ -1,2 +1,2 @@
-# quiz
-Hugo quiz generator
+# Quiz
+Hugo quiz generator with simple theme
