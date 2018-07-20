@@ -1,0 +1,2 @@
+# quiz
+Hugo quiz generator
