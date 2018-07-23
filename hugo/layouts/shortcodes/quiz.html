@@ -1,36 +1,36 @@
 <!-- Quiz shortcode -->
-{{ with .Page.Params }}
+{{- with .Page.Params }}
 <!-- Check for questions -->
-{{ if not .questions }}
+{{- if not .questions }}
 <!-- No questions -->
 <p>
   No quiz questions defined, you need to define some front matter
   fields.
 </p>
-{{ else }}
+{{- else }}
 <!-- Quiz -->
 <div id="quiz" class="quiz">
   <div id="intro" class="intro">
     <h4>{{ .intro }}</h4>
     <input type="button" value="Start" class="start" id="start" />
   </div>
-  {{ $questions := .questions }}
-  {{ $last_index := sub (len $questions) 1 }}
-  {{ range $index, $question := $questions }}
+  {{- $questions := .questions }}
+  {{- $last_index := sub (len $questions) 1 }}
+  {{- range $index, $question := $questions }}
   <div id="panel-{{ add $index 1 }}" class="question" style="display: block;">
     <h4>{{ $question.q }}</h4>
     <div id="answers-{{ add $index 1 }}" class="answers">
-      {{ $answers := $question.answers }}
-      {{ range $n, $answer := $answers }}
-      <input type="radio" id="radio-{{ $n }}" value="{{ $answer.n }}" />
-      <label for="radio-{{ $n }}">{{ $answer.a }}</label><br />
-      {{ end }}
+      {{ $answers := $question.answers -}}
+      <fieldset>
+        {{ range $n, $answer := $answers -}}
+        <input type="radio" id="radio-{{ $n }}" value="{{ $answer.n }}" />
+        <label for="radio-{{ $n }}">{{ $answer.a }}</label><br />
+        {{- end }}
+      </fieldset>
       <br />
-      <input type="button" value="Next" class="next" id="next-{{ add $index 1 }}" />
     </div>
   </div>
-  {{ end }}
-  
+  {{- end }}
 </div>
-{{ end }}
-{{ end }}
+{{- end }}
+{{- end }}
