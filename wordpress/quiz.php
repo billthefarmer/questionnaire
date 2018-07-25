@@ -46,31 +46,41 @@ function quiz_enqueue_scripts() {
 }
 
 // Add the content if the shortcode is found.
-function questions_shortcode($atts) {
+function questions_shortcode($atts, $content) {
 
     // Buffer the output
     ob_start();
 
-    $custom = get_post_custom();
-
-    // Check there's at least one question defined, no point else
-    if ($custom['question']) {
-
-        // Debug output if defined
-        if ($custom['debug'])
-            the_meta();
-    }
-
-    // Show this message if no questions defined
-    else
-        echo "<p>No quiz questions defined, you need to define some custom fields.</p>";
+  ?>
+    <div class="intro">
+    <fieldset>
+    <h4 id="intro"></h4>
+    <input type="button" value="Start" class="start" id="start" />
+    </fieldset>
+    </div>
+    <div class="question">
+    <fieldset>
+    <h4 id="question"></h4>
+    <input type="radio" id="radio-1" value="answer-1" />
+    <label for="radio-1" id="label-1"></label><br />
+    <input type="radio" id="radio-2" value="answer-2" />
+    <label for="radio-2" id="label-2"></label><br />
+    </fieldset>
+    </div>
+    <div class="final">
+    <fieldset>
+    <h5>Title</h5>
+    <input type="text" name="title" />
+    </fieldset>
+    </div>
+<?php
 
     // Return the output
     return ob_get_clean();
 }
 
 // Add the content if the shortcode is found.
-function results_shortcode($atts) {
+function results_shortcode($atts, $content) {
 
     // Buffer the output
     ob_start();
