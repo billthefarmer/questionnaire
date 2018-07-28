@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Quiz
+ * Plugin Name: Quizzer
  * Plugin URI: https://github.com/billthefarmer/quiz/
  * Description: Lets you create a quiz using your data.
  * Version: 0.5
@@ -46,68 +46,127 @@ function quiz_enqueue_scripts() {
 }
 
 // Add the content if the shortcode is found.
-function questions_shortcode($atts, $content) {
+function questions_shortcode($atts, $content = null) {
 
     // Buffer the output
     ob_start();
 
-  ?>
-    <div class="intro">
-    <fieldset>
+    if (!$content)
+    {
+        echo "<p>No quiz data defined, you need to add some quiz data.</p>";
+        return;
+    }
+
+    ?>
+<div class="intro">
+  <fieldset>
     <h4 id="intro"></h4>
-    <input type="button" value="Start" class="start" id="start" />
-    </fieldset>
-    </div>
-    <div class="question">
-    <fieldset>
+    <input type="button" value="Begin!" class="start" id="start" />
+  </fieldset>
+</div>
+<div class="question">
+  <fieldset>
+    <progress id="progress" value="6.25" max="100"></progress>
     <h4 id="question"></h4>
-    <input type="radio" id="radio-1" value="answer-1" />
+    <input type="radio" id="radio-1" name="answer"
+           class="answer" value="answer-1" />
     <label for="radio-1" id="label-1"></label><br />
-    <input type="radio" id="radio-2" value="answer-2" />
+    <input type="radio" id="radio-2" name="answer"
+           class="answer" value="answer-2" />
     <label for="radio-2" id="label-2"></label><br />
-    </fieldset>
-    </div>
-    <div class="final">
+    <br />
+    <input type="button" id="back" class="back" value="Back" />
+  </fieldset>
+</div>
+<div class="last">
+  <fieldset>
+    <progress value="100" max="100"></progress>
+    <h4 id="last"></h4>
+    <input type="radio" id="radio-3" name="last"
+           class="last" value="answer-3" />
+    <label for="radio-3" id="label-3"></label><br />
+    <input type="radio" id="radio-4" name="last"
+           class="last" value="answer-4" />
+    <label for="radio-4" id="label-4"></label><br />
+    <input type="radio" id="radio-5" name="last"
+           class="last" value="answer-5" />
+    <label for="radio-5" id="label-5"></label><br />
+    <input type="radio" id="radio-6" name="last"
+           class="last" value="answer-6" />
+    <label for="radio-6" id="label-6"></label><br />
+    <br />
+    <input type="button" id="prev" class="back" value="Back" />
+  </fieldset>
+</div>
+<div class="result">
+  <form action="" method="get" class="result">
     <fieldset>
-    <h5>Title</h5>
-    <input type="text" name="title" />
+      <h3>Results</h3>
+      <fieldset>
+        <table>
+          <tr><td><label for="arch">Archetype: </label></td>
+            <td><input type="text" id="arch"
+                       name="arch" readonly></td></tr>
+          <tr><td><label for="brain">Brain: </label></td>
+            <td><input type="text" id="brain"
+                       name="brain" readonly></td></tr>
+          <tr><td><label for="arch">Communication: </label></td>
+            <td><input type="text" id="comm"
+                       name="comm" readonly></td></tr>
+          <tr><td><label for="arch">Direction: </label></td>
+            <td><input type="text" id="direct"
+                       name="direct" readonly></td></tr>
+          <tr><td><label for="arch">Execution: </label></td>
+            <td><input type="text" id="exec"
+                       name="exec" readonly></td></tr>
+          <tr><td><label for="arch">Focus: </label></td>
+            <td><input type="text" id="focus"
+                       name="focus" readonly></td></tr>
+          <tr><td><label for="journey">Journey: </label></td>
+            <td><input type="text" id="journey"
+                       name="journey" readonly></td></tr>
+        </table>
+      </fieldset>
+      <h3>Contact Information</h3>
+      <fieldset>
+        <table>
+          <tr><td><label for="forename">First name: </label></td>
+            <td><input type="text" id="forename"
+                       name="forename" required></td></tr>
+          <tr><td><label for="lastname">Last name: </label></td>
+            <td><input type="text" id="lastname"
+                       name="lastname" required></td></tr>
+          <tr><td><label for="email">Email: </label></td>
+            <td><input type="email" id="email"
+                       name="email" required></td></tr>
+        </table>
+      </fieldset>
+      <br />
+      <input type="button" id="again" value="Again" />
+      <input type="submit" id="submit" value="Results" />
     </fieldset>
-    </div>
+  </form>
+</div>
 <?php
+
+    // Output the quiz data
+    echo "<script type=\"text/javascript\">let quiz_data = $content;</script>";
 
     // Return the output
     return ob_get_clean();
 }
 
 // Add the content if the shortcode is found.
-function results_shortcode($atts, $content) {
+function results_shortcode($atts, $content = null) {
 
     // Buffer the output
     ob_start();
-
-    $custom = get_post_custom();
-
-    // Check there's at least one result defined, no point else
-    if ($custom['result']) {
-
-        // Debug output if defined
-        if ($custom['debug'])
-            the_meta();
-    }
-
-    // Show this message if no questions defined
-    else
-        echo "<p>No results defined, you need to define some custom fields.</p>";
 
     // Return the output
     return ob_get_clean();
 }
 
-// Output javascript structure defining the custom variables for the
-// whatever-o-meter.js script to use
+// Quiz footer
 function quiz_footer() {
 
-    $custom = get_post_custom();
-
-    }
 }
