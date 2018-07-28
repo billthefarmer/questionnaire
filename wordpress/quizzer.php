@@ -16,11 +16,11 @@
  */
 
 // Add scripts hook, also adds shortcodes and further action
-add_action('wp_enqueue_scripts', 'quiz_enqueue_scripts', 11);
+add_action('wp_enqueue_scripts', 'quizzer_enqueue_scripts', 11);
 
 // Queue scripts and styles. Wordpress includes jquery-ui script files,
 // but not all the styles
-function quiz_enqueue_scripts() {
+function quizzer_enqueue_scripts() {
 
     // Check on a page
 
@@ -33,25 +33,29 @@ function quiz_enqueue_scripts() {
                           plugins_url('/js/quiz.min.js', __FILE__),
                           array('jquery-ui-core', 'jquery-ui-widget',
                                 'jquery-ui-mouse', 'jquery-ui-button',
-                                'jquery-ui-slider', 'jquery-effects-core',
+                                'jquery-ui-progressbar', 'jquery-effects-core',
                                 'jquery'));
 
         // Add the shortcodes and action to insert the code into the page
         // and add the javascript data
-        add_shortcode('quiz-questions', 'questions_shortcode');
-        add_shortcode('quiz-results', 'results_shortcode');
+        add_shortcode('quizzer-questions', 'quizzer_questions_shortcode');
+        add_shortcode('quizzer-results', 'quizzer_results_shortcode');
 
-        add_action('wp_footer', 'quiz_footer', 11);
+        add_action('wp_footer', 'quizzer_footer', 11);
     }
 }
 
 // Add the content if the shortcode is found.
-function questions_shortcode($atts, $content = null) {
+function quizzer_questions_shortcode($atts, $content = null) {
 
     // Buffer the output
     ob_start();
 
-    if (!$content)
+    // Get the data
+    $data = $atts["data"];
+
+    // Check for data
+    if (!$data)
     {
         echo "<p>No quiz data defined, you need to add some quiz data.</p>";
         return;
@@ -149,15 +153,12 @@ function questions_shortcode($atts, $content = null) {
 </div>
 <?php
 
-    // Output the quiz data
-    echo "<script type=\"text/javascript\">let quiz_data = $content;</script>";
-
     // Return the output
     return ob_get_clean();
 }
 
 // Add the content if the shortcode is found.
-function results_shortcode($atts, $content = null) {
+function quizzer_results_shortcode($atts, $content = null) {
 
     // Buffer the output
     ob_start();
@@ -167,6 +168,6 @@ function results_shortcode($atts, $content = null) {
 }
 
 // Quiz footer
-function quiz_footer() {
+function quizzer_footer() {
 
 }
