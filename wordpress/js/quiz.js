@@ -223,23 +223,23 @@ jQuery(document).ready(function($) {
             $("div.intro").fadeIn();
         });
     });
+
+    function calculate(results, matrix) {
+        let b = (results.B / 2) - 3;
+        let c = (results.C / 2) - 3;
+        let d = (results.D / 2) - 3;
+        let e = (results.E / 2) - 3;
+        let f = (results.F / 2) - 3;
+        let j = (results.J / 2) - 1;
+
+        let result = {A: matrix.A[Math.trunc(b / 2)][Math.trunc(e / 2)],
+                      B: matrix.B[b],
+                      C: matrix.C[c],
+                      D: matrix.D[d],
+                      E: matrix.E[e],
+                      F: matrix.F[f],
+                      J: matrix.J[j]};
+
+        return result;
+    }
 });
-
-function calculate(results, matrix) {
-    let b = (results.B / 2) - 3;
-    let c = (results.C / 2) - 3;
-    let d = (results.D / 2) - 3;
-    let e = (results.E / 2) - 3;
-    let f = (results.F / 2) - 3;
-    let j = (results.J / 2) - 1;
-
-    let result = {A: matrix.A[Math.trunc(b / 2)][Math.trunc(e / 2)],
-                  B: matrix.B[b],
-                  C: matrix.C[c],
-                  D: matrix.D[d],
-                  E: matrix.E[e],
-                  F: matrix.F[f],
-                  J: matrix.J[j]};
-
-    return result;
-}
