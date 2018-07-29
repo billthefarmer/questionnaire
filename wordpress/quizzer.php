@@ -28,9 +28,11 @@ function quiz_enqueue_scripts() {
 
         wp_enqueue_style('jquery-ui',
                          plugins_url('/css/jquery-ui.min.css', __FILE__));
+        wp_enqueue_style('quiz',
+                         plugins_url('/css/quiz.css', __FILE__));
 
         wp_enqueue_script('quiz',
-                          plugins_url('/js/quiz.min.js', __FILE__),
+                          plugins_url('/js/quiz.js', __FILE__),
                           array('jquery-ui-core', 'jquery-ui-widget',
                                 'jquery-ui-mouse', 'jquery-ui-button',
                                 'jquery-ui-progressbar', 'jquery-effects-core',
@@ -51,7 +53,7 @@ function quiz_questions_shortcode($atts) {
     ob_start();
 
     ?>
-<div class="intro">
+<div class="quiz-intro">
   <fieldset>
     <h4 id="quiz-intro"></h4>
     <input type="button" id="quiz-start" class="quiz-button" value="Begin!" />
@@ -147,7 +149,7 @@ function quiz_questions_shortcode($atts) {
 }
 
 // Add the content if the shortcode is found.
-function quiz_results_shortcode($atts, $content = null) {
+function quiz_results_shortcode($atts) {
 
     // Buffer the output
     ob_start();

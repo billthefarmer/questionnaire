@@ -1,0 +1,9 @@
+
+div.quiz-question, div.quiz-last, div.quiz-result, #quiz-back {
+    display: none;
+}
+
+label {
+    display: inline;
+    margin: 0;
+}

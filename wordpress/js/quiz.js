@@ -1,4 +1,4 @@
-// quizzer.js
+// quiz.js
 //
 // Version: 0.5
 // Author: Bill Farmer
@@ -9,7 +9,28 @@
 
 jQuery(document).ready(function($) {
 
-    let data = JSON.parse($("#data").html());
+    // Data
+    let data = {};
+    let intro = "";
+    let questions = [];
+    let last = "";
+    let matrix = [];
+
+    // Get data from page
+    try
+    {
+        data = JSON.parse($("#quiz-data").html());
+        intro = data.intro;
+        questions = data.questions;
+        last = data.last;
+        matrix = data.matrix;
+    }
+
+    catch(e)
+    {
+        // console.error(e);
+        return;
+    }
 
     // Set up buttons
     $("input.quiz-button").button();
@@ -21,15 +42,12 @@ jQuery(document).ready(function($) {
     // Set up radio buttons
     // $("input[type=radio]").checkboxradio();
 
-    $("#quiz-intro").html(data.intro);
+    $("#quiz-intro").html(intro);
 
     let question = 0;
     let value = 0;
     
-    let questions = data.questions;
-    let last = data.last;
     let results = {A: [0, 0], B: 0, C: 0, D: 0, E: 0, F: 0, J: 0};
-    let matrix = data.matrix;
 
     // Process the start button
     $("#quiz-start").click(function() {
