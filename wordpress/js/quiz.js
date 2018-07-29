@@ -52,7 +52,6 @@ jQuery(document).ready(function($) {
     // Process the start button
     $("#quiz-start").click(function() {
         question = 0;
-        $("#quiz-data").css("display", "none");
         $("div.quiz-intro").fadeOut(function() {
             $("#quiz-progress").progressbar("option", "value", 6.25);
             $("#quiz-question").html(questions[question].q);
@@ -165,7 +164,7 @@ jQuery(document).ready(function($) {
                     $("#quiz-radio-1").attr("value", questions[question].v[1]);
                 }
                 $("input[type=radio]").prop("checked", false);
-                $("input.back").css("display", "block");
+                $("input.quiz-back").css("display", "block");
                 $("div.quiz-question").fadeIn();
             });
         }
@@ -189,7 +188,7 @@ jQuery(document).ready(function($) {
     });
 
     //Process the last radio buttons
-    $("input[type=radio].last").click(function() {
+    $("input[type=radio].quiz-last").click(function() {
         let type = last.t;
         value = +$(this).attr("value");
         results[type] += value;
@@ -212,7 +211,7 @@ jQuery(document).ready(function($) {
 
     // Process the again button
     $("#quiz-again").click(function() {
-        $(".result").fadeOut(function() {
+        $("div.result").fadeOut(function() {
             for (let [key, value] in results)
             {
                 if (key == "A")
@@ -221,7 +220,7 @@ jQuery(document).ready(function($) {
                 else
                     results[key] = 0;
             }
-            $(".intro").fadeIn();
+            $("div.intro").fadeIn();
         });
     });
 });

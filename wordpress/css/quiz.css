@@ -1,9 +1,13 @@
-
+/* Quiz styles */
 div.quiz-question, div.quiz-last, div.quiz-result, #quiz-back {
     display: none;
 }
 
-label {
+label.quiz-label {
     display: inline;
     margin: 0;
+}
+
+#quiz-data {
+    display: none;
 }

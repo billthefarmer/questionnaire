@@ -65,11 +65,12 @@ function quiz_questions_shortcode($atts) {
     <h4 id="quiz-question"></h4>
     <input type="radio" id="quiz-radio-1" name="quiz-answer"
            class="quiz-answer" value="quiz-answer-1" />
-    <label for="quiz-radio-1" id="quiz-label-1"></label><br />
+    <label for="quiz-radio-1" class="quiz-label" id="quiz-label-1">
+    </label><br />
     <input type="radio" id="quiz-radio-2" name="quiz-answer"
            class="quiz-answer" value="quiz-answer-2" />
-    <label for="quiz-radio-2" id="quiz-label-2"></label><br />
-    <br />
+    <label for="quiz-radio-2" class="quiz-label" id="quiz-label-2">
+    </label><br /><br />
     <input type="button" id="quiz-back" class="quiz-button" value="Back" />
   </fieldset>
 </div>
@@ -79,17 +80,20 @@ function quiz_questions_shortcode($atts) {
     <h4 id="quiz-last"></h4>
     <input type="radio" id="quiz-radio-3" name="quiz-last"
            class="quiz-last" value="quiz-answer-3" />
-    <label for="quiz-radio-3" id="quiz-label-3"></label><br />
+    <label for="quiz-radio-3" class="quiz-label" id="quiz-label-3">
+    </label><br />
     <input type="radio" id="quiz-radio-4" name="quiz-last"
            class="quiz-last" value="quiz-answer-4" />
-    <label for="quiz-radio-4" id="quiz-label-4"></label><br />
+    <label for="quiz-radio-4" class="quiz-label" id="quiz-label-4">
+    </label><br />
     <input type="radio" id="quiz-radio-5" name="quiz-last"
            class="quiz-last" value="quiz-answer-5" />
-    <label for="quiz-radio-5" id="quiz-label-5"></label><br />
+    <label for="quiz-radio-5" class="quiz-label" id="quiz-label-5">
+    </label><br />
     <input type="radio" id="quiz-radio-6" name="quiz-last"
            class="quiz-last" value="quiz-answer-6" />
-    <label for="quiz-radio-6" id="quiz-label-6"></label><br />
-    <br />
+    <label for="quiz-radio-6" class="quiz-label" id="quiz-label-6">
+    </label><br /><br />
     <input type="button" id="quiz-prev" class="quiz-button" value="Back" />
   </fieldset>
 </div>
