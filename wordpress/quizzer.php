@@ -31,12 +31,11 @@ function quiz_enqueue_scripts() {
         wp_enqueue_style('quiz',
                          plugins_url('/css/quiz.css', __FILE__));
 
+        wp_enqueue_script('jquery-ui',
+                          plugins_url('/js/jquery-ui.min.js', __FILE__));
         wp_enqueue_script('quiz',
                           plugins_url('/js/quiz.js', __FILE__),
-                          array('jquery-ui-core', 'jquery-ui-widget',
-                                'jquery-ui-mouse', 'jquery-ui-button',
-                                'jquery-ui-progressbar', 'jquery-effects-core',
-                                'jquery'));
+                          array('jquery'));
 
         // Add the shortcodes and actions to insert the code into the
         // page
