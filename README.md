@@ -1,2 +1,2 @@
-# Quiz
-Hugo quiz generator with simple theme
+# Questionnaire
+Hugo questionnaire generator with simple theme
