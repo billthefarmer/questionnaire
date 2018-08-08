@@ -71,6 +71,7 @@ jQuery(document).ready(function($) {
                 $("#quiz-radio-1").attr("value", questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
+            // $("input[type=radio]").checkboxradio("refresh");
             $("div.quiz-question").fadeIn();
         });
     });
@@ -81,7 +82,7 @@ jQuery(document).ready(function($) {
         let type = questions[question].t;
         results[type] -= value;
         if (question == 0)
-            $("input.quiz-back").css("display", "none");
+            $("#quiz-back").css("display", "none");
         $("div.quiz-question").fadeOut(function() {
             let progress = (question + 1) * 6.25;
             $("#quiz-progress").progressbar("option", "value", progress);
@@ -102,7 +103,8 @@ jQuery(document).ready(function($) {
                 $("#quiz-radio-1").attr("value", questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
-            $(".question").fadeIn();
+            // $("input[type=radio]").checkboxradio("refresh");
+            $("div.quiz-question").fadeIn();
         });
     });
 
@@ -131,6 +133,7 @@ jQuery(document).ready(function($) {
                 $("#quiz-radio-1").attr("value", questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
+            // $("input[type=radio]").checkboxradio("refresh");
             $("div.quiz-question").fadeIn();
         });
     });
@@ -164,7 +167,8 @@ jQuery(document).ready(function($) {
                     $("#quiz-radio-1").attr("value", questions[question].v[1]);
                 }
                 $("input[type=radio]").prop("checked", false);
-                $("input.quiz-back").css("display", "block");
+                // $("input[type=radio]").checkboxradio("refresh");
+                $("#quiz-back").css("display", "block");
                 $("div.quiz-question").fadeIn();
             });
         }
@@ -182,6 +186,7 @@ jQuery(document).ready(function($) {
                 $("#quiz-label-6").html(last.a[3]);
                 $("#quiz-radio-6").attr("value", last.v[3]);
                 $("input[type=radio]").prop("checked", false);
+                // $("input[type=radio]").checkboxradio("refresh");
                 $("div.last").fadeIn();
             });
         }
