@@ -1,0 +1,13 @@
+/* Questionnaire styles */
+div.questionnaire-question, div.questionnaire-last, div.questionnaire-result, #questionnaire-back {
+    display: none;
+}
+
+label.questionnaire-label {
+    display: inline;
+    margin: 0;
+}
+
+#questionnaire-data {
+    display: none;
+}
