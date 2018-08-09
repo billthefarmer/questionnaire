@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Questionnaire
- * Plugin URI: https://github.com/billthefarmer/quiz/
+ * Plugin Name: Questionnaire Maker
+ * Plugin URI: https://github.com/billthefarmer/questionnaire/
  * Description: Lets you create a questionnaire using your data.
  * Version: 0.5
  * Author: Bill Farmer

@@ -1,4 +1,4 @@
-=== Questionnaire ===
+=== Questionnaire Maker ===
 Contributors: Bill Farmer
 Requires at least: 4.0
 Tags: plugin
