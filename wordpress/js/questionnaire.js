@@ -136,7 +136,7 @@ jQuery(document).ready(function($) {
     });
 
     // Process the radio buttons
-    $("input[type=radio].questionnaire-answer").click(function() {
+    $("input[type=radio].question-radio").click(function() {
         let type = questions[question].t;
         value = +$(this).attr("value");
         results[type] += value;
@@ -177,7 +177,7 @@ jQuery(document).ready(function($) {
 
         else
         {
-            $("div.question").fadeOut(function() {
+            $("div.questionnaire-question").fadeOut(function() {
                 $("#questionnaire-last").html(last.q);
                 $("#last-label-1").html(last.a[0]);
                 $("#last-radio-1").attr("value", last.v[0]);
@@ -191,13 +191,13 @@ jQuery(document).ready(function($) {
                 $("#last-radio-5").attr("value", last.v[4]);
                 $("input[type=radio]").prop("checked", false);
                 // $("input[type=radio]").checkboxradio("refresh");
-                $("div.last").fadeIn();
+                $("div.questionnaire-last").fadeIn();
             });
         }
     });
 
     //Process the last radio buttons
-    $("input[type=radio].questionnaire-last").click(function() {
+    $("input[type=radio].question-last").click(function() {
         let type = last.t;
         value = +$(this).attr("value");
         results[type] += value;

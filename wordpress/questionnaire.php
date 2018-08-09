@@ -85,27 +85,27 @@ function questionnaire_questions_shortcode($atts) {
     <div id="questionnaire-progress-max"></div>
     <h4 id="questionnaire-last"></h4>
     <input type="radio" id="last-radio-1" name="question-answer"
-           class="question-radio" value="last-answer-1" />
+           class="question-last" value="last-answer-1" />
     <label for="last-radio-1" class="question-label"
            id="last-label-1">
     </label><br />
     <input type="radio" id="last-radio-2" name="question-answer"
-           class="question-radio" value="last-answer-2" />
+           class="question-last" value="last-answer-2" />
     <label for="last-radio-2" class="question-label"
            id="last-label-2">
     </label><br />
     <input type="radio" id="last-radio-3" name="question-answer"
-           class="question-radio" value="last-answer-3" />
+           class="question-last" value="last-answer-3" />
     <label for="last-radio-3" class="question-label"
            id="last-label-3">
     </label><br />
     <input type="radio" id="last-radio-4" name="question-answer"
-           class="question-radio" value="last-answer-4" />
+           class="question-last" value="last-answer-4" />
     <label for="last-radio-4" class="question-label"
            id="last-label-4">
     </label><br />
     <input type="radio" id="last-radio-5" name="question-answer"
-           class="question-radio" value="last-answer-5" />
+           class="question-last" value="last-answer-5" />
     <label for="last-radio-5" class="question-label"
            id="last-label-5">
     </label><br /><br />
