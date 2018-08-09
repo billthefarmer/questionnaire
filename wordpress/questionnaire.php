@@ -31,12 +31,12 @@ function questionnaire_enqueue_scripts() {
         wp_enqueue_style('questionnaire',
                          plugins_url('/css/questionnaire.css', __FILE__));
 
+        wp_enqueue_script('questions',
+                          plugins_url('/js/questions.js', __FILE__));
         wp_enqueue_script('questionnaire',
                           plugins_url('/js/questionnaire.js', __FILE__),
-                          array('jquery-ui-core', 'jquery-ui-widget',
-                                'jquery-ui-mouse', 'jquery-ui-button',
-                                'jquery-ui-progressbar', 'jquery-effects-core',
-                                'jquery'));
+                          array('jquery-ui-core', 'jquery-ui-button',
+                                'jquery-ui-progressbar', 'jquery'));
 
         // Add the shortcodes and actions to insert the code into the
         // page
@@ -66,15 +66,15 @@ function questionnaire_questions_shortcode($atts) {
   <fieldset>
     <div id="questionnaire-progress"></div>
     <h4 id="questionnaire-question"></h4>
-    <input type="radio" id="questionnaire-radio-1" name="questionnaire-answer"
-           class="questionnaire-answer" value="questionnaire-answer-1" />
-    <label for="questionnaire-radio-1" class="questionnaire-label"
-           id="questionnaire-label-1">
+    <input type="radio" id="question-radio-1" name="question-answer"
+           class="question-radio" value="question-answer-1" />
+    <label for="question-radio-1" class="question-label"
+           id="question-label-1">
     </label><br />
-    <input type="radio" id="questionnaire-radio-2" name="questionnaire-answer"
-           class="questionnaire-answer" value="questionnaire-answer-2" />
-    <label for="questionnaire-radio-2" class="questionnaire-label"
-           id="questionnaire-label-2">
+    <input type="radio" id="question-radio-2" name="question-answer"
+           class="question-radio" value="question-answer-2" />
+    <label for="question-radio-2" class="question-label"
+           id="question-label-2">
     </label><br /><br />
     <input type="button" id="questionnaire-back"
            class="questionnaire-button" value="Back" />
@@ -84,29 +84,30 @@ function questionnaire_questions_shortcode($atts) {
   <fieldset>
     <div id="questionnaire-progress-max"></div>
     <h4 id="questionnaire-last"></h4>
-    <input type="radio" id="questionnaire-radio-3" name="questionnaire-last"
-           class="questionnaire-last" value="questionnaire-answer-3" />
-    <label for="questionnaire-radio-3" class="questionnaire-label"
-           id="questionnaire-label-3">
+    <input type="radio" id="last-radio-1" name="question-answer"
+           class="question-radio" value="last-answer-1" />
+    <label for="last-radio-1" class="question-label"
+           id="last-label-1">
     </label><br />
-    <input type="radio" id="questionnaire-radio-4" name="questionnaire-last"
-           class="questionnaire-last" value="questionnaire-answer-4" />
-    <label for="questionnaire-radio-4" class="questionnaire-label"
-           id="questionnaire-label-4">
+    <input type="radio" id="last-radio-2" name="question-answer"
+           class="question-radio" value="last-answer-2" />
+    <label for="last-radio-2" class="question-label"
+           id="last-label-2">
     </label><br />
-    <input type="radio" id="questionnaire-radio-5" name="questionnaire-last"
-           class="questionnaire-last" value="questionnaire-answer-5" />
-    <label for="questionnaire-radio-5" class="questionnaire-label"
-           id="questionnaire-label-5">
+    <input type="radio" id="last-radio-3" name="question-answer"
+           class="question-radio" value="last-answer-3" />
+    <label for="last-radio-3" class="question-label"
+           id="last-label-3">
     </label><br />
-    <input type="radio" id="questionnaire-radio-6" name="questionnaire-last"
-           class="questionnaire-last" value="questionnaire-answer-6" />
-    <label for="questionnaire-radio-6" class="questionnaire-label"
-           id="questionnaire-label-6">
-    <input type="radio" id="questionnaire-radio-7" name="questionnaire-last"
-           class="questionnaire-last" value="questionnaire-answer-7" />
-    <label for="questionnaire-radio-7" class="questionnaire-label"
-           id="questionnaire-label-7">
+    <input type="radio" id="last-radio-4" name="question-answer"
+           class="question-radio" value="last-answer-4" />
+    <label for="last-radio-4" class="question-label"
+           id="last-label-4">
+    </label><br />
+    <input type="radio" id="last-radio-5" name="question-answer"
+           class="question-radio" value="last-answer-5" />
+    <label for="last-radio-5" class="question-label"
+           id="last-label-5">
     </label><br /><br />
     <input type="button" id="questionnaire-prev"
            class="questionnaire-button" value="Back" />
@@ -174,6 +175,21 @@ function questionnaire_results_shortcode($atts) {
 
     // Buffer the output
     ob_start();
+
+    ?>
+
+<div class="report-content">
+  <fieldset>
+    <h2 id="user-name" class="user-name"></h2>
+    <input type="button" id="update-preview" name="update-preview"
+           value="Update Preview" />
+    <input type="button" id="download-report" name="download-report"
+           value="Download Report" />
+    <br /><br />
+  </fieldset>
+</div>
+
+<?php
 
     // Return the output
     return ob_get_clean();

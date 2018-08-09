@@ -1,4 +1,4 @@
-// quiz.js
+// questionnaire.js
 //
 // Version: 0.5
 // Author: Bill Farmer
@@ -9,40 +9,23 @@
 
 jQuery(document).ready(function($) {
 
-    // Data
-    let data = {};
-    let intro = "";
-    let questions = [];
-    let last = "";
-    let matrix = [];
-
-    // Get data from page
-    try
-    {
-        data = JSON.parse($("#quiz-data").html());
-        intro = data.intro;
-        questions = data.questions;
-        last = data.last;
-        matrix = data.matrix;
-    }
-
-    catch(e)
-    {
-        // console.error(e);
-        return;
-    }
+    // Set up data
+    intro = data.intro;
+    questions = data.questions;
+    last = data.last;
+    matrix = data.matrix;
 
     // Set up buttons
-    $("input.quiz-button").button();
+    $("input.questionnaire-button").button();
 
     // Set up progress bars
-    $("#quiz-progress").progressbar({value: 6.25});
-    $("#quiz-progress-max").progressbar({value: 100});
+    $("#questionnaire-progress").progressbar({value: 6.25});
+    $("#questionnaire-progress-max").progressbar({value: 100});
 
     // Set up radio buttons
     // $("input[type=radio]").checkboxradio();
 
-    $("#quiz-intro").html(intro);
+    $("#questionnaire-intro").html(intro);
 
     let question = 0;
     let value = 0;
@@ -50,96 +33,110 @@ jQuery(document).ready(function($) {
     let results = {A: [0, 0], B: 0, C: 0, D: 0, E: 0, F: 0, J: 0};
 
     // Process the start button
-    $("#quiz-start").click(function() {
+    $("#questionnaire-start").click(function() {
         question = 0;
-        $("div.quiz-intro").fadeOut(function() {
-            $("#quiz-progress").progressbar("option", "value", 6.25);
-            $("#quiz-question").html(questions[question].q);
+        $("div.questionnaire-intro").fadeOut(function() {
+            $("#questionnaire-progress").progressbar("option", "value", 6.25);
+            $("#questionnaire-question").html(questions[question].q);
             if (Math.round(Math.random()))
             {
-                $("#quiz-label-1").html(questions[question].a[0]);
-                $("#quiz-radio-1").attr("value", questions[question].v[0]);
-                $("#quiz-label-2").html(questions[question].a[1]);
-                $("#quiz-radio-2").attr("value", questions[question].v[1]);
+                $("#question-label-1").html(questions[question].a[0]);
+                $("#question-radio-1").attr("value",
+                                                 questions[question].v[0]);
+                $("#question-label-2").html(questions[question].a[1]);
+                $("#question-radio-2").attr("value",
+                                                 questions[question].v[1]);
             }
 
             else
             {
-                $("#quiz-label-2").html(questions[question].a[0]);
-                $("#quiz-radio-2").attr("value", questions[question].v[0]);
-                $("#quiz-label-1").html(questions[question].a[1]);
-                $("#quiz-radio-1").attr("value", questions[question].v[1]);
+                $("#question-label-2").html(questions[question].a[0]);
+                $("#question-radio-2").attr("value",
+                                                 questions[question].v[0]);
+                $("#question-label-1").html(questions[question].a[1]);
+                $("#question-radio-1").attr("value",
+                                                 questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
             // $("input[type=radio]").checkboxradio("refresh");
-            $("div.quiz-question").fadeIn();
+            $("div.questionnaire-question").fadeIn();
         });
     });
 
     // Process the back button
-    $("#quiz-back").click(function() {
+    $("#questionnaire-back").click(function() {
         question--;
         let type = questions[question].t;
         results[type] -= value;
         if (question == 0)
-            $("#quiz-back").css("display", "none");
-        $("div.quiz-question").fadeOut(function() {
+            $("#questionnaire-back").css("display", "none");
+        $("div.questionnaire-question").fadeOut(function() {
             let progress = (question + 1) * 6.25;
-            $("#quiz-progress").progressbar("option", "value", progress);
-            $("#quiz-question").html(questions[question].q);
+            $("#questionnaire-progress").progressbar("option", "value",
+                                                     progress);
+            $("#questionnaire-question").html(questions[question].q);
             if (Math.round(Math.random()))
             {
-                $("#quiz-label-1").html(questions[question].a[0]);
-                $("#quiz-radio-1").attr("value", questions[question].v[0]);
-                $("#quiz-label-2").html(questions[question].a[1]);
-                $("#quiz-radio-2").attr("value", questions[question].v[1]);
+                $("#question-label-1").html(questions[question].a[0]);
+                $("#question-radio-1").attr("value",
+                                                 questions[question].v[0]);
+                $("#question-label-2").html(questions[question].a[1]);
+                $("#question-radio-2").attr("value",
+                                                 questions[question].v[1]);
             }
 
             else
             {
-                $("#quiz-label-2").html(questions[question].a[0]);
-                $("#quiz-radio-2").attr("value", questions[question].v[0]);
-                $("#quiz-label-1").html(questions[question].a[1]);
-                $("#quiz-radio-1").attr("value", questions[question].v[1]);
+                $("#question-label-2").html(questions[question].a[0]);
+                $("#question-radio-2").attr("value",
+                                                 questions[question].v[0]);
+                $("#question-label-1").html(questions[question].a[1]);
+                $("#question-radio-1").attr("value",
+                                                 questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
             // $("input[type=radio]").checkboxradio("refresh");
-            $("div.quiz-question").fadeIn();
+            $("div.questionnaire-question").fadeIn();
         });
     });
 
     // Process the prev button
-    $("#quiz-prev").click(function() {
+    $("#questionnaire-prev").click(function() {
         question--;
         let type = questions[question].t;
         results[type] -= value;
-        $("div.quiz-last").fadeOut(function() {
+        $("div.questionnaire-last").fadeOut(function() {
             let progress = (question + 1) * 6.25;
-            $("#quiz-progress").progressbar("option", "value", progress);
-            $("#quiz-question").html(questions[question].q);
+            $("#questionnaire-progress").progressbar("option", "value",
+                                                     progress);
+            $("#questionnaire-question").html(questions[question].q);
             if (Math.round(Math.random()))
             {
-                $("#quiz-label-1").html(questions[question].a[0]);
-                $("#quiz-radio-1").attr("value", questions[question].v[0]);
-                $("#quiz-label-2").html(questions[question].a[1]);
-                $("#quiz-radio-2").attr("value", questions[question].v[1]);
+                $("#question-label-1").html(questions[question].a[0]);
+                $("#question-radio-1").attr("value",
+                                                 questions[question].v[0]);
+                $("#question-label-2").html(questions[question].a[1]);
+                $("#question-radio-2").attr("value",
+                                                 questions[question].v[1]);
             }
 
             else
             {
-                $("#quiz-label-2").html(questions[question].a[0]);
-                $("#quiz-radio-2").attr("value", questions[question].v[0]);
-                $("#quiz-label-1").html(questions[question].a[1]);
-                $("#quiz-radio-1").attr("value", questions[question].v[1]);
+                $("#question-label-2").html(questions[question].a[0]);
+                $("#question-radio-2").attr("value",
+                                                 questions[question].v[0]);
+                $("#question-label-1").html(questions[question].a[1]);
+                $("#question-radio-1").attr("value",
+                                                 questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
             // $("input[type=radio]").checkboxradio("refresh");
-            $("div.quiz-question").fadeIn();
+            $("div.questionnaire-question").fadeIn();
         });
     });
 
     // Process the radio buttons
-    $("input[type=radio].quiz-answer").click(function() {
+    $("input[type=radio].questionnaire-answer").click(function() {
         let type = questions[question].t;
         value = +$(this).attr("value");
         results[type] += value;
@@ -147,44 +144,51 @@ jQuery(document).ready(function($) {
         if (question < questions.length)
         {
             let type = questions[question].t;
-            $("div.quiz-question").fadeOut(function() {
+            $("div.questionnaire-question").fadeOut(function() {
                 let progress = (question + 1) * 6.25;
-                $("#quiz-progress").progressbar("option", "value", progress);
-                $("#quiz-question").html(questions[question].q);
+                $("#questionnaire-progress").progressbar("option", "value",
+                                                         progress);
+                $("#questionnaire-question").html(questions[question].q);
                 if (Math.round(Math.random()))
                 {
-                    $("#quiz-label-1").html(questions[question].a[0]);
-                    $("#quiz-radio-1").attr("value", questions[question].v[0]);
-                    $("#quiz-label-2").html(questions[question].a[1]);
-                    $("#quiz-radio-2").attr("value", questions[question].v[1]);
+                    $("#question-label-1").html(questions[question].a[0]);
+                    $("#question-radio-1").attr("value",
+                                                     questions[question].v[0]);
+                    $("#question-label-2").html(questions[question].a[1]);
+                    $("#question-radio-2").attr("value",
+                                                     questions[question].v[1]);
                 }
 
                 else
                 {
-                    $("#quiz-label-2").html(questions[question].a[0]);
-                    $("#quiz-radio-2").attr("value", questions[question].v[0]);
-                    $("#quiz-label-1").html(questions[question].a[1]);
-                    $("#quiz-radio-1").attr("value", questions[question].v[1]);
+                    $("#question-label-2").html(questions[question].a[0]);
+                    $("#question-radio-2").attr("value",
+                                                     questions[question].v[0]);
+                    $("#question-label-1").html(questions[question].a[1]);
+                    $("#question-radio-1").attr("value",
+                                                     questions[question].v[1]);
                 }
                 $("input[type=radio]").prop("checked", false);
                 // $("input[type=radio]").checkboxradio("refresh");
-                $("#quiz-back").css("display", "block");
-                $("div.quiz-question").fadeIn();
+                $("#questionnaire-back").css("display", "block");
+                $("div.questionnaire-question").fadeIn();
             });
         }
 
         else
         {
             $("div.question").fadeOut(function() {
-                $("#quiz-last").html(last.q);
-                $("#quiz-label-3").html(last.a[0]);
-                $("#quiz-radio-3").attr("value", last.v[0]);
-                $("#quiz-label-4").html(last.a[1]);
-                $("#quiz-radio-4").attr("value", last.v[1]);
-                $("#quiz-label-5").html(last.a[2]);
-                $("#quiz-radio-5").attr("value", last.v[2]);
-                $("#quiz-label-6").html(last.a[3]);
-                $("#quiz-radio-6").attr("value", last.v[3]);
+                $("#questionnaire-last").html(last.q);
+                $("#last-label-1").html(last.a[0]);
+                $("#last-radio-1").attr("value", last.v[0]);
+                $("#last-label-2").html(last.a[1]);
+                $("#last-radio-2").attr("value", last.v[1]);
+                $("#last-label-3").html(last.a[2]);
+                $("#last-radio-3").attr("value", last.v[2]);
+                $("#last-label-4").html(last.a[3]);
+                $("#last-radio-4").attr("value", last.v[3]);
+                $("#last-label-5").html(last.a[4]);
+                $("#last-radio-5").attr("value", last.v[4]);
                 $("input[type=radio]").prop("checked", false);
                 // $("input[type=radio]").checkboxradio("refresh");
                 $("div.last").fadeIn();
@@ -193,7 +197,7 @@ jQuery(document).ready(function($) {
     });
 
     //Process the last radio buttons
-    $("input[type=radio].quiz-last").click(function() {
+    $("input[type=radio].questionnaire-last").click(function() {
         let type = last.t;
         value = +$(this).attr("value");
         results[type] += value;
@@ -201,13 +205,13 @@ jQuery(document).ready(function($) {
             results.A[0] = results.B;
             results.A[1] = results.E;
             let result = calculate(results, matrix);
-            $("#quiz-arch").attr("value", result.A);
-            $("#quiz-brain").attr("value", result.B);
-            $("#quiz-comm").attr("value", result.C);
-            $("#quiz-direct").attr("value", result.D);
-            $("#quiz-exec").attr("value", result.E);
-            $("#quiz-focus").attr("value", result.F);
-            $("#quiz-journey").attr("value", result.J);
+            $("#questionnaire-arch").attr("value", result.A);
+            $("#questionnaire-brain").attr("value", result.B);
+            $("#questionnaire-comm").attr("value", result.C);
+            $("#questionnaire-direct").attr("value", result.D);
+            $("#questionnaire-exec").attr("value", result.E);
+            $("#questionnaire-focus").attr("value", result.F);
+            $("#questionnaire-journey").attr("value", result.J);
             $("div.result").fadeIn();
             console.log(results);
             console.log(calculate(results, matrix));
@@ -215,7 +219,7 @@ jQuery(document).ready(function($) {
     });
 
     // Process the again button
-    $("#quiz-again").click(function() {
+    $("#questionnaire-again").click(function() {
         $("div.result").fadeOut(function() {
             for (let [key, value] in results)
             {
