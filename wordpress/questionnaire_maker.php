@@ -133,12 +133,12 @@ function questionnaire_questions_shortcode($atts) {
                        name="questionnaire-direct" readonly></td></tr>
           <tr><td><label for="questionnaire-exec">Execution: </label></td>
             <td><input type="text" id="questionnaire-exec"
-                       name="exec" readonly></td></tr>
-          <tr><td><label for="arch">Focus: </label></td>
-            <td><input type="text" id="focus"
-                       name="focus" readonly></td></tr>
-          <tr><td><label for="journey">Journey: </label></td>
-            <td><input type="questionnaire-text" id="questionnaire-journey"
+                       name="questionnaire-exec" readonly></td></tr>
+          <tr><td><label for="questionnaire-focus">Focus: </label></td>
+            <td><input type="text" id="questionnaire-focus"
+                       name="questionnaire-focus" readonly></td></tr>
+          <tr><td><label for="questionnaire-journey">Journey: </label></td>
+            <td><input type="text" id="questionnaire-journey"
                        name="questionnaire-journey" readonly></td></tr>
         </table>
       </fieldset>

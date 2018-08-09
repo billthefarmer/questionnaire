@@ -12,6 +12,6 @@ label.questionnaire-label {
     display: none;
 }
 
-input.question-radio, input.question-last {
-    margin: 5px;
+label {
+    display: inline;
 }

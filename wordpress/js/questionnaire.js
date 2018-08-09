@@ -201,7 +201,7 @@ jQuery(document).ready(function($) {
         let type = last.t;
         value = +$(this).attr("value");
         results[type] += value;
-        $("div.last").fadeOut(function() {
+        $("div.questionnaire-last").fadeOut(function() {
             results.A[0] = results.B;
             results.A[1] = results.E;
             let result = calculate(results, matrix);
@@ -212,7 +212,7 @@ jQuery(document).ready(function($) {
             $("#questionnaire-exec").attr("value", result.E);
             $("#questionnaire-focus").attr("value", result.F);
             $("#questionnaire-journey").attr("value", result.J);
-            $("div.result").fadeIn();
+            $("div.questionnaire-result").fadeIn();
             console.log(results);
             console.log(calculate(results, matrix));
         });
@@ -220,7 +220,7 @@ jQuery(document).ready(function($) {
 
     // Process the again button
     $("#questionnaire-again").click(function() {
-        $("div.result").fadeOut(function() {
+        $("div.questionnaire-result").fadeOut(function() {
             for (let [key, value] in results)
             {
                 if (key == "A")
@@ -229,7 +229,7 @@ jQuery(document).ready(function($) {
                 else
                     results[key] = 0;
             }
-            $("div.intro").fadeIn();
+            $("div.questionnaire-intro").fadeIn();
         });
     });
 
