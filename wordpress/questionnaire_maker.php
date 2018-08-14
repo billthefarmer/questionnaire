@@ -182,9 +182,9 @@ function questionnaire_results_shortcode($atts) {
   <fieldset>
     <h2 id="user-name" class="user-name"></h2>
     <input type="button" id="update-preview" name="update-preview"
-           value="Update Preview" />
+           class="questionnaire-button" value="Update Preview" />
     <input type="button" id="download-report" name="download-report"
-           value="Download Report" />
+           class="questionnaire-button" value="Download Report" />
     <br /><br />
   </fieldset>
 </div>

@@ -16,6 +16,10 @@ label {
     display: inline;
 }
 
+div.ui-progressbar div.ui-progressbar-value {
+    margin: 0;
+}
+
 div.ui-progressbar-value {
     background: #b1bf34;
 }
@@ -23,9 +27,10 @@ div.ui-progressbar-value {
 input.ui-button {
     background: #b1bf34;
     color: white;
+    padding: 0.75em 2em;
 }
 
-input.ui-button:hover {
+input.ui-button:hover, input.ui-button:focus {
     background: orange;
     color: white;
 }

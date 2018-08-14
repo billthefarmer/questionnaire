@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
     $("#questionnaire-progress-max").progressbar({value: 100});
 
     // Set up radio buttons
-    $("input[type=radio]").button();
+    // $("input[type=radio]").button();
 
     $("#questionnaire-intro").html(intro);
 
@@ -58,7 +58,7 @@ jQuery(document).ready(function($) {
                                                  questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
-            $("input[type=radio]").button("refresh");
+            // $("input[type=radio]").button("refresh");
             $("div.questionnaire-question").fadeIn();
         });
     });
@@ -95,7 +95,7 @@ jQuery(document).ready(function($) {
                                                  questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
-            $("input[type=radio]").button("refresh");
+            // $("input[type=radio]").button("refresh");
             $("div.questionnaire-question").fadeIn();
         });
     });
@@ -130,7 +130,7 @@ jQuery(document).ready(function($) {
                                                  questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
-            $("input[type=radio]").button("refresh");
+            // $("input[type=radio]").button("refresh");
             $("div.questionnaire-question").fadeIn();
         });
     });
@@ -169,7 +169,7 @@ jQuery(document).ready(function($) {
                                                      questions[question].v[1]);
                 }
                 $("input[type=radio]").prop("checked", false);
-                $("input[type=radio]").button("refresh");
+                // $("input[type=radio]").button("refresh");
                 $("#questionnaire-back").css("display", "block");
                 $("div.questionnaire-question").fadeIn();
             });
@@ -190,7 +190,7 @@ jQuery(document).ready(function($) {
                 $("#last-label-5").html(last.a[4]);
                 $("#last-radio-5").attr("value", last.v[4]);
                 $("input[type=radio]").prop("checked", false);
-                $("input[type=radio]").button("refresh");
+                // $("input[type=radio]").button("refresh");
                 $("div.questionnaire-last").fadeIn();
             });
         }
