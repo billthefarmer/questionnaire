@@ -15,3 +15,17 @@ label.questionnaire-label {
 label {
     display: inline;
 }
+
+div.ui-progressbar-value {
+    background: #b1bf34;
+}
+
+input.ui-button {
+    background: #b1bf34;
+    color: white;
+}
+
+input.ui-button:hover {
+    background: orange;
+    color: white;
+}
