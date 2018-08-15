@@ -1,5 +1,13 @@
-/* Questionnaire styles */
-div.questionnaire-question, div.questionnaire-last, div.questionnaire-result, #questionnaire-back {
+/* Questionnaire styles
+ * #9b1d33 dark red
+ * #c23c45 red
+ * #e37152 orange
+ * #e7eb63 yellow
+ * #b1bf34 green
+ */
+
+div.questionnaire-question, div.questionnaire-last,
+div.questionnaire-contact, #questionnaire-back {
     display: none;
 }
 
@@ -31,6 +39,6 @@ input.ui-button {
 }
 
 input.ui-button:hover, input.ui-button:focus {
-    background: orange;
+    background: #e37152;
     color: white;
 }

@@ -204,15 +204,7 @@ jQuery(document).ready(function($) {
         $("div.questionnaire-last").fadeOut(function() {
             results.A[0] = results.B;
             results.A[1] = results.E;
-            let result = calculate(results, matrix);
-            $("#questionnaire-arch").attr("value", result.A);
-            $("#questionnaire-brain").attr("value", result.B);
-            $("#questionnaire-comm").attr("value", result.C);
-            $("#questionnaire-direct").attr("value", result.D);
-            $("#questionnaire-exec").attr("value", result.E);
-            $("#questionnaire-focus").attr("value", result.F);
-            $("#questionnaire-journey").attr("value", result.J);
-            $("div.questionnaire-result").fadeIn();
+            $("div.questionnaire-contact").fadeIn();
             console.log(results);
             console.log(calculate(results, matrix));
         });
