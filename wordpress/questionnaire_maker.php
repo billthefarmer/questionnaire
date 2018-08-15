@@ -23,8 +23,7 @@ add_action('wp_enqueue_scripts', 'questionnaire_enqueue_scripts', 11);
 function questionnaire_enqueue_scripts() {
 
     // Check on a page
-
-    if (is_page()) {
+    if (is_page('Questionnaire')) {
 
         // Styles
         wp_enqueue_style('jquery-ui',
@@ -45,9 +44,29 @@ function questionnaire_enqueue_scripts() {
         // page
         add_shortcode('questionnaire-questions',
                       'questionnaire_questions_shortcode');
+    }
+
+    if (is_page('Report')) {
+
+        // Styles
+        wp_enqueue_style('jquery-ui',
+                         plugins_url('/css/jquery-ui.min.css', __FILE__));
+        wp_enqueue_style('questionnaire',
+                         plugins_url('/css/questionnaire.css', __FILE__));
+
+        // Javascript
+        wp_enqueue_script('answers',
+                          plugins_url('/js/answers.js', __FILE__));
+        wp_enqueue_script('report',
+                          plugins_url('/js/report.js', __FILE__));
+        wp_enqueue_script('jquery-ui-all',
+                          plugins_url('/js/jquery-ui.min.js', __FILE__),
+                          array('jquery'));
+
+        // Add the shortcodes and actions to insert the code into the
+        // page
         add_shortcode('questionnaire-results',
                       'questionnaire_results_shortcode');
-        add_action('wp_footer', 'questionnaire_footer', 11);
     }
 }
 
@@ -179,9 +198,4 @@ function questionnaire_results_shortcode($atts) {
 
     // Return the output
     return ob_get_clean();
-}
-
-// Questionnaire footer
-function questionnaire_footer() {
-
 }
