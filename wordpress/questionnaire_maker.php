@@ -23,7 +23,7 @@ add_action('wp_enqueue_scripts', 'questionnaire_enqueue_scripts', 11);
 function questionnaire_enqueue_scripts() {
 
     // Check on a page
-    if (is_page('Questionnaire')) {
+    if (is_page()) {
 
         // Styles
         wp_enqueue_style('jquery-ui',
@@ -173,6 +173,8 @@ function questionnaire_questions_shortcode($atts) {
 
     // Return the output
     return ob_get_clean();
+
+    add_action('wp_footer', 'questionnaire_footer', 11);
 }
 
 // Add the content if the shortcode is found.
@@ -195,6 +197,23 @@ function questionnaire_results_shortcode($atts) {
 </div>
 
 <?php
+
+    // Return the output
+    return ob_get_clean();
+
+    add_action('wp_footer', 'questionnaire_footer', 11);
+}
+
+// Questionnaire footer
+function questionnaire_footer() {
+
+    $answers = plugins_url('/js/answers.js', __FILE__);
+
+    // Buffer the output
+    ob_start();
+
+    echo '<p>Footer</p>
+    <script src="text/javascript" src="$answers"></script>'; 
 
     // Return the output
     return ob_get_clean();
