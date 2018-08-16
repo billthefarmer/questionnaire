@@ -11,13 +11,14 @@ div.questionnaire-contact, #questionnaire-back {
     display: none;
 }
 
+div.questionnaire-centre {
+    text-align: center;
+    padding: 1em;
+}
+
 label.questionnaire-label {
     display: inline;
     margin: 0;
-}
-
-#questionnaire-data {
-    display: none;
 }
 
 label {
@@ -26,19 +27,25 @@ label {
 
 div.ui-progressbar div.ui-progressbar-value {
     margin: 0;
+    border: none;
 }
 
 div.ui-progressbar-value {
-    background: #b1bf34;
+    background: yellowgreen;
 }
 
 input.ui-button {
-    background: #b1bf34;
+    background: yellowgreen;
     color: white;
     padding: 0.75em 2em;
+    font-weight: bold;
+    border: none;
 }
 
 input.ui-button:hover, input.ui-button:focus {
-    background: #e37152;
+    background: orange;
     color: white;
+    padding: 0.75em 2em;
+    font-weight: bold;
+    border: none;
 }

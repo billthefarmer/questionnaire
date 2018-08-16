@@ -32,18 +32,15 @@ function questionnaire_enqueue_scripts() {
                          plugins_url('/css/questionnaire.css', __FILE__));
 
         // Javascript
-        wp_enqueue_script('questions',
-                          plugins_url('/js/questions.js', __FILE__));
-        wp_enqueue_script('questionnaire',
-                          plugins_url('/js/questionnaire.js', __FILE__));
         wp_enqueue_script('jquery-ui-all',
                           plugins_url('/js/jquery-ui.min.js', __FILE__),
                           array('jquery'));
 
-        // Add the shortcodes and actions to insert the code into the
-        // page
+        // Add the shortcodes
         add_shortcode('questionnaire-questions',
                       'questionnaire_questions_shortcode');
+        add_shortcode('questionnaire-report',
+                      'questionnaire_report_shortcode');
     }
 
     if (is_page('Report')) {
@@ -65,8 +62,6 @@ function questionnaire_enqueue_scripts() {
 
         // Add the shortcodes and actions to insert the code into the
         // page
-        add_shortcode('questionnaire-results',
-                      'questionnaire_results_shortcode');
     }
 }
 
@@ -133,7 +128,7 @@ function questionnaire_questions_shortcode($atts) {
              class="question-last" value="last-answer-5" />
       <label for="last-radio-5" class="question-label"
              id="last-label-5">
-      </label><br /><br />
+      </label><br />
     </div>
     <input type="button" id="questionnaire-prev"
            class="questionnaire-button" value="Back" />
@@ -171,10 +166,14 @@ function questionnaire_questions_shortcode($atts) {
 </div>
 <?php
 
+    $questions = plugins_url('/js/questions.js', __FILE__);
+    $questionnaire = plugins_url('/js/questionnaire.js', __FILE__);
+
+    echo "<script type=\"text/javascript\" src=\"$questions\"></script>
+<script type=\"text/javascript\" src=\"$questionnaire\"></script>";
+
     // Return the output
     return ob_get_clean();
-
-    add_action('wp_footer', 'questionnaire_footer', 11);
 }
 
 // Add the content if the shortcode is found.
@@ -198,22 +197,11 @@ function questionnaire_results_shortcode($atts) {
 
 <?php
 
-    // Return the output
-    return ob_get_clean();
-
-    add_action('wp_footer', 'questionnaire_footer', 11);
-}
-
-// Questionnaire footer
-function questionnaire_footer() {
-
     $answers = plugins_url('/js/answers.js', __FILE__);
+    $report = plugins_url('/js/report.js', __FILE__);
 
-    // Buffer the output
-    ob_start();
-
-    echo '<p>Footer</p>
-    <script src="text/javascript" src="$answers"></script>'; 
+    echo "<script type=\"text/javascript\" src=\"$answers\"></script>
+<script type=\"text/javascript\" src=\"$report\"></script>";
 
     // Return the output
     return ob_get_clean();
