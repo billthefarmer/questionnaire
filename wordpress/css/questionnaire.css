@@ -16,13 +16,13 @@ div.questionnaire-centre {
     padding: 1em;
 }
 
+div.report-content, div.report-preview {
+    float: left;
+}
+
 label.questionnaire-label {
     display: inline;
     margin: 0;
-}
-
-label {
-    display: inline;
 }
 
 div.ui-progressbar div.ui-progressbar-value {
@@ -31,11 +31,11 @@ div.ui-progressbar div.ui-progressbar-value {
 }
 
 div.ui-progressbar-value {
-    background: yellowgreen;
+    background: #b1bf34;
 }
 
 input.ui-button {
-    background: yellowgreen;
+    background: #b1bf34;
     color: white;
     padding: 0.75em 2em;
     font-weight: bold;
