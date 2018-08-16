@@ -42,27 +42,6 @@ function questionnaire_enqueue_scripts() {
         add_shortcode('questionnaire-report',
                       'questionnaire_report_shortcode');
     }
-
-    if (is_page('Report')) {
-
-        // Styles
-        wp_enqueue_style('jquery-ui',
-                         plugins_url('/css/jquery-ui.min.css', __FILE__));
-        wp_enqueue_style('questionnaire',
-                         plugins_url('/css/questionnaire.css', __FILE__));
-
-        // Javascript
-        wp_enqueue_script('answers',
-                          plugins_url('/js/answers.js', __FILE__));
-        wp_enqueue_script('report',
-                          plugins_url('/js/report.js', __FILE__));
-        wp_enqueue_script('jquery-ui-all',
-                          plugins_url('/js/jquery-ui.min.js', __FILE__),
-                          array('jquery'));
-
-        // Add the shortcodes and actions to insert the code into the
-        // page
-    }
 }
 
 // Add the content if the shortcode is found.
@@ -193,6 +172,11 @@ function questionnaire_results_shortcode($atts) {
            class="questionnaire-button" value="Download Report" />
     <br /><br />
   </fieldset>
+</div>
+<div class="report-preview">
+  <iframe id="preview" class="preview" type="application/pdf"
+          width="640" height="880" frameborder="0">
+  </iframe>
 </div>
 
 <?php
