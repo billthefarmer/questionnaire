@@ -58,7 +58,7 @@ jQuery(document).ready(function($) {
                                                  questions[question].v[1]);
             }
             $("input[type=radio]").prop("checked", false);
-            // $("input[type=radio]").checkboxradio("refresh");
+            // $("input[type=radio]").checkboxradio();
             $("div.questionnaire-question").fadeIn();
         });
     });

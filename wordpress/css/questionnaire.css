@@ -20,9 +20,13 @@ div.report-content, div.report-preview {
     float: left;
 }
 
-label.questionnaire-label {
-    display: inline;
-    margin: 0;
+input.question-radio {
+    margin: initial;
+    margin-right: 0.5em;
+}
+
+label.question-label {
+    display: initial;
 }
 
 div.ui-progressbar div.ui-progressbar-value {
