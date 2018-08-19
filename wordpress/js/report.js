@@ -34,8 +34,8 @@ jQuery(document).ready(function($) {
 
     let pages = data.pages;
     let answers = data.answers;
-    let note = data.note;
-    let last = data.last
+    let notes = data.notes;
+    let last = data.last;
 
     // Dimensions in points
     let pageWidth = 595;
@@ -80,31 +80,37 @@ jQuery(document).ready(function($) {
 
     if (B)
     {
+        let desc = answers['B'].desc;
         let type = answers['B'][B].type;
         let text = answers['B'][B].text;
         doc.setFontType('bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
         doc.setFontType('normal');
+        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
 
     if (C)
     {
+        let desc = answers['C'].desc;
         let type = answers['C'][C].type;
         let text = answers['C'][C].text;
         doc.setFontType('bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
         doc.setFontType('normal');
+        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
 
     if (D)
     {
+        let desc = answers['D'].desc;
         let type = answers['D'][D].type;
         let text = answers['D'][D].text;
         doc.setFontType('bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
         doc.setFontType('normal');
+        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
 
@@ -114,33 +120,35 @@ jQuery(document).ready(function($) {
 
     if (E)
     {
+        let desc = answers['E'].desc;
         let type = answers['E'][E].type;
         let text = answers['E'][E].text;
         doc.setFontType('bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
         doc.setFontType('normal');
+        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
 
     if (F)
     {
+        let desc = answers['F'].desc;
         let type = answers['F'][F].type;
         let text = answers['F'][F].text;
         doc.setFontType('bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
         doc.setFontType('normal');
+        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
 
     // Note
-    console.log(note);
-    if (note)
-        addTextObject(note, doc, y);
-
-    // Create disclaimer
     doc.addPage();
     y = margin;
     pageno++;
+
+    for (note of notes)
+        y = addTextObject(note, doc, y);
 
     for (let image of last.images)
         addImageObject(image, doc, pageno, 
@@ -149,15 +157,16 @@ jQuery(document).ready(function($) {
 	                   $('#preview').attr('src', string);
                        });
 
+    // Create disclaimer
     for (let text of last.text)
-        addTextObject(text, doc, y);
+        y = addTextObject(text, doc, y);
 
-    $("#update").click(function() {
+    $("#update-preview").click(function() {
         var string = doc.output('bloburi');
 	$('#preview').attr('src', string);
     });
 
-    $('#report').click(function() {
+    $('#download-report').click(function() {
         doc.save('report.pdf');
     });
 
@@ -209,7 +218,7 @@ jQuery(document).ready(function($) {
         let width = image.width;
         width = width? width: textWidth;
         addImage(image.src, image.type, doc, pageno, x, y,
-                 width, image.height, func);
+                 width, image.height, image.link, func);
     }
 
     /**
@@ -239,6 +248,7 @@ jQuery(document).ready(function($) {
      * @param y      Y location on page
      * @param width  Image width on page
      * @param height Image height on  page
+     * @param link   Link to add to image
      * @param func   Function to call after image added
      * @description
      * If the x parameter is negative, used as right edge of image.
@@ -246,7 +256,7 @@ jQuery(document).ready(function($) {
      * If the height is null or 0, height is calculated to
      * preserve image aspect ratio.
      */
-    function addImage(src, type, doc, page, x, y, width, height, func) {
+    function addImage(src, type, doc, page, x, y, width, height, link, func) {
         let img = new Image();
         img.src = src;
         img.addEventListener('load', function(event) {
@@ -256,6 +266,11 @@ jQuery(document).ready(function($) {
             y = y < 0? -y - height: y;
             doc.setPage(page);
             doc.addImage(data.url, type, x, y, width, height);
+            if (link)
+            {
+                let options = {url: link};
+                doc.link(x, y, width, height, options);
+            }
             if (func)
                 func();
         });

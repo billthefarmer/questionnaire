@@ -10,10 +10,10 @@
 jQuery(document).ready(function($) {
 
     // Set up data
-    intro = data.intro;
-    questions = data.questions;
-    last = data.last;
-    matrix = data.matrix;
+    let intro = data.intro;
+    let questions = data.questions;
+    let last = data.last;
+    let matrix = data.matrix;
 
     // Set up buttons
     $("input.questionnaire-button").button();
@@ -23,14 +23,14 @@ jQuery(document).ready(function($) {
     $("#questionnaire-progress-max").progressbar({value: 100});
 
     // Set up radio buttons
-    // $("input[type=radio]").checkboxradio();
+    $("input[type=radio]").button();
 
     $("#questionnaire-intro").html(intro);
 
     let question = 0;
     let value = 0;
-    
-    let results = {A: [0, 0], B: 0, C: 0, D: 0, E: 0, F: 0, J: 0};
+
+    let results = {A: [0, 0], B: 0, C: 0, D: 0, E: 0, F: 0, S: 0};
 
     // Process the start button
     $("#questionnaire-start").click(function() {
@@ -204,7 +204,22 @@ jQuery(document).ready(function($) {
         $("div.questionnaire-last").fadeOut(function() {
             results.A[0] = results.B;
             results.A[1] = results.E;
-            $("div.questionnaire-contact").fadeIn();
+            let result = calculate(results, matrix);
+            $("#arch").attr("value", result.A);
+            $("#brain").attr("value", result.B);
+            $("#comm").attr("value", result.C);
+            $("#direct").attr("value", result.D);
+            $("#exec").attr("value", result.E);
+            $("#focus").attr("value", result.F);
+            $("#stage").attr("value", result.S);
+            $("#A").attr("value", results.A);
+            $("#B").attr("value", results.B);
+            $("#C").attr("value", results.C);
+            $("#D").attr("value", results.D);
+            $("#E").attr("value", results.E);
+            $("#F").attr("value", results.F);
+            $("#S").attr("value", results.S);
+            $("div.result").fadeIn();
             console.log(results);
             console.log(calculate(results, matrix));
         });
@@ -231,7 +246,7 @@ jQuery(document).ready(function($) {
         let d = (results.D / 2) - 3;
         let e = (results.E / 2) - 3;
         let f = (results.F / 2) - 3;
-        let j = (results.J / 2) - 1;
+        let j = (results.S / 2) - 1;
 
         let result = {A: matrix.A[Math.trunc(b / 2)][Math.trunc(e / 2)],
                       B: matrix.B[b],
@@ -239,7 +254,7 @@ jQuery(document).ready(function($) {
                       D: matrix.D[d],
                       E: matrix.E[e],
                       F: matrix.F[f],
-                      J: matrix.J[j]};
+                      S: matrix.S[j]};
 
         return result;
     }

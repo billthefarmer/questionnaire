@@ -32,9 +32,10 @@ function questionnaire_enqueue_scripts() {
                          plugins_url('/css/questionnaire.css', __FILE__));
 
         // Javascript
-        wp_enqueue_script('jquery-ui-all',
-                          plugins_url('/js/jquery-ui.min.js', __FILE__),
-                          array('jquery'));
+        wp_enqueue_script('empty', 
+                          plugins_url('/js/empty.js', __FILE__),
+                          array('jquery-ui-button', 'jquery-ui-progressbar',
+                                'jquery'));
 
         // Add the shortcodes
         add_shortcode('questionnaire-questions',
@@ -114,6 +115,33 @@ function questionnaire_questions_shortcode($atts) {
   </fieldset>
 </div>
 <div class="questionnaire-contact">
+  <fieldset>
+    <h3>Results</h3>
+    <fieldset>
+      <table>
+        <tr><td><label for="arch">Archetype: </label></td>
+          <td><input type="text" id="arch"
+                     name="arch" readonly /></td></tr>
+        <tr><td><label for="brain">Brain: </label></td>
+          <td><input type="text" id="brain"
+                     name="brain" readonly /></td></tr>
+        <tr><td><label for="arch">Communication: </label></td>
+          <td><input type="text" id="comm"
+                     name="comm" readonly /></td></tr>
+        <tr><td><label for="arch">Direction: </label></td>
+          <td><input type="text" id="direct"
+                     name="direct" readonly /></td></tr>
+        <tr><td><label for="arch">Execution: </label></td>
+          <td><input type="text" id="exec"
+                     name="exec" readonly /></td></tr>
+        <tr><td><label for="arch">Focus: </label></td>
+          <td><input type="text" id="focus"
+                     name="focus" readonly /></td></tr>
+        <tr><td><label for="stage">Stage: </label></td>
+          <td><input type="text" id="stage"
+                     name="stage" readonly /></td></tr>
+      </table>
+    </fieldset>
   <form action="" method="get" class="questionnaire-result">
     <input type="hidden" id="A" name="A" />
     <input type="hidden" id="B" name="B" />
@@ -121,7 +149,7 @@ function questionnaire_questions_shortcode($atts) {
     <input type="hidden" id="D" name="D" />
     <input type="hidden" id="E" name="E" />
     <input type="hidden" id="F" name="F" />
-    <input type="hidden" id="J" name="J" />
+    <input type="hidden" id="S" name="S" />
     <fieldset>
       <h3>Contact Information</h3>
       <table>
@@ -156,7 +184,7 @@ function questionnaire_questions_shortcode($atts) {
 }
 
 // Add the content if the shortcode is found.
-function questionnaire_results_shortcode($atts) {
+function questionnaire_report_shortcode($atts) {
 
     // Buffer the output
     ob_start();
@@ -183,8 +211,10 @@ function questionnaire_results_shortcode($atts) {
 
     $answers = plugins_url('/js/answers.js', __FILE__);
     $report = plugins_url('/js/report.js', __FILE__);
+    $jspdf = plugins_url('/js/jspdf.min.js', __FILE__);
 
-    echo "<script type=\"text/javascript\" src=\"$answers\"></script>
+    echo "<script type=\"text/javascript\" src=\"$jspdf\"></script>
+<script type=\"text/javascript\" src=\"$answers\"></script>
 <script type=\"text/javascript\" src=\"$report\"></script>";
 
     // Return the output
