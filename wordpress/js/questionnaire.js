@@ -219,7 +219,7 @@ jQuery(document).ready(function($) {
             $("#E").attr("value", results.E);
             $("#F").attr("value", results.F);
             $("#S").attr("value", results.S);
-            $("div.result").fadeIn();
+            $("div.questionnaire-contact").fadeIn();
             console.log(results);
             console.log(calculate(results, matrix));
         });

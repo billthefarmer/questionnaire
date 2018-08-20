@@ -25,10 +25,6 @@ input.question-radio {
     margin-right: 0.5em;
 }
 
-label.question-label {
-    display: initial;
-}
-
 div.ui-progressbar div.ui-progressbar-value {
     margin: 0;
     border: none;

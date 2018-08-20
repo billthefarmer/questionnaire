@@ -142,7 +142,7 @@ function questionnaire_questions_shortcode($atts) {
                      name="stage" readonly /></td></tr>
       </table>
     </fieldset>
-  <form action="" method="get" class="questionnaire-result">
+  <form action="report" method="get" class="questionnaire-result">
     <input type="hidden" id="A" name="A" />
     <input type="hidden" id="B" name="B" />
     <input type="hidden" id="C" name="C" />
@@ -153,21 +153,21 @@ function questionnaire_questions_shortcode($atts) {
     <fieldset>
       <h3>Contact Information</h3>
       <table>
-        <tr><td><label for="questionnaire-forename">First name: </label></td>
-          <td><input type="text" id="questionnaire-forename"
-                     name="questionnaire-forename" required></td></tr>
-        <tr><td><label for="questionnaire-lastname">Last name: </label></td>
-          <td><input type="text" id="questionnaire-lastname"
-                     name="questionnaire-lastname" required></td></tr>
-        <tr><td><label for="questionnaire-email">Email: </label></td>
-          <td><input type="email" id="questionnaire-email"
-                     name="questionnaire-email" required></td></tr>
+        <tr><td><label for="forename">First name: </label></td>
+          <td><input type="text" id="forename"
+                     name="forename" required></td></tr>
+        <tr><td><label for="lastname">Last name: </label></td>
+          <td><input type="text" id="lastname"
+                     name="lastname" required></td></tr>
+        <tr><td><label for="email">Email: </label></td>
+          <td><input type="email" id="email"
+                     name="email" required></td></tr>
       </table>
       <br />
       <input type="button" id="questionnaire-again"
              class="questionnaire-button" value="Again" />
       <input type="submit" id="questionnaire-submit"
-             class="questionnaire-button" value="Results" />
+             class="questionnaire-button" value="Report" />
     </fieldset>
   </form>
 </div>
@@ -202,7 +202,7 @@ function questionnaire_report_shortcode($atts) {
   </fieldset>
 </div>
 <div class="report-preview">
-  <iframe id="preview" class="preview" type="application/pdf"
+  <iframe id="report-preview" class="report-preview" type="application/pdf"
           width="640" height="880" frameborder="0">
   </iframe>
 </div>
@@ -212,10 +212,14 @@ function questionnaire_report_shortcode($atts) {
     $answers = plugins_url('/js/answers.js', __FILE__);
     $report = plugins_url('/js/report.js', __FILE__);
     $jspdf = plugins_url('/js/jspdf.min.js', __FILE__);
+    $plugin = plugins_url('/', __FILE__);
 
     echo "<script type=\"text/javascript\" src=\"$jspdf\"></script>
 <script type=\"text/javascript\" src=\"$answers\"></script>
-<script type=\"text/javascript\" src=\"$report\"></script>";
+<script type=\"text/javascript\" src=\"$report\"></script>
+<script type=\"text/javascript\">
+let plugin_url = \"$plugin\";
+</script>";
 
     // Return the output
     return ob_get_clean();

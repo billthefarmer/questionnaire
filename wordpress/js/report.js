@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
             addImageObject(image, doc, pageno, 
                            function() {
                                let string = doc.output('bloburi');
-	                       $('#preview').attr('src', string);
+	                       $('#report-preview').attr('src', string);
                            });
 
         let y = margin;
@@ -142,28 +142,26 @@ jQuery(document).ready(function($) {
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
 
-    // Note
+    // Last page
     doc.addPage();
     y = margin;
     pageno++;
 
-    for (note of notes)
-        y = addTextObject(note, doc, y);
-
+    // Images
     for (let image of last.images)
         addImageObject(image, doc, pageno, 
                        function() {
                            let string = doc.output('bloburi');
-	                   $('#preview').attr('src', string);
+	                   $('#report-preview').attr('src', string);
                        });
 
-    // Create disclaimer
+    // Text
     for (let text of last.text)
         y = addTextObject(text, doc, y);
 
     $("#update-preview").click(function() {
         var string = doc.output('bloburi');
-	$('#preview').attr('src', string);
+	$('#report-preview').attr('src', string);
     });
 
     $('#download-report').click(function() {
@@ -172,7 +170,7 @@ jQuery(document).ready(function($) {
 
     function update() {
         let string = doc.output('bloburi');
-	$('#preview').attr('src', string);
+	$('#report-preview').attr('src', string);
     }
 
     /**
@@ -258,7 +256,7 @@ jQuery(document).ready(function($) {
      */
     function addImage(src, type, doc, page, x, y, width, height, link, func) {
         let img = new Image();
-        img.src = src;
+        img.src = plugin_url + src;
         img.addEventListener('load', function(event) {
             let data = getDataUrl(event.currentTarget, type);
             height = height? height: width * data.height / data.width;
