@@ -12,7 +12,7 @@ div.questionnaire-contact, #questionnaire-back {
 }
 
 div.questionnaire-centre {
-    text-align: center;
+    margin-left: 20%;
     padding: 1em;
 }
 
@@ -38,7 +38,7 @@ div.ui-progressbar-value {
     background: #b1bf34;
 }
 
-input.ui-button {
+input.ui-button, label.ui-button {
     background: #b1bf34;
     color: white;
     padding: 0.75em 2em;
@@ -46,7 +46,8 @@ input.ui-button {
     border: none;
 }
 
-input.ui-button:hover, input.ui-button:focus {
+input.ui-button:hover, input.ui-button:focus,
+label.ui-button:hover, label.ui-button:focus {
     background: orange;
     color: white;
     padding: 0.75em 2em;
