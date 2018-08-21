@@ -38,7 +38,8 @@ input.ui-button, label.ui-button {
     background: #b1bf34;
     color: white;
     padding: 0.75em 2em;
-    font-weight: bold;
+    font-size: 12pt;
+    font-weight: bold !important;
     border: none;
 }
 
@@ -47,6 +48,5 @@ label.ui-button:hover, label.ui-button:focus {
     background: orange;
     color: white;
     padding: 0.75em 2em;
-    font-weight: bold;
     border: none;
 }
