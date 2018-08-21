@@ -73,7 +73,7 @@ function questionnaire_questions_shortcode($atts) {
              class="question-radio" value="question-answer-2" />
       <label for="question-radio-2" class="question-label"
              id="question-label-2">
-      </label><br /><br />
+      </label>
     </div>
     <input type="button" id="questionnaire-back"
            class="questionnaire-button" value="Back" />
@@ -108,7 +108,7 @@ function questionnaire_questions_shortcode($atts) {
              class="question-last" value="last-answer-5" />
       <label for="last-radio-5" class="question-label"
              id="last-label-5">
-      </label><br />
+      </label>
     </div>
     <input type="button" id="questionnaire-prev"
            class="questionnaire-button" value="Back" />
