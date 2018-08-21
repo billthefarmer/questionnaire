@@ -173,8 +173,8 @@ function questionnaire_questions_shortcode($atts) {
 </div>
 <?php
 
-    $questions = plugins_url('/js/questions.js', __FILE__);
-    $questionnaire = plugins_url('/js/questionnaire.js', __FILE__);
+    $questions = plugins_url('/js/questions.min.js', __FILE__);
+    $questionnaire = plugins_url('/js/questionnaire.min.js', __FILE__);
 
     echo "<script type=\"text/javascript\" src=\"$questions\"></script>
 <script type=\"text/javascript\" src=\"$questionnaire\"></script>";
@@ -209,8 +209,8 @@ function questionnaire_report_shortcode($atts) {
 
 <?php
 
-    $answers = plugins_url('/js/answers.js', __FILE__);
-    $report = plugins_url('/js/report.js', __FILE__);
+    $answers = plugins_url('/js/answers.min.js', __FILE__);
+    $report = plugins_url('/js/report.min.js', __FILE__);
     $jspdf = plugins_url('/js/jspdf.min.js', __FILE__);
     $plugin = plugins_url('/', __FILE__);
 
