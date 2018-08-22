@@ -1,7 +1,8 @@
-baseURL: http://example.org/
+baseURL: https://billthefarmer.github.io/questionnaire/
 languageCode: en-gb
-title: My New Hugo Quiz
+title: Questionnaire
 theme: simple
+publishDir: d:/billthefarmer.github.io/questionnaire/
 metaDataFormat: yaml
 params:
   copyright: Copyright 2018 Bill Farmer
