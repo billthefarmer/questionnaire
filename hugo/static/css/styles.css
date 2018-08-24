@@ -42,6 +42,10 @@ div.right {
     float: left;
 }
 
+iframe.preview {
+    border: none;
+}
+
 div.centred {
     margin-left: 20%;
 }
