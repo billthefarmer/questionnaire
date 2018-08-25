@@ -16,8 +16,31 @@ div.questionnaire-centre {
     padding: 1em;
 }
 
-div.report-content, div.report-preview {
+div.report-content {
     float: left;
+    padding: 20px;
+}
+
+div.report-preview {
+    float: right;
+    padding: 20px;
+}
+
+div.wrap {
+    max-width: -moz-fit-content !important;
+    max-width: -webkit-fit-content !important;
+    max-width: -ms-fit-content !important;
+    max-width: -o-fit-content !important;
+    max-width: fit-content !important;
+}
+
+header.entry-header, div.entry-content {
+    padding: 20px;
+    width: -moz-fit-content !important;
+    width: -webkit-fit-content !important;
+    width: -ms-fit-content !important;
+    width: -o-fit-content !important;
+    width: fit-content !important;
 }
 
 input.question-radio {
@@ -35,7 +58,11 @@ div.ui-progressbar-value {
 }
 
 input[type=text], input[type=email], input[type=hidden] {
-    padding: 0;
+    padding: 3px;
+}
+
+iframe.report-preview {
+    border: none;
 }
 
 input.ui-button, label.ui-button {
