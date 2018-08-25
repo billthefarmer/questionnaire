@@ -1,4 +1,4 @@
-// test.js
+// questionnaire.js
 //
 // Version: 0.5
 // Author: Bill Farmer
@@ -60,7 +60,7 @@ jQuery(document).ready(function($) {
             }
             $("input[type=radio]").prop("checked", false);
             $("input[type=radio]").checkboxradio("refresh");
-            $(".question").fadeIn();
+            $("div.question").fadeIn();
         });
     });
 
@@ -233,7 +233,7 @@ jQuery(document).ready(function($) {
         let d = (results.D / 2) - 3;
         let e = (results.E / 2) - 3;
         let f = (results.F / 2) - 3;
-        let j = (results.S / 2) - 1;
+        let s = (results.S / 2) - 1;
 
         let result = {A: matrix.A[Math.trunc(b / 2)][Math.trunc(e / 2)],
                       B: matrix.B[b],
@@ -241,7 +241,7 @@ jQuery(document).ready(function($) {
                       D: matrix.D[d],
                       E: matrix.E[e],
                       F: matrix.F[f],
-                      S: matrix.S[j]};
+                      S: matrix.S[s]};
 
         return result;
     }

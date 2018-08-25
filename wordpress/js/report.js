@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
     let D = getURLParameter('D');
     let E = getURLParameter('E');
     let F = getURLParameter('F');
-    let J = getURLParameter('J');
+    let S = getURLParameter('S');
 
     let forename = getURLParameter('forename');
     let lastname = getURLParameter('lastname');

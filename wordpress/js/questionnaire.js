@@ -14,6 +14,7 @@ jQuery(document).ready(function($) {
     let questions = data.questions;
     let last = data.last;
     let matrix = data.matrix;
+    let report = data.report;
 
     // Set up buttons
     $("input.questionnaire-button").button();
@@ -26,6 +27,8 @@ jQuery(document).ready(function($) {
     $("input[type=radio]").button();
 
     $("#questionnaire-intro").html(intro);
+
+    $("#report").attr("action", report);
 
     let question = 0;
     let value = 0;
@@ -240,13 +243,14 @@ jQuery(document).ready(function($) {
         });
     });
 
+    // Calculate results
     function calculate(results, matrix) {
         let b = (results.B / 2) - 3;
         let c = (results.C / 2) - 3;
         let d = (results.D / 2) - 3;
         let e = (results.E / 2) - 3;
         let f = (results.F / 2) - 3;
-        let j = (results.S / 2) - 1;
+        let s = (results.S / 2) - 1;
 
         let result = {A: matrix.A[Math.trunc(b / 2)][Math.trunc(e / 2)],
                       B: matrix.B[b],
@@ -254,7 +258,7 @@ jQuery(document).ready(function($) {
                       D: matrix.D[d],
                       E: matrix.E[e],
                       F: matrix.F[f],
-                      S: matrix.S[j]};
+                      S: matrix.S[s]};
 
         return result;
     }
