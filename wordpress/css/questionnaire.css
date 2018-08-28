@@ -43,6 +43,10 @@ header.entry-header, div.entry-content {
     width: fit-content !important;
 }
 
+div.questionnaire {
+    width: 560px;
+}
+
 input.question-radio {
     margin: initial;
     margin-right: 0.5em;

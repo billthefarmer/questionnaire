@@ -52,124 +52,126 @@ function questionnaire_questions_shortcode($atts) {
     ob_start();
 
     ?>
-<div class="questionnaire-intro">
-  <fieldset>
-    <h4 id="questionnaire-intro"></h4>
-    <input type="button" id="questionnaire-start"
-           class="questionnaire-button" value="Begin!" />
-  </fieldset>
-</div>
-<div class="questionnaire-question">
-  <fieldset>
-    <div id="questionnaire-progress"></div>
-    <div class="questionnaire-centre">
-      <h4 id="questionnaire-question"></h4>
-      <input type="radio" id="question-radio-1" name="question-answer"
-             class="question-radio" value="question-answer-1" />
-      <label for="question-radio-1" class="question-label"
-             id="question-label-1">
-      </label><br />
-      <input type="radio" id="question-radio-2" name="question-answer"
-             class="question-radio" value="question-answer-2" />
-      <label for="question-radio-2" class="question-label"
-             id="question-label-2">
-      </label>
-    </div>
-    <input type="button" id="questionnaire-back"
-           class="questionnaire-button" value="Back" />
-  </fieldset>
-</div>
-<div class="questionnaire-last">
-  <fieldset>
-    <div id="questionnaire-progress-max"></div>
-    <div class="questionnaire-centre">
-      <h4 id="questionnaire-last"></h4>
-      <input type="radio" id="last-radio-1" name="question-answer"
-             class="question-last" value="last-answer-1" />
-      <label for="last-radio-1" class="question-label"
-             id="last-label-1">
-      </label><br />
-      <input type="radio" id="last-radio-2" name="question-answer"
-             class="question-last" value="last-answer-2" />
-      <label for="last-radio-2" class="question-label"
-             id="last-label-2">
-      </label><br />
-      <input type="radio" id="last-radio-3" name="question-answer"
-             class="question-last" value="last-answer-3" />
-      <label for="last-radio-3" class="question-label"
-             id="last-label-3">
-      </label><br />
-      <input type="radio" id="last-radio-4" name="question-answer"
-             class="question-last" value="last-answer-4" />
-      <label for="last-radio-4" class="question-label"
-             id="last-label-4">
-      </label><br />
-      <input type="radio" id="last-radio-5" name="question-answer"
-             class="question-last" value="last-answer-5" />
-      <label for="last-radio-5" class="question-label"
-             id="last-label-5">
-      </label>
-    </div>
-    <input type="button" id="questionnaire-prev"
-           class="questionnaire-button" value="Back" />
-  </fieldset>
-</div>
-<div class="questionnaire-contact">
-  <fieldset>
-    <h3>Results</h3>
+<div class="questionnaire">
+  <div class="questionnaire-intro">
     <fieldset>
-      <table>
-        <tr><td><label for="arch">Archetype: </label></td>
-          <td><input type="text" id="arch"
-                     name="arch" readonly /></td></tr>
-        <tr><td><label for="brain">Brain: </label></td>
-          <td><input type="text" id="brain"
-                     name="brain" readonly /></td></tr>
-        <tr><td><label for="arch">Communication: </label></td>
-          <td><input type="text" id="comm"
-                     name="comm" readonly /></td></tr>
-        <tr><td><label for="arch">Direction: </label></td>
-          <td><input type="text" id="direct"
-                     name="direct" readonly /></td></tr>
-        <tr><td><label for="arch">Execution: </label></td>
-          <td><input type="text" id="exec"
-                     name="exec" readonly /></td></tr>
-        <tr><td><label for="arch">Focus: </label></td>
-          <td><input type="text" id="focus"
-                     name="focus" readonly /></td></tr>
-        <tr><td><label for="stage">Stage: </label></td>
-          <td><input type="text" id="stage"
-                     name="stage" readonly /></td></tr>
-      </table>
+      <h4 id="questionnaire-intro"></h4>
+      <input type="button" id="questionnaire-start"
+             class="questionnaire-button" value="Begin!" />
     </fieldset>
-  <form action="report" method="get" class="questionnaire-result">
-    <input type="hidden" id="A" name="A" />
-    <input type="hidden" id="B" name="B" />
-    <input type="hidden" id="C" name="C" />
-    <input type="hidden" id="D" name="D" />
-    <input type="hidden" id="E" name="E" />
-    <input type="hidden" id="F" name="F" />
-    <input type="hidden" id="S" name="S" />
+  </div>
+  <div class="questionnaire-question">
     <fieldset>
-      <h3>Contact Information</h3>
-      <table>
-        <tr><td><label for="forename">First name: </label></td>
-          <td><input type="text" id="forename"
-                     name="forename" required></td></tr>
-        <tr><td><label for="lastname">Last name: </label></td>
-          <td><input type="text" id="lastname"
-                     name="lastname" required></td></tr>
-        <tr><td><label for="email">Email: </label></td>
-          <td><input type="email" id="email"
-                     name="email" required></td></tr>
-      </table>
-      <br />
-      <input type="button" id="questionnaire-again"
-             class="questionnaire-button" value="Again" />
-      <input type="submit" id="questionnaire-submit"
-             class="questionnaire-button" value="Report" />
+      <div id="questionnaire-progress"></div>
+      <div class="questionnaire-centre">
+        <h4 id="questionnaire-question"></h4>
+        <input type="radio" id="question-radio-1" name="question-answer"
+               class="question-radio" value="question-answer-1" />
+        <label for="question-radio-1" class="question-label"
+               id="question-label-1">
+        </label><br />
+        <input type="radio" id="question-radio-2" name="question-answer"
+               class="question-radio" value="question-answer-2" />
+        <label for="question-radio-2" class="question-label"
+               id="question-label-2">
+        </label>
+      </div>
+      <input type="button" id="questionnaire-back"
+             class="questionnaire-button" value="Back" />
     </fieldset>
-  </form>
+  </div>
+  <div class="questionnaire-last">
+    <fieldset>
+      <div id="questionnaire-progress-max"></div>
+      <div class="questionnaire-centre">
+        <h4 id="questionnaire-last"></h4>
+        <input type="radio" id="last-radio-1" name="question-answer"
+               class="question-last" value="last-answer-1" />
+        <label for="last-radio-1" class="question-label"
+               id="last-label-1">
+        </label><br />
+        <input type="radio" id="last-radio-2" name="question-answer"
+               class="question-last" value="last-answer-2" />
+        <label for="last-radio-2" class="question-label"
+               id="last-label-2">
+        </label><br />
+        <input type="radio" id="last-radio-3" name="question-answer"
+               class="question-last" value="last-answer-3" />
+        <label for="last-radio-3" class="question-label"
+               id="last-label-3">
+        </label><br />
+        <input type="radio" id="last-radio-4" name="question-answer"
+               class="question-last" value="last-answer-4" />
+        <label for="last-radio-4" class="question-label"
+               id="last-label-4">
+        </label><br />
+        <input type="radio" id="last-radio-5" name="question-answer"
+               class="question-last" value="last-answer-5" />
+        <label for="last-radio-5" class="question-label"
+               id="last-label-5">
+        </label>
+      </div>
+      <input type="button" id="questionnaire-prev"
+             class="questionnaire-button" value="Back" />
+    </fieldset>
+  </div>
+  <div class="questionnaire-contact">
+    <fieldset>
+      <h3>Results</h3>
+      <fieldset>
+        <table>
+          <tr><td><label for="arch">Archetype: </label></td>
+            <td><input type="text" id="arch"
+                       name="arch" readonly /></td></tr>
+          <tr><td><label for="brain">Brain: </label></td>
+            <td><input type="text" id="brain"
+                       name="brain" readonly /></td></tr>
+          <tr><td><label for="arch">Communication: </label></td>
+            <td><input type="text" id="comm"
+                       name="comm" readonly /></td></tr>
+          <tr><td><label for="arch">Direction: </label></td>
+            <td><input type="text" id="direct"
+                       name="direct" readonly /></td></tr>
+          <tr><td><label for="arch">Execution: </label></td>
+            <td><input type="text" id="exec"
+                       name="exec" readonly /></td></tr>
+          <tr><td><label for="arch">Focus: </label></td>
+            <td><input type="text" id="focus"
+                       name="focus" readonly /></td></tr>
+          <tr><td><label for="stage">Stage: </label></td>
+            <td><input type="text" id="stage"
+                       name="stage" readonly /></td></tr>
+        </table>
+      </fieldset>
+      <form action="report" method="get" class="questionnaire-result">
+        <input type="hidden" id="A" name="A" />
+        <input type="hidden" id="B" name="B" />
+        <input type="hidden" id="C" name="C" />
+        <input type="hidden" id="D" name="D" />
+        <input type="hidden" id="E" name="E" />
+        <input type="hidden" id="F" name="F" />
+        <input type="hidden" id="S" name="S" />
+        <fieldset>
+          <h3>Contact Information</h3>
+          <table>
+            <tr><td><label for="forename">First name: </label></td>
+              <td><input type="text" id="forename"
+                         name="forename" required></td></tr>
+            <tr><td><label for="lastname">Last name: </label></td>
+              <td><input type="text" id="lastname"
+                         name="lastname" required></td></tr>
+            <tr><td><label for="email">Email: </label></td>
+              <td><input type="email" id="email"
+                         name="email" required></td></tr>
+          </table>
+          <br />
+          <input type="button" id="questionnaire-again"
+                 class="questionnaire-button" value="Again" />
+          <input type="submit" id="questionnaire-submit"
+                 class="questionnaire-button" value="Report" />
+        </fieldset>
+      </form>
+  </div>
 </div>
 <?php
 
