@@ -62,11 +62,7 @@ jQuery(document).ready(function($) {
             doc.addPage();
 
         for (let image of page.images)
-            addImageObject(image, doc, pageno, 
-                           function() {
-                               let string = doc.output('bloburi');
-	                       $('#preview').attr('src', string);
-                           });
+            addImageObject(image, doc, pageno, update);
 
         let y = margin;
         for (let text of page.text)
@@ -149,20 +145,13 @@ jQuery(document).ready(function($) {
 
     // Images
     for (let image of last.images)
-        addImageObject(image, doc, pageno, 
-                       function() {
-                           let string = doc.output('bloburi');
-	                   $('#preview').attr('src', string);
-                       });
+        addImageObject(image, doc, pageno, update);
 
     // Text
     for (let text of last.text)
         y = addTextObject(text, doc, y);
 
-    $("#update").click(function() {
-        var string = doc.output('bloburi');
-	$('#preview').attr('src', string);
-    });
+    $("#update").click(update);
 
     $('#report').click(function() {
         doc.save('report.pdf');
