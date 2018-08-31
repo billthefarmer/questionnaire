@@ -205,7 +205,7 @@ function questionnaire_report_shortcode($atts) {
 </div>
 <div class="report-preview">
   <iframe id="report-preview" class="report-preview" type="application/pdf"
-          width="640" height="876">
+          width="640" height="878">
   </iframe>
 </div>
 
