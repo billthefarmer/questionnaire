@@ -250,7 +250,7 @@ jQuery(document).ready(function($) {
         let d = (results.D / 2) - 3;
         let e = (results.E / 2) - 3;
         let f = (results.F / 2) - 3;
-        let s = (results.S / 2) - 1;
+        let s = results.S - 1;
 
         let result = {A: matrix.A[Math.trunc(b / 2)][Math.trunc(e / 2)],
                       B: matrix.B[b],

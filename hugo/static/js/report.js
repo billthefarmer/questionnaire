@@ -55,6 +55,7 @@ jQuery(document).ready(function($) {
 
     // Print front page and explanatory letter
     let pageno = 1;
+    let images = 0;
     for (let page of pages)
     {
         pageno = page.pageno;
@@ -244,6 +245,7 @@ jQuery(document).ready(function($) {
      * preserve image aspect ratio.
      */
     function addImage(src, type, doc, page, x, y, width, height, link, func) {
+        images++;
         let img = new Image();
         img.src = baseURL + src;
         img.addEventListener('load', function(event) {
@@ -258,7 +260,7 @@ jQuery(document).ready(function($) {
                 let options = {url: link};
                 doc.link(x, y, width, height, options);
             }
-            if (func)
+            if (--images == 0 && func)
                 func();
         });
     }
