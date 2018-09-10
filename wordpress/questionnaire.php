@@ -15,6 +15,9 @@
  * Copyright (C) 2018 Bill Farmer
  */
 
+// Include TCPDF, if present
+$tcpdf_present = include_once 'tcpdf/tcpdf.php';
+
 // Add scripts hook, also adds shortcodes and further action
 add_action('wp_enqueue_scripts', 'questionnaire_enqueue_scripts', 11);
 
@@ -188,8 +191,34 @@ function questionnaire_questions_shortcode($atts) {
 // Add the content if the shortcode is found.
 function questionnaire_report_shortcode($atts) {
 
+    global $tcpdf_present;
+
+    // ?A=10%2C12&B=10&C=8&D=6&E=12&F=8&S=10
+    // &forename=Jeremiah&lastname=Fundament
+    // &email=jerry%40fundament.com
+
+    // Get parameters
+    $A = filter_input(INPUT_GET, 'A', FILTER_SANITIZE_STRING);
+    $B = filter_input(INPUT_GET, 'B', FILTER_SANITIZE_NUMBER_INT);
+    $C = filter_input(INPUT_GET, 'C', FILTER_SANITIZE_NUMBER_INT);
+    $D = filter_input(INPUT_GET, 'D', FILTER_SANITIZE_NUMBER_INT);
+    $E = filter_input(INPUT_GET, 'E', FILTER_SANITIZE_NUMBER_INT);
+    $F = filter_input(INPUT_GET, 'F', FILTER_SANITIZE_NUMBER_INT);
+    $S = filter_input(INPUT_GET, 'S', FILTER_SANITIZE_NUMBER_INT);
+
+    $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
+    $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_GET, 'email', FILTER_SANITIZE_EMAIL);
+
     // Buffer the output
     ob_start();
+
+    // Include path
+    $include_path = get_include_path();
+
+    // Check TCPDF
+    if (!$tcpdf_present)
+        echo('<p>TCPDF not found - include_path=$include_path</p>');
 
     ?>
 
@@ -210,6 +239,15 @@ function questionnaire_report_shortcode($atts) {
 </div>
 
 <?php
+
+    if ($tcpdf_present) {
+
+        $pdf = new TCPDF();
+        $pdf->setPageUnit('pt');
+        // set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->AddPage();
+    }
 
     $answers = plugins_url('/js/answers.min.js', __FILE__);
     $report = plugins_url('/js/report.min.js', __FILE__);
