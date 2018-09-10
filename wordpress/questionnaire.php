@@ -240,9 +240,12 @@ function questionnaire_report_shortcode($atts) {
 
 <?php
 
-        echo "<p>email = <code>$email</code></p>";
+    // Get data
+    $file = fopen(plugins_url('/js/answers.min.json', __FILE__));
+    $json = fread($file);
+    $data = json_decode($json);
 
-        if ($tcpdf_present) {
+    if ($tcpdf_present) {
 
         $pdf = new TCPDF();
         $pdf->setPageUnit('pt');
