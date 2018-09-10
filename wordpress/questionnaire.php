@@ -243,7 +243,7 @@ function questionnaire_report_shortcode($atts) {
     // Get data
     $path = plugin_dir_path(__FILE__);
     $file = fopen($path . 'js/answers.min.json', 'r');
-    $json = fread($file);
+    $json = fread($file, 20480);
     $data = json_decode($json);
     $tag = $data->answers->tag;
     echo "<p>Data = '$json'</p>";
