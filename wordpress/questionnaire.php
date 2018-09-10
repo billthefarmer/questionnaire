@@ -218,7 +218,7 @@ function questionnaire_report_shortcode($atts) {
 
     // Check TCPDF
     if ($tcpdf_present)
-        echo("<p>TCPDF not found - please install php-tcpdf <code>sudo apt install php-tcpdf</code></p>");
+        echo("<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>");
 
     ?>
 
