@@ -246,6 +246,7 @@ function questionnaire_report_shortcode($atts) {
     $json = fread($file, 64);
     $data = json_decode($json);
     $tag = $data['answers']['tag'];
+    echo "<p>Data = '$data'</p>";
     echo "<p>Tag = '$tag'</p>";
 
     if ($tcpdf_present) {
