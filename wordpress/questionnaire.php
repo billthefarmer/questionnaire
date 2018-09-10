@@ -218,7 +218,7 @@ function questionnaire_report_shortcode($atts) {
 
     // Check TCPDF
     if ($tcpdf_present)
-        echo('<p>TCPDF not found - include_path=$include_path</p>');
+        echo("<p>TCPDF not found - include_path = $include_path</p>");
 
     ?>
 
