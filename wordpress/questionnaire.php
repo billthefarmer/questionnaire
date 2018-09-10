@@ -244,7 +244,7 @@ function questionnaire_report_shortcode($atts) {
     $file = fopen(plugins_url('/js/answers.min.json', __FILE__));
     $json = fread($file);
     $data = json_decode($json);
-    $tag = data['answers']['tag'];
+    $tag = $data['answers']['tag'];
     echo "<p>Tag = '$tag'</p>";
 
     if ($tcpdf_present) {
