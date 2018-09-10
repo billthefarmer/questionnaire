@@ -241,7 +241,7 @@ function questionnaire_report_shortcode($atts) {
 <?php
 
     // Get data
-    $file = fopen(plugins_url('/js/answers.min.json', __FILE__), 'r');
+    $file = fopen(plugin_dir_path(__FILE__).'/js/answers.min.json', 'r');
     $json = fread($file, 64);
     $data = json_decode($json);
     $tag = $data['answers']['tag'];
