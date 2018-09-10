@@ -217,8 +217,8 @@ function questionnaire_report_shortcode($atts) {
     $include_path = get_include_path();
 
     // Check TCPDF
-    if ($tcpdf_present)
-        echo("<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>");
+    if (!$tcpdf_present)
+        echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
 
     ?>
 
@@ -240,7 +240,9 @@ function questionnaire_report_shortcode($atts) {
 
 <?php
 
-    if ($tcpdf_present) {
+        echo "<p>email = <code>$email</code></p>";
+
+        if ($tcpdf_present) {
 
         $pdf = new TCPDF();
         $pdf->setPageUnit('pt');
