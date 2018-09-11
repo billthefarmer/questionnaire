@@ -244,6 +244,15 @@ function questionnaire_report_shortcode($atts) {
         $pageHeight = $pdf->getPageHeight();
         $textWidth = $pageWidth - ($margin * 2);
 
+        function add_image_object($pdf, $image)
+        {
+            global $margin, $textWidth;
+        };
+
+        function add_text_object($pdf, $text)
+        {
+        };
+
         // set margins
         $pdf->SetMargins($margin, $margin, $margin);
 
@@ -252,12 +261,11 @@ function questionnaire_report_shortcode($atts) {
             $pdf->AddPage();
             $pageno = $page->pageno;
 
-            $y = $margin;
             foreach ($page->images as $image)
-                addImageObject($pdf, $image);
+                add_image_object($pdf, $image);
 
             foreach ($page->text as $text)
-                $y = addTextObject($pdf, $text, $y);
+                add_text_object($pdf, $text);
         }
     }
 
