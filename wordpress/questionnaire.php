@@ -210,11 +210,59 @@ function questionnaire_report_shortcode($atts) {
     $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_GET, 'email', FILTER_SANITIZE_EMAIL);
 
+    // Get data
+    $path = plugin_dir_path(__FILE__);
+    $json = file_get_contents($path . 'js/answers.min.json');
+    $data = json_decode($json);
+
+    if (!$forename)
+        $forename = "Cat";
+    if (!$lastname)
+        $lastname = "LeBlanc";
+
+    $forename = str_replace("+", " ", $forename);
+    $lastname = str_replace("+", " ", $lastname);
+
+    $name = $forename . " " . $lastname;
+
+    // Check tcpdf
+    if ($tcpdf_present) {
+
+        $pages = $data->pages;
+        $answers = $data->answers;
+        $last = $data->last;
+
+        $pdf = new TCPDF();
+        $pdf->setPageUnit('pt');
+
+        // remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+
+        $margin = 72;
+        $pageWidth = $pdf->getPageWidth();
+        $pageHeight = $pdf->getPageHeight();
+        $textWidth = $pageWidth - ($margin * 2);
+
+        // set margins
+        $pdf->SetMargins($margin, $margin, $margin);
+
+        foreach ($pages as $page) {
+            
+            $pdf->AddPage();
+            $pageno = $page->pageno;
+
+            $y = $margin;
+            foreach ($page->images as $image)
+                addImageObject($pdf, $image);
+
+            foreach ($page->text as $text)
+                $y = addTextObject($pdf, $text, $y);
+        }
+    }
+
     // Buffer the output
     ob_start();
-
-    // Include path
-    $include_path = get_include_path();
 
     // Check TCPDF
     if (!$tcpdf_present)
@@ -239,23 +287,6 @@ function questionnaire_report_shortcode($atts) {
 </div>
 
 <?php
-
-    // Get data
-    $path = plugin_dir_path(__FILE__);
-    $file = fopen($path . 'js/answers.min.json', 'r');
-    $json = fread($file, 20480);
-    $data = json_decode($json);
-    $tag = $data->answers->tag;
-    echo "<p>Tag = '$tag'</p>";
-
-    if ($tcpdf_present) {
-
-        $pdf = new TCPDF();
-        $pdf->setPageUnit('pt');
-        // set margins
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $pdf->AddPage();
-    }
 
     $answers = plugins_url('/js/answers.min.js', __FILE__);
     $report = plugins_url('/js/report.min.js', __FILE__);

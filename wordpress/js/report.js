@@ -34,7 +34,6 @@ jQuery(document).ready(function($) {
 
     let pages = data.pages;
     let answers = data.answers;
-    let notes = data.notes;
     let last = data.last;
 
     // Dimensions in points
