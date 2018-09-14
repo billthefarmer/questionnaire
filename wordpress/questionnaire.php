@@ -226,8 +226,8 @@ function questionnaire_report_shortcode($atts) {
     $name = $forename . " " . $lastname;
 
     // Check tcpdf
-    if ($tcpdf_present) {
-
+    if ($tcpdf_present)
+    {
         $pages = $data->pages;
         $answers = $data->answers;
         $last = $data->last;
@@ -246,18 +246,19 @@ function questionnaire_report_shortcode($atts) {
 
         function add_image_object($pdf, $image)
         {
-            global $margin, $textWidth;
+            global $margin, $textWidth, $pageHeight;
         };
 
         function add_text_object($pdf, $text)
         {
+            global $margin, $textWidth, $pageHeight;
         };
 
         // set margins
         $pdf->SetMargins($margin, $margin, $margin);
 
-        foreach ($pages as $page) {
-            
+        foreach ($pages as $page)
+        {            
             $pdf->AddPage();
             $pageno = $page->pageno;
 
@@ -267,6 +268,54 @@ function questionnaire_report_shortcode($atts) {
             foreach ($page->text as $text)
                 add_text_object($pdf, $text);
         }
+
+        // Create report
+        $pdf->AddPage();
+
+        if ($B)
+        {
+            $desc = answers->B->desc;
+            $type = answers->B->{$B}->type;
+            $text = answers->B->{$B}->text;
+        }
+
+        if ($C)
+        {
+            $desc = answers->C->desc;
+            $type = answers->C->{$C}->type;
+            $text = answers->C->{$C}->text;
+        }
+
+        $pdf->AddPage();
+
+        if ($D)
+        {
+            $desc = answers->D->desc;
+            $type = answers->D->{$D}->type;
+            $text = answers->D->{$D}->text;
+        }
+
+        if ($E)
+        {
+            $desc = answers->E->desc;
+            $type = answers->E->{$E}->type;
+            $text = answers->E->{$E}->text;
+        }
+
+        if ($F)
+        {
+            $desc = answers->F->desc;
+            $type = answers->F->{$F}->type;
+            $text = answers->F->{$F}->text;
+        }
+
+        $pdf->AddPage();
+
+        foreach ($last->images as $image)
+            add_image_object($pdf, $image);
+
+        foreach ($last->text as $text)
+            add_text_object($pdf, $text);
     }
 
     // Buffer the output
