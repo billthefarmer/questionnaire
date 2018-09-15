@@ -267,7 +267,8 @@ function questionnaire_report_shortcode($atts) {
 
             $subst = str_replace(['~forename~', '~lastname~'],
                                       [$forename, $lastname], $text->text);
-            $pdf->MultiCell(0, 0, $text->text, 0, 'L');
+
+            $pdf->MultiCell(0, 0, $subst, 0, 'L');
         };
 
         function add_entry($pdf, $entry, $value)
@@ -277,10 +278,13 @@ function questionnaire_report_shortcode($atts) {
             $text = $entry->$value->text;
 
             $pdf->MultiCell(0, 0, $desc, 0, 'L');
+            $pdf->Ln();
             $pdf->SetFont('', 'B');
             $pdf->MultiCell(0, 0, $type, 0, 'L');
+            $pdf->Ln();
             $pdf->SetFont('', '');
             $pdf->MultiCell(0, 0, $text, 0, 'L');
+            $pdf->Ln();
         };
 
         // set margins
