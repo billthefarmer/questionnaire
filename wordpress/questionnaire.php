@@ -278,13 +278,13 @@ function questionnaire_report_shortcode($atts) {
             $text = $entry->$value->text;
 
             $pdf->MultiCell(0, 0, $desc, 0, 'L');
-            $pdf->Ln();
+            $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
             $pdf->SetFont('', 'B');
             $pdf->MultiCell(0, 0, $type, 0, 'L');
-            $pdf->Ln();
+            $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
             $pdf->SetFont('', '');
             $pdf->MultiCell(0, 0, $text, 0, 'L');
-            $pdf->Ln();
+            $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
         };
 
         // set margins
