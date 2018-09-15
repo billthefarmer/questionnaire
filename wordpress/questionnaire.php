@@ -246,12 +246,12 @@ function questionnaire_report_shortcode($atts) {
 
         function add_image_object($pdf, $image)
         {
-            global $margin, $textWidth, $pageHeight;
+            global $margin, $textWidth, $pageHeight, $path;
         };
 
         function add_text_object($pdf, $text)
         {
-            global $margin, $textWidth, $pageHeight;
+            global $forename, $lastname;
 
             if ($text->type)
                 $pdf->SetFont('', $text->type);
@@ -260,7 +260,22 @@ function questionnaire_report_shortcode($atts) {
             if ($text->y)
                 $pdf->SetY($text->y);
 
+            $subst = str_replace(['~forename~', '~lastname~'],
+                                      [$forename, $lastname], $text->text);
             $pdf->MultiCell(0, 0, $text->text, 0, 'L');
+        };
+
+        function add_entry($pdf, $entry, $value)
+        {
+            $desc = $entry->desc;
+            $type = $entry->$value->type;
+            $text = $entry->$value->text;
+
+            $pdf->MultiCell(0, 0, $desc, 0, 'L');
+            $pdf->SetFont('', 'B');
+            $pdf->MultiCell(0, 0, $type, 0, 'L');
+            $pdf->SetFont('', '');
+            $pdf->MultiCell(0, 0, $text, 0, 'L');
         };
 
         // set margins
@@ -282,46 +297,21 @@ function questionnaire_report_shortcode($atts) {
         $pdf->AddPage();
 
         if ($B)
-        {
-            $desc = $answers->B->desc;
-            $pdf->MultiCell(0, 0, $desc, 0, 'L');
-            $type = $answers->B->$B->type;
-            $pdf->SetFont('', 'bold');
-            $pdf->MultiCell(0, 0, $type, 0, 'L');
-            $pdf->SetFont('', 'normal');
-            $text = $answers->B->$B->text;
-            $pdf->MultiCell(0, 0, $text, 0, 'L');
-        }
+            add_entry($pdf, $answers->B, $B);
 
         if ($C)
-        {
-            $desc = $answers->C->desc;
-            $type = $answers->C->$C->type;
-            $text = $answers->C->$C->text;
-        }
+            add_entry($pdf, $answers->C, $C);
 
         $pdf->AddPage();
 
         if ($D)
-        {
-            $desc = $answers->D->desc;
-            $type = $answers->D->$D->type;
-            $text = $answers->D->$D->text;
-        }
+            add_entry($pdf, $answers->D, $D);
 
         if ($E)
-        {
-            $desc = $answers->E->desc;
-            $type = $answers->E->$E->type;
-            $text = $answers->E->$E->text;
-        }
+            add_entry($pdf, $answers->E, $E);
 
         if ($F)
-        {
-            $desc = $answers->F->desc;
-            $type = $answers->F->$F->type;
-            $text = $answers->F->$F->text;
-        }
+            add_entry($pdf, $answers->F, $F);
 
         $pdf->AddPage();
 
