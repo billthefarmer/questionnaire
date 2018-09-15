@@ -311,10 +311,10 @@ function questionnaire_report_shortcode($atts) {
         if ($C)
             add_entry($pdf, $answers->C, $C);
 
-        $pdf->AddPage();
-
         if ($D)
             add_entry($pdf, $answers->D, $D);
+
+        $pdf->AddPage();
 
         if ($E)
             add_entry($pdf, $answers->E, $E);
