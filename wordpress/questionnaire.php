@@ -332,7 +332,7 @@ function questionnaire_report_shortcode($atts) {
             add_text_object($pdf, $text);
 
         // Output document
-        $pdf->Output('report.pdf', 'D');
+        $pdf->Output($path . 'report/report.pdf', 'F');
     }
 
     // Buffer the output
