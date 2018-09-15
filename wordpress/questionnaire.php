@@ -249,10 +249,8 @@ function questionnaire_report_shortcode($atts) {
             global $margin, $textWidth, $pageHeight, $path;
         };
 
-        function add_text_object($pdf, $text)
+        function add_text_object($pdf, $text, $forename, $lastname)
         {
-            global $forename, $lastname;
-
             if ($text->type)
                 $pdf->SetFont('', $text->type);
 
@@ -299,7 +297,7 @@ function questionnaire_report_shortcode($atts) {
                 add_image_object($pdf, $image);
 
             foreach ($page->text as $text)
-                add_text_object($pdf, $text);
+                add_text_object($pdf, $text, $forename, $lastname);
         }
 
         // Create report
