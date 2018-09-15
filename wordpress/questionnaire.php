@@ -255,8 +255,13 @@ function questionnaire_report_shortcode($atts) {
 
             if ($text->type)
                 $pdf->SetFont('', $text->type);
+
+            else
+                $pdf->SetFont('', '');
+
             if ($text->size)
                 $pdf->SetFontSize($text->size);
+
             if ($text->y)
                 $pdf->SetY($text->y);
 
