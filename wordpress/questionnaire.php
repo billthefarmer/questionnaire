@@ -260,7 +260,7 @@ function questionnaire_report_shortcode($atts) {
             if ($text->y)
                 $pdf->SetY($text->y);
 
-            $pdf->MultiCell(0, 0, $text->text);
+            $pdf->MultiCell(0, 0, $text->text, 0, 'L');
         };
 
         // set margins
@@ -284,12 +284,13 @@ function questionnaire_report_shortcode($atts) {
         if ($B)
         {
             $desc = $answers->B->desc;
-            $pdf->MultiCell(0, 0, $desc);
+            $pdf->MultiCell(0, 0, $desc, 0, 'L');
             $type = $answers->B->$B->type;
             $pdf->SetFont('', 'bold');
-            $pdf->MultiCell(0, 0, $type);
+            $pdf->MultiCell(0, 0, $type, 0, 'L');
+            $pdf->SetFont('', 'normal');
             $text = $answers->B->$B->text;
-            $pdf->MultiCell(0, 0, $text);
+            $pdf->MultiCell(0, 0, $text, 0, 'L');
         }
 
         if ($C)
