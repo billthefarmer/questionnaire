@@ -252,6 +252,15 @@ function questionnaire_report_shortcode($atts) {
         function add_text_object($pdf, $text)
         {
             global $margin, $textWidth, $pageHeight;
+
+            if ($text->type)
+                $pdf->SetFont('', $text->type);
+            if ($text->size)
+                $pdf->SetFontSize($text->size);
+            if ($text->y)
+                $pdf->SetY($text->y);
+
+            $pdf->MultiCell(0, 0, $text->text);
         };
 
         // set margins
@@ -275,8 +284,12 @@ function questionnaire_report_shortcode($atts) {
         if ($B)
         {
             $desc = $answers->B->desc;
+            $pdf->MultiCell(0, 0, $desc);
             $type = $answers->B->$B->type;
+            $pdf->SetFont('', 'bold');
+            $pdf->MultiCell(0, 0, $type);
             $text = $answers->B->$B->text;
+            $pdf->MultiCell(0, 0, $text);
         }
 
         if ($C)
@@ -316,6 +329,9 @@ function questionnaire_report_shortcode($atts) {
 
         foreach ($last->text as $text)
             add_text_object($pdf, $text);
+
+        // Output document
+        $pdf->Output('report.pdf', 'D');
     }
 
     // Buffer the output
