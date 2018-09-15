@@ -274,39 +274,39 @@ function questionnaire_report_shortcode($atts) {
 
         if ($B)
         {
-            $desc = answers->B->desc;
-            $type = answers->B->{$B}->type;
-            $text = answers->B->{$B}->text;
+            $desc = $answers->B->desc;
+            $type = $answers->B->$B->type;
+            $text = $answers->B->$B->text;
         }
 
         if ($C)
         {
-            $desc = answers->C->desc;
-            $type = answers->C->{$C}->type;
-            $text = answers->C->{$C}->text;
+            $desc = $answers->C->desc;
+            $type = $answers->C->$C->type;
+            $text = $answers->C->$C->text;
         }
 
         $pdf->AddPage();
 
         if ($D)
         {
-            $desc = answers->D->desc;
-            $type = answers->D->{$D}->type;
-            $text = answers->D->{$D}->text;
+            $desc = $answers->D->desc;
+            $type = $answers->D->$D->type;
+            $text = $answers->D->$D->text;
         }
 
         if ($E)
         {
-            $desc = answers->E->desc;
-            $type = answers->E->{$E}->type;
-            $text = answers->E->{$E}->text;
+            $desc = $answers->E->desc;
+            $type = $answers->E->$E->type;
+            $text = $answers->E->$E->text;
         }
 
         if ($F)
         {
-            $desc = answers->F->desc;
-            $type = answers->F->{$F}->type;
-            $text = answers->F->{$F}->text;
+            $desc = $answers->F->desc;
+            $type = $answers->F->$F->type;
+            $text = $answers->F->$F->text;
         }
 
         $pdf->AddPage();
