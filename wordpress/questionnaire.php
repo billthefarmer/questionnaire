@@ -244,11 +244,6 @@ function questionnaire_report_shortcode($atts) {
         $pageHeight = $pdf->getPageHeight();
         $textWidth = $pageWidth - ($margin * 2);
 
-        function add_image_object($pdf, $image, $margin, $textWidth,
-                                  $pageHeight, $path)
-        {
-        };
-
         function new_text_line($pdf)
         {
             $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
@@ -290,6 +285,20 @@ function questionnaire_report_shortcode($atts) {
             new_text_line($pdf);
         };
 
+        function add_image_object($pdf, $image, $margin, $textWidth,
+                                  $pageHeight, $pageWidth, $path)
+        {
+            $y = $image->y;
+            $align = $y? ($y < 0)? 'B': 'T': 'T';
+            $y = $y? ($y < 0)? $pageHeight - $margin: $y: $margin;
+            $width = $image->width;
+            $width = $width? $width: $textWidth;
+            $x = $image->x;
+            $x = $x? ($x < 0)? $pageWidth - $margin - $width: $x: $margin;
+            $pdf->Image($path . $image->src, $x, $y, $width, $image->height,
+                        $image->type, $image->link, $align);
+        };
+
         // set margins
         $pdf->SetMargins($margin, $margin, $margin);
 
@@ -300,7 +309,7 @@ function questionnaire_report_shortcode($atts) {
 
             foreach ($page->images as $image)
                 add_image_object($pdf, $image, $margin, $textWidth,
-                                 $pageHeight, $path);
+                                 $pageHeight, $pageWidth, $path);
 
             foreach ($page->text as $text)
                 add_text_object($pdf, $text, $forename, $lastname);
@@ -329,7 +338,8 @@ function questionnaire_report_shortcode($atts) {
         $pdf->AddPage();
 
         foreach ($last->images as $image)
-            add_image_object($pdf, $image);
+            add_image_object($pdf, $image, $margin, $textWidth,
+                             $pageHeight, $pageWidth, $path);
 
         foreach ($last->text as $text)
             add_text_object($pdf, $text);
