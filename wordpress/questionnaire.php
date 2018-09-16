@@ -299,7 +299,8 @@ function questionnaire_report_shortcode($atts) {
             $pageno = $page->pageno;
 
             foreach ($page->images as $image)
-                add_image_object($pdf, $image);
+                add_image_object($pdf, $image, $margin, $textWidth,
+                                 $pageHeight, $path);
 
             foreach ($page->text as $text)
                 add_text_object($pdf, $text, $forename, $lastname);
