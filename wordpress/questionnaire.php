@@ -260,6 +260,9 @@ function questionnaire_report_shortcode($atts) {
             if ($text->size)
                 $pdf->SetFontSize($text->size);
 
+            if ($text->color)
+                $pdf->SetTextColor($text->color);
+
             if ($text->y)
                 $pdf->SetY($text->y);
 
