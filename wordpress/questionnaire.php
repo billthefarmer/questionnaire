@@ -275,12 +275,12 @@ function questionnaire_report_shortcode($atts) {
             $type = $entry->$value->type;
             $text = $entry->$value->text;
 
-            $pdf->MultiCell(0, 0, $desc, 0, 'L');
-            new_text_line($pdf);
             $pdf->SetFont('', 'B');
             $pdf->MultiCell(0, 0, $type, 0, 'L');
             new_text_line($pdf);
             $pdf->SetFont('', '');
+            $pdf->MultiCell(0, 0, $desc, 0, 'L');
+            new_text_line($pdf);
             $pdf->MultiCell(0, 0, $text, 0, 'L');
             new_text_line($pdf);
         };
@@ -307,12 +307,12 @@ function questionnaire_report_shortcode($atts) {
             $pdf->AddPage();
             $pageno = $page->pageno;
 
+            foreach ($page->text as $text)
+                add_text_object($pdf, $text, $forename, $lastname);
+
             foreach ($page->images as $image)
                 add_image_object($pdf, $image, $margin, $textWidth,
                                  $pageHeight, $pageWidth, $path);
-
-            foreach ($page->text as $text)
-                add_text_object($pdf, $text, $forename, $lastname);
         }
 
         // Create report
@@ -337,12 +337,12 @@ function questionnaire_report_shortcode($atts) {
 
         $pdf->AddPage();
 
+        foreach ($last->text as $text)
+            add_text_object($pdf, $text);
+
         foreach ($last->images as $image)
             add_image_object($pdf, $image, $margin, $textWidth,
                              $pageHeight, $pageWidth, $path);
-
-        foreach ($last->text as $text)
-            add_text_object($pdf, $text);
 
         // Output document
         $pdf->Output($path . 'report/report.pdf', 'F');
