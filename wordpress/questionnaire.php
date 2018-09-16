@@ -23,8 +23,8 @@ add_action('wp_enqueue_scripts', 'questionnaire_enqueue_scripts', 11);
 
 // Queue scripts and styles. Wordpress includes jquery-ui script files,
 // but not all the styles
-function questionnaire_enqueue_scripts() {
-
+function questionnaire_enqueue_scripts()
+{
     // Check on a page
     if (is_page()) {
 
@@ -49,8 +49,8 @@ function questionnaire_enqueue_scripts() {
 }
 
 // Add the content if the shortcode is found.
-function questionnaire_questions_shortcode($atts) {
-
+function questionnaire_questions_shortcode($atts)
+{
     // Buffer the output
     ob_start();
 
@@ -189,66 +189,69 @@ function questionnaire_questions_shortcode($atts) {
 }
 
 // Add the content if the shortcode is found.
-function questionnaire_report_shortcode($atts) {
-
+function questionnaire_report_shortcode($atts)
+{
     global $tcpdf_present;
 
-    // ?A=10%2C12&B=10&C=8&D=6&E=12&F=8&S=10
-    // &forename=Jeremiah&lastname=Fundament
-    // &email=jerry%40fundament.com
-
-    // Get parameters
-    $A = filter_input(INPUT_GET, 'A', FILTER_SANITIZE_STRING);
-    $B = filter_input(INPUT_GET, 'B', FILTER_SANITIZE_NUMBER_INT);
-    $C = filter_input(INPUT_GET, 'C', FILTER_SANITIZE_NUMBER_INT);
-    $D = filter_input(INPUT_GET, 'D', FILTER_SANITIZE_NUMBER_INT);
-    $E = filter_input(INPUT_GET, 'E', FILTER_SANITIZE_NUMBER_INT);
-    $F = filter_input(INPUT_GET, 'F', FILTER_SANITIZE_NUMBER_INT);
-    $S = filter_input(INPUT_GET, 'S', FILTER_SANITIZE_NUMBER_INT);
-
-    $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
-    $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
-    $email = filter_input(INPUT_GET, 'email', FILTER_SANITIZE_EMAIL);
-
-    // Get data
-    $path = plugin_dir_path(__FILE__);
-    $json = file_get_contents($path . 'js/answers.min.json');
-    $data = json_decode($json);
-
-    if (!$forename)
-        $forename = "Cat";
-    if (!$lastname)
-        $lastname = "LeBlanc";
-
-    $forename = str_replace("+", " ", $forename);
-    $lastname = str_replace("+", " ", $lastname);
-
-    $name = $forename . " " . $lastname;
-    ob_start();
-    // Check tcpdf
-    if ($tcpdf_present)
+    // Create report
+    function create_report()
     {
+        // ?A=10%2C12&B=10&C=8&D=6&E=12&F=8&S=10
+        // &forename=Jeremiah&lastname=Fundament
+        // &email=jerry%40fundament.com
+
+        // Get parameters
+        $A = filter_input(INPUT_GET, 'A', FILTER_SANITIZE_STRING);
+        $B = filter_input(INPUT_GET, 'B', FILTER_SANITIZE_NUMBER_INT);
+        $C = filter_input(INPUT_GET, 'C', FILTER_SANITIZE_NUMBER_INT);
+        $D = filter_input(INPUT_GET, 'D', FILTER_SANITIZE_NUMBER_INT);
+        $E = filter_input(INPUT_GET, 'E', FILTER_SANITIZE_NUMBER_INT);
+        $F = filter_input(INPUT_GET, 'F', FILTER_SANITIZE_NUMBER_INT);
+        $S = filter_input(INPUT_GET, 'S', FILTER_SANITIZE_NUMBER_INT);
+
+        $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
+        $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
+
+        if (!$forename)
+            $forename = "Cat";
+        if (!$lastname)
+            $lastname = "LeBlanc";
+
+        $forename = str_replace("+", " ", $forename);
+        $lastname = str_replace("+", " ", $lastname);
+
+        // Get data
+        $path = plugin_dir_path(__FILE__);
+        $json = file_get_contents($path . 'js/answers.min.json');
+        $data = json_decode($json);
+
         $pages = $data->pages;
         $answers = $data->answers;
         $last = $data->last;
 
+        // Create document
         $pdf = new TCPDF();
         $pdf->setPageUnit('pt');
 
-        // remove default header/footer
+        // Remove default header/footer
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
 
-        $margin = 72;
+        $margin = 72; // 1"
         $pageWidth = $pdf->getPageWidth();
         $pageHeight = $pdf->getPageHeight();
         $textWidth = $pageWidth - ($margin * 2);
 
+        // Set margins
+        $pdf->SetMargins($margin, $margin, $margin);
+
+        // New line
         function new_text_line($pdf)
         {
             $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
         };
 
+        // Add text
         function add_text_object($pdf, $text, $forename, $lastname)
         {
             if ($text->type)
@@ -272,6 +275,7 @@ function questionnaire_report_shortcode($atts) {
             $pdf->MultiCell(0, 0, $subst, 0, 'L');
         };
 
+        // Add report entry
         function add_entry($pdf, $entry, $value)
         {
             $desc = $entry->desc;
@@ -288,41 +292,37 @@ function questionnaire_report_shortcode($atts) {
             new_text_line($pdf);
         };
 
+        // Add image
         function add_image_object($pdf, $image, $margin, $textWidth,
                                   $pageHeight, $pageWidth, $path)
         {
             $y = $image->y;
-            $y = $y? ($y < 0)? $pageHeight - $margin - $image->height: $y: $margin;
+            $y = $y? ($y < 0)?
+               $pageHeight - $margin - $image->height: $y: $margin;
             $width = $image->width;
             $width = $width? $width: $textWidth;
             $x = $image->x;
             $x = $x? ($x < 0)? $pageWidth - $margin - $width: $x: $margin;
             $pdf->Image($path . $image->src, $x, $y, $width, $image->height,
                         $image->type, $image->link);
-            $rbx = $pdf->getImageRBX();
-            $rby = $pdf->getImageRBY();
-            echo "Image $image->src, $x, $y, $width, $image->height, $image->type, $pageWidth, $pageHeight, $rbx, $rby\n";
         };
 
-        // set margins
-        $pdf->SetMargins($margin, $margin, $margin);
-
-        echo '<pre style="width: 1280;">';
-
-            foreach ($pages as $page)
+        // Preamble
+        foreach ($pages as $page)
         {            
             $pdf->AddPage();
-            $pageno = $page->pageno;
 
+            // Text
             foreach ($page->text as $text)
                 add_text_object($pdf, $text, $forename, $lastname);
 
+            // Images
             foreach ($page->images as $image)
                 add_image_object($pdf, $image, $margin, $textWidth,
                                  $pageHeight, $pageWidth, $path);
         }
 
-        // Create report
+        // Report
         $pdf->AddPage();
 
         if ($B)
@@ -344,24 +344,23 @@ function questionnaire_report_shortcode($atts) {
 
         $pdf->AddPage();
 
+        // Last page text
         foreach ($last->text as $text)
             add_text_object($pdf, $text);
 
+        // Last page images
         foreach ($last->images as $image)
             add_image_object($pdf, $image, $margin, $textWidth,
                              $pageHeight, $pageWidth, $path);
-
-        echo "</pre>";
-
         // Output document
         $pdf->Output($path . 'report/report.pdf', 'F');
-    }
-
-    // Buffer the output
-    // ob_start();
+    };
 
     // Check TCPDF
-    if (!$tcpdf_present)
+    if ($tcpdf_present)
+        create_report();
+
+    else
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
 
     ?>
@@ -376,13 +375,22 @@ function questionnaire_report_shortcode($atts) {
     <br /><br />
   </fieldset>
 </div>
+
+<?php
+
+    if (!wp_is_mobile())
+    {
+        ?>
+
 <div class="report-preview">
-  <iframe id="report-preview" class="report-preview" type="application/pdf"
+  <object id="report-preview" class="report-preview" type="application/pdf"
           width="640" height="878">
-  </iframe>
+  </object>
 </div>
 
 <?php
+
+    }
 
     $answers = plugins_url('/js/answers.min.js', __FILE__);
     $report = plugins_url('/js/report.min.js', __FILE__);

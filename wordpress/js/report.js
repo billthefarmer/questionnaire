@@ -157,9 +157,12 @@ jQuery(document).ready(function($) {
         doc.save('report.pdf');
     });
 
+    /**
+     * Updates preview
+     */
     function update() {
         let string = doc.output('bloburi');
-	$('#report-preview').attr('src', string);
+	$('#report-preview').attr('data', string);
     }
 
     /**
