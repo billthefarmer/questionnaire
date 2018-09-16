@@ -303,7 +303,7 @@ function questionnaire_report_shortcode($atts) {
         // set margins
         $pdf->SetMargins($margin, $margin, $margin);
 
-        echo '<pre style="width: 1280;">':
+        echo '<pre style="width: 1280;">';
 
             foreach ($pages as $page)
         {            
