@@ -224,7 +224,7 @@ function questionnaire_report_shortcode($atts) {
     $lastname = str_replace("+", " ", $lastname);
 
     $name = $forename . " " . $lastname;
-
+    ob_start();
     // Check tcpdf
     if ($tcpdf_present)
     {
@@ -297,12 +297,15 @@ function questionnaire_report_shortcode($atts) {
             $x = $x? ($x < 0)? $pageWidth - $margin - $width: $x: $margin;
             $pdf->Image($path . $image->src, $x, $y, $width, $image->height,
                         $image->type, $image->link, $align);
+            echo "Image $path . $image->src, $x, $y, $width, $image->height, $image->type, $image->link, $align");
         };
 
         // set margins
         $pdf->SetMargins($margin, $margin, $margin);
 
-        foreach ($pages as $page)
+        echo '<pre style="width: 1280;">':
+
+            foreach ($pages as $page)
         {            
             $pdf->AddPage();
             $pageno = $page->pageno;
@@ -344,12 +347,14 @@ function questionnaire_report_shortcode($atts) {
             add_image_object($pdf, $image, $margin, $textWidth,
                              $pageHeight, $pageWidth, $path);
 
+        echo "</pre>";
+
         // Output document
         $pdf->Output($path . 'report/report.pdf', 'F');
     }
 
     // Buffer the output
-    ob_start();
+    // ob_start();
 
     // Check TCPDF
     if (!$tcpdf_present)
