@@ -244,9 +244,14 @@ function questionnaire_report_shortcode($atts) {
         $pageHeight = $pdf->getPageHeight();
         $textWidth = $pageWidth - ($margin * 2);
 
-        function add_image_object($pdf, $image)
+        function add_image_object($pdf, $image, $margin, $textWidth,
+                                  $pageHeight, $path)
         {
-            global $margin, $textWidth, $pageHeight, $path;
+        };
+
+        function new_text_line($pdf)
+        {
+            $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
         };
 
         function add_text_object($pdf, $text, $forename, $lastname)
@@ -276,13 +281,13 @@ function questionnaire_report_shortcode($atts) {
             $text = $entry->$value->text;
 
             $pdf->MultiCell(0, 0, $desc, 0, 'L');
-            $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
+            new_text_line($pdf);
             $pdf->SetFont('', 'B');
             $pdf->MultiCell(0, 0, $type, 0, 'L');
-            $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
+            new_text_line($pdf);
             $pdf->SetFont('', '');
             $pdf->MultiCell(0, 0, $text, 0, 'L');
-            $pdf->Ln($pdf->getCellHeight($pdf->getFontSize()));
+            new_text_line($pdf);
         };
 
         // set margins
