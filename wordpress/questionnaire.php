@@ -289,17 +289,16 @@ function questionnaire_report_shortcode($atts) {
                                   $pageHeight, $pageWidth, $path)
         {
             $y = $image->y;
-            $align = $y? ($y < 0)? 'B': 'T': 'T';
             $y = $y? ($y < 0)? $pageHeight - ($margin * 2): $y: $margin;
             $width = $image->width;
             $width = $width? $width: $textWidth;
             $x = $image->x;
             $x = $x? ($x < 0)? $pageWidth - $margin - $width: $x: $margin;
             $pdf->Image($path . $image->src, $x, $y, $width, $image->height,
-                        $image->type, $image->link, $align);
+                        $image->type, $image->link);
             $rbx = $pdf->getImageRBX();
             $rby = $pdf->getImageRBY();
-            echo "Image $image->src, $x, $y, $width, $image->height, $image->type, $image->link, $align, $pageHeight, $rbx, $rby\n";
+            echo "Image $image->src, $x, $y, $width, $image->height, $image->type, $pageWidth, $pageHeight, $rbx, $rby\n";
         };
 
         // set margins
