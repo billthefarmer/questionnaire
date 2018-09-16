@@ -289,7 +289,7 @@ function questionnaire_report_shortcode($atts) {
                                   $pageHeight, $pageWidth, $path)
         {
             $y = $image->y;
-            $y = $y? ($y < 0)? $pageHeight - ($margin * 2): $y: $margin;
+            $y = $y? ($y < 0)? $pageHeight - $margin - $image->height: $y: $margin;
             $width = $image->width;
             $width = $width? $width: $textWidth;
             $x = $image->x;
