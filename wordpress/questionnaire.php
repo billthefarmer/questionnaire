@@ -194,7 +194,7 @@ function questionnaire_report_shortcode($atts)
     global $tcpdf_present;
 
     // Create report
-    function create_report()
+    function create_report($filename)
     {
         // ?A=10%2C12&B=10&C=8&D=6&E=12&F=8&S=10
         // &forename=Jeremiah&lastname=Fundament
@@ -208,18 +208,6 @@ function questionnaire_report_shortcode($atts)
         $E = filter_input(INPUT_GET, 'E', FILTER_SANITIZE_NUMBER_INT);
         $F = filter_input(INPUT_GET, 'F', FILTER_SANITIZE_NUMBER_INT);
         $S = filter_input(INPUT_GET, 'S', FILTER_SANITIZE_NUMBER_INT);
-
-        $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
-        $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
-
-        if (!$forename)
-            $forename = "Cat";
-        if (!$lastname)
-            $lastname = "LeBlanc";
-
-        $forename = str_replace("+", " ", $forename);
-        $lastname = str_replace("+", " ", $lastname);
-        $filename = str_replace(" ", "_", $forename . "_" . $lastname . ".pdf");
 
         // Get data
         $path = plugin_dir_path(__FILE__);
@@ -361,9 +349,22 @@ function questionnaire_report_shortcode($atts)
         return plugins_url('report/' . $filename, __FILE__);
     };
 
+    $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
+    $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
+
+    if (!$forename)
+        $forename = "Cat";
+    if (!$lastname)
+        $lastname = "LeBlanc";
+
+    $forename = str_replace("+", " ", $forename);
+    $lastname = str_replace("+", " ", $lastname);
+    $username = $forename . " " . $lastname;
+    $filename = str_replace(" ", "_", $username . ".pdf");
+
     // Check TCPDF
     if ($tcpdf_present)
-        $fileuri = create_report();
+        $fileuri = create_report($filename);
 
     else
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
@@ -372,7 +373,7 @@ function questionnaire_report_shortcode($atts)
 
 <div class="report-content">
   <fieldset>
-    <h2 id="user-name" class="user-name"></h2>
+    <h2 id="user-name" class="user-name"><?php echo $username ?></h2>
     <a href="<?php echo $fileuri ?>" download>
       <input type="button" id="download-report" name="download-report"
              class="questionnaire-button" value="Download Report" />
