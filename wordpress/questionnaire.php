@@ -194,7 +194,7 @@ function questionnaire_report_shortcode($atts)
     global $tcpdf_present;
 
     // Create report
-    function create_report($filename, $firstname, $lastname)
+    function create_report($filename, $forename, $lastname)
     {
         // ?A=10%2C12&B=10&C=8&D=6&E=12&F=8&S=10
         // &forename=Jeremiah&lastname=Fundament
@@ -364,7 +364,7 @@ function questionnaire_report_shortcode($atts)
 
     // Check TCPDF
     if ($tcpdf_present)
-        $fileuri = create_report($filename, $firstname, $lastname);
+        $fileuri = create_report($filename, $forename, $lastname);
 
     else
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
