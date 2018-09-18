@@ -373,10 +373,10 @@ function questionnaire_report_shortcode($atts)
 <div class="report-content">
   <fieldset>
     <h2 id="user-name" class="user-name"></h2>
-    <input type="button" id="update-preview" name="update-preview"
-           class="questionnaire-button" value="Update Preview" />
-    <input type="button" id="download-report" name="download-report"
-           class="questionnaire-button" value="Download Report" />
+    <a href="<?php echo $fileuri ?>" download>
+      <input type="button" id="download-report" name="download-report"
+             class="questionnaire-button" value="Download Report" />
+    </a>
     <br /><br />
   </fieldset>
 </div>
@@ -397,17 +397,9 @@ function questionnaire_report_shortcode($atts)
 
     }
 
-    // $answers = plugins_url('/js/answers.min.js', __FILE__);
+    // Add javascript
     $report = plugins_url('/js/report.min.js', __FILE__);
-    // $jspdf = plugins_url('/js/jspdf.min.js', __FILE__);
-    // $plugin = plugins_url('/', __FILE__);
-
-    // echo "<script type=\"text/javascript\" src=\"$jspdf\"></script>
-    // <script type=\"text/javascript\" src=\"$answers\"></script>
     echo "<script type=\"text/javascript\" src=\"$report\"></script>";
-    // <script type=\"text/javascript\">
-    // let plugin_url = \"$plugin\";
-    // </script>";
 
     // Return the output
     return ob_get_clean();
