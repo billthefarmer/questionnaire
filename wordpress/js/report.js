@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
     lastname = lastname.replace('+', ' ');
     
     let name = forename + " " + lastname;
-
+    /*
     let pages = data.pages;
     let answers = data.answers;
     let last = data.last;
@@ -156,15 +156,16 @@ jQuery(document).ready(function($) {
     $('#download-report').click(function() {
         doc.save('report.pdf');
     });
-
+    */
     /**
      * Updates preview
      */
+    /*
     function update() {
         let string = doc.output('bloburi');
 	$('#report-preview').attr('data', string);
     }
-
+    */
     /**
      * Gets URL parameter value.
      * @name  getURLParameter
@@ -182,7 +183,7 @@ jQuery(document).ready(function($) {
                 return parameterName[1];
         }
     }
-
+    /*
     function addTextObject(text, doc, y)
     {
         if (text.size)
@@ -221,12 +222,13 @@ jQuery(document).ready(function($) {
      * @param width  Text width on page
      * @returns Y location of bottom of text
      */
+    /*
     function addText(text, doc, x, y, width) {
         let textLines = doc.splitTextToSize(text, width);
         doc.text(textLines, x, y);
         return y + (textLines.length * doc.getLineHeight());
     }
-
+    */
     /**
      * Adds image to document.
      * @name  addImage
@@ -246,6 +248,7 @@ jQuery(document).ready(function($) {
      * If the height is null or 0, height is calculated to
      * preserve image aspect ratio.
      */
+    /*
     function addImage(src, type, doc, page, x, y, width, height, link, func) {
         images++;
         let img = new Image();
@@ -266,7 +269,7 @@ jQuery(document).ready(function($) {
                 func();
         });
     }
-
+    */
     /**
      * Gets data URL, width, height for image.
      * @name  getDataUrl
@@ -276,6 +279,7 @@ jQuery(document).ready(function($) {
      *           width: image width,
      *           height: image height}
      */
+    /*
     function getDataUrl(img, type) {
         let canvas = document.createElement('canvas');
         canvas.width = img.width;
@@ -286,4 +290,5 @@ jQuery(document).ready(function($) {
                 width: img.width,
                 height: img.height};
     }
+    */
 });

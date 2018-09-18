@@ -397,17 +397,17 @@ function questionnaire_report_shortcode($atts)
 
     }
 
-    $answers = plugins_url('/js/answers.min.js', __FILE__);
+    // $answers = plugins_url('/js/answers.min.js', __FILE__);
     $report = plugins_url('/js/report.min.js', __FILE__);
-    $jspdf = plugins_url('/js/jspdf.min.js', __FILE__);
-    $plugin = plugins_url('/', __FILE__);
+    // $jspdf = plugins_url('/js/jspdf.min.js', __FILE__);
+    // $plugin = plugins_url('/', __FILE__);
 
-    echo "<script type=\"text/javascript\" src=\"$jspdf\"></script>
-<script type=\"text/javascript\" src=\"$answers\"></script>
-<script type=\"text/javascript\" src=\"$report\"></script>
-<script type=\"text/javascript\">
-let plugin_url = \"$plugin\";
-</script>";
+    // echo "<script type=\"text/javascript\" src=\"$jspdf\"></script>
+    // <script type=\"text/javascript\" src=\"$answers\"></script>
+    echo "<script type=\"text/javascript\" src=\"$report\"></script>";
+    // <script type=\"text/javascript\">
+    // let plugin_url = \"$plugin\";
+    // </script>";
 
     // Return the output
     return ob_get_clean();
