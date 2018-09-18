@@ -219,6 +219,7 @@ function questionnaire_report_shortcode($atts)
 
         $forename = str_replace("+", " ", $forename);
         $lastname = str_replace("+", " ", $lastname);
+        $filename = str_replace(" ", "_", $forename . "_" . $lastname . ".pdf");
 
         // Get data
         $path = plugin_dir_path(__FILE__);
@@ -352,13 +353,17 @@ function questionnaire_report_shortcode($atts)
         foreach ($last->images as $image)
             add_image_object($pdf, $image, $margin, $textWidth,
                              $pageHeight, $pageWidth, $path);
+
         // Output document
-        $pdf->Output($path . 'report/report.pdf', 'F');
+        $pdf->Output($path . 'report/' . $filename, 'F');
+
+        // Return file uri
+        return plugins_url('report/' . $filename, __FILE__);
     };
 
     // Check TCPDF
     if ($tcpdf_present)
-        create_report();
+        $fileuri = create_report();
 
     else
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
@@ -384,7 +389,7 @@ function questionnaire_report_shortcode($atts)
 
 <div class="report-preview">
   <object id="report-preview" class="report-preview" type="application/pdf"
-          width="640" height="878">
+          data="<?php echo $fileuri ?>" width="640" height="878">
   </object>
 </div>
 
