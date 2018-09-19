@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
     $("#download-report").button();
 
     // Create cookie, if not present
-    if (!readCookie("ClientEmail")startsWith(cookieValue))
+    if (!readCookie("ClientEmail").startsWith(cookieValue))
         createCookie("ClientEmail", cookieValue, 30);
 
     console.log(document.cookie.split(';'));
@@ -21,15 +21,17 @@ jQuery(document).ready(function($) {
     // Create cookie
     function createCookie(name, value, days)
     {
+        let expires;
+
 	if (days)
         {
 	    let date = new Date();
 	    date.setTime(date.getTime() + (days*24*60*60*1000));
-	    let expires = "; expires=" + date.toGMTString();
+	    expires = "; expires=" + date.toGMTString();
 	}
 
 	else
-            let expires = "";
+            expires = "";
 
 	document.cookie = name + "=" + value + expires + "; path=/";
     }
