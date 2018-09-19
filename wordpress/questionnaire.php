@@ -432,7 +432,7 @@ function questionnaire_report_shortcode($atts)
     }
 
     // Add javascript
-    $report = plugins_url('/js/report.js', __FILE__);
+    $report = plugins_url('/js/report.min.js', __FILE__);
     echo "<script type=\"text/javascript\" src=\"$report\"></script>\n";
 
     $value = md5($usermail);

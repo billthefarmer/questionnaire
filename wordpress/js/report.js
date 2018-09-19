@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
     $("#download-report").button();
 
     // Create cookie, if not present
-    if (!readCookie("ClientEmail").startsWith(cookieValue))
+    if (readCookie("ClientEmail") != cookieValue)
         createCookie("ClientEmail", cookieValue, 30);
 
     console.log(document.cookie.split(';'));
