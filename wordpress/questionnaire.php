@@ -376,7 +376,8 @@ function questionnaire_report_shortcode($atts)
     $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
     $usermail = filter_input(INPUT_GET, 'email', FILTER_SANITIZE_EMAIL);
 
-    $cookie = md5($usermail);
+    $cookieValue = md5($usermail);
+    $cookieName = "ClientEmailSent";
 
     if (!$forename)
         $forename = "Cat";
@@ -399,12 +400,8 @@ function questionnaire_report_shortcode($atts)
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
 
     // Send email
-    if ($_COOKIE['ClientEmail'] != $cookie)
+    if ($_COOKIE[$cookieName] != $cookie)
         send_email($usermail, $forename, $lastname, $username, $filename);
-
-    echo "<pre style='width: 960px;'>";
-    print_r($_COOKIE);
-    echo "</pre>";
 
     ?>
 
@@ -437,13 +434,20 @@ function questionnaire_report_shortcode($atts)
 
     // Add javascript
     $report = plugins_url('/js/report.min.js', __FILE__);
-    echo "<script type=\"text/javascript\" src=\"$report\"></script>\n";
 
-    echo "<script type=\"text/javascript\">\n";
-    echo "let cookieName = \"ClientEmail\";\n";
-    echo "let cookieValue = \"$cookie\";\n";
-    echo "</script>\n";
+    ?>
+
+<script type="text/javascript" src="<?php echo $report ?>"></script>
+
+<script type="text/javascript">
+let cookieName = "<?php echo $cookieName ?>";
+let cookieValue = "<?php echo $cookieValue ?>";
+</script>
+
+<?php
 
     // Return the output
     return ob_get_clean();
 }
+
+?>
