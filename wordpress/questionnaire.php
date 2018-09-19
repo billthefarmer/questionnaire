@@ -349,8 +349,31 @@ function questionnaire_report_shortcode($atts)
         return plugins_url('report/' . $filename, __FILE__);
     };
 
+    function send_email($usermail, $forename, $lastname, $username, $filename)
+    {
+        // Set fields
+        $to = "$username <$usermail>";
+        $from = "Cat LeBlanc <cat@catleblanc.com>";
+        $subject = "Your Entrepreneurial Design Profile Report";
+        $message = "Dear $forename\r\n\r\n" .
+                 "Please find attached your report.\r\n\r\n" .
+                 "I hope you find your design to be insightful in your business building journey!\r\n\r\n" .
+                 "Cat\r\n\r\n" . $to;
+        $headers = "From: $from";
+
+        // Get attachment path
+        $path = plugin_dir_path(__FILE__);
+        $attachments = $path . "report/" . $filename;
+
+        // Send mail
+        $to = "williamjfarmer@yahoo.co.uk";
+        wp_mail($to, $subject, $message, $headers,
+                $attachments);
+    };
+
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
     $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
+    $usermail = filter_input(INPUT_GET, 'email', FILTER_SANITIZE_EMAIL);
 
     if (!$forename)
         $forename = "Cat";
@@ -361,6 +384,9 @@ function questionnaire_report_shortcode($atts)
     $lastname = str_replace("+", " ", $lastname);
     $username = $forename . " " . $lastname;
     $filename = str_replace(" ", "_", $username . ".pdf");
+
+    // Buffer the output
+    ob_start();
 
     // Check TCPDF
     if ($tcpdf_present)
