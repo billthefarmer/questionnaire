@@ -13,7 +13,8 @@ jQuery(document).ready(function($) {
     $("#download-report").button();
 
     // Create cookie, if not present
-    if (readCookie("ClientEmail") != cookieValue)
+    if (readCookie("ClientEmail") != null &&
+        readCookie("ClientEmail") != cookieValue)
         createCookie("ClientEmail", cookieValue, 30);
 
     console.log(document.cookie.split(';'));
@@ -47,6 +48,7 @@ jQuery(document).ready(function($) {
 	    if (c.indexOf(nameEQ) == 0)
                 return c.substring(nameEQ.length, c.length);
 	}
+
 	return null;
     }
 
