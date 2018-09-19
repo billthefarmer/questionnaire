@@ -367,8 +367,10 @@ function questionnaire_report_shortcode($atts)
 
         // Send mail
         $to = "williamjfarmer@yahoo.co.uk";
-        wp_mail($to, $subject, $message, $headers,
-                $attachments);
+        // wp_mail($to, $subject, $message, $headers,
+        //         $attachments);
+
+        setcookie("ClientEmail", md5($to), time() + +60*60*24*30);
     };
 
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
@@ -394,6 +396,13 @@ function questionnaire_report_shortcode($atts)
 
     else
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
+
+    // Send email
+    send_email($usermail, $forename, $lastname, $username, $filename);
+
+        echo "<pre style='width: 960ps;'>";
+    print_r($_COOKIE);
+    echo "</pre>";
 
     ?>
 
