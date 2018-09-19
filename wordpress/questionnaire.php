@@ -371,6 +371,7 @@ function questionnaire_report_shortcode($atts)
         //         $attachments);
 
         setcookie("ClientEmail", md5($to), time() + +60*60*24*30);
+        echo
     };
 
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
@@ -436,6 +437,9 @@ function questionnaire_report_shortcode($atts)
     // Add javascript
     $report = plugins_url('/js/report.min.js', __FILE__);
     echo "<script type=\"text/javascript\" src=\"$report\"></script>";
+
+    $value = md5($usermail);
+    echo "<script type=\"text/javascript\">let cookieValue = $value;</script>";
 
     // Return the output
     return ob_get_clean();
