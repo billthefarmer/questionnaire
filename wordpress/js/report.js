@@ -17,8 +17,6 @@ jQuery(document).ready(function($) {
         readCookie(cookieName) != cookieValue)
         createCookie(cookieName, cookieValue, 30);
 
-    console.log(document.cookie.split(';'));
-
     // Create cookie
     function createCookie(name, value, days)
     {
