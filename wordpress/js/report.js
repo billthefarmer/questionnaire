@@ -13,8 +13,10 @@ jQuery(document).ready(function($) {
     $("#download-report").button();
 
     // Create cookie, if not present
-    if (readCookie("ClientEmail") != cookieValue)
+    if (!readCookie("ClientEmail")startsWith(cookieValue))
         createCookie("ClientEmail", cookieValue, 30);
+
+    console.log(document.cookie.split(';'));
 
     // Create cookie
     function createCookie(name, value, days)
