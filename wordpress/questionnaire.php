@@ -369,9 +369,6 @@ function questionnaire_report_shortcode($atts)
         $to = "williamjfarmer@yahoo.co.uk";
         // wp_mail($to, $subject, $message, $headers,
         //         $attachments);
-
-        setcookie("ClientEmail", md5($to), time() + +60*60*24*30);
-        echo
     };
 
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
