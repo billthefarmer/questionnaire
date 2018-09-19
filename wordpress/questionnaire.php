@@ -433,10 +433,10 @@ function questionnaire_report_shortcode($atts)
 
     // Add javascript
     $report = plugins_url('/js/report.min.js', __FILE__);
-    echo "<script type=\"text/javascript\" src=\"$report\"></script>";
+    echo "<script type=\"text/javascript\" src=\"$report\"></script>\n";
 
     $value = md5($usermail);
-    echo "<script type=\"text/javascript\">let cookieValue = $value;</script>";
+    echo "<script type=\"text/javascript\">\nlet cookieValue = \"$value\";\n</script>";
 
     // Return the output
     return ob_get_clean();
