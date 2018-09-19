@@ -13,9 +13,9 @@ jQuery(document).ready(function($) {
     $("#download-report").button();
 
     // Create cookie, if not present
-    if (readCookie("ClientEmail") == null ||
-        readCookie("ClientEmail") != cookieValue)
-        createCookie("ClientEmail", cookieValue, 30);
+    if (readCookie(cookieName) == null ||
+        readCookie(cookieName) != cookieValue)
+        createCookie(cookieName, cookieValue, 30);
 
     console.log(document.cookie.split(';'));
 

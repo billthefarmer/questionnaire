@@ -357,7 +357,8 @@ function questionnaire_report_shortcode($atts)
         $subject = "Your Entrepreneurial Design Profile Report";
         $message = "Dear $forename\r\n\r\n" .
                  "Please find attached your report.\r\n\r\n" .
-                 "I hope you find your design to be insightful in your business building journey!\r\n\r\n" .
+                 "I hope you find your design to be insightful " .
+                 "in your business building journey!\r\n\r\n" .
                  "Cat\r\n\r\n" . $to;
         $headers = "From: $from";
 
@@ -367,13 +368,15 @@ function questionnaire_report_shortcode($atts)
 
         // Send mail
         $to = "williamjfarmer@yahoo.co.uk";
-        // wp_mail($to, $subject, $message, $headers,
-        //         $attachments);
+        wp_mail($to, $subject, $message, $headers,
+                $attachments);
     };
 
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
     $lastname = filter_input(INPUT_GET, 'lastname', FILTER_SANITIZE_STRING);
     $usermail = filter_input(INPUT_GET, 'email', FILTER_SANITIZE_EMAIL);
+
+    $cookie = md5($usermail);
 
     if (!$forename)
         $forename = "Cat";
@@ -396,9 +399,10 @@ function questionnaire_report_shortcode($atts)
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
 
     // Send email
-    send_email($usermail, $forename, $lastname, $username, $filename);
+    if ($_COOKIE['ClientEmail'] != $cookie)
+        send_email($usermail, $forename, $lastname, $username, $filename);
 
-        echo "<pre style='width: 960ps;'>";
+    echo "<pre style='width: 960px;'>";
     print_r($_COOKIE);
     echo "</pre>";
 
@@ -435,8 +439,10 @@ function questionnaire_report_shortcode($atts)
     $report = plugins_url('/js/report.min.js', __FILE__);
     echo "<script type=\"text/javascript\" src=\"$report\"></script>\n";
 
-    $value = md5($usermail);
-    echo "<script type=\"text/javascript\">\nlet cookieValue = \"$value\";\n</script>";
+    echo "<script type=\"text/javascript\">\n";
+    echo "let cookieName = \"ClientEmail\";\n";
+    echo "let cookieValue = \"$cookie\";\n";
+    echo "</script>\n";
 
     // Return the output
     return ob_get_clean();
