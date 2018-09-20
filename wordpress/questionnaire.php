@@ -241,7 +241,7 @@ function questionnaire_report_shortcode($atts)
         };
 
         // Add text
-        function add_text_object($pdf, $text, $forename, $lastname)
+        function add_text_object($pdf, $text, $forename = '', $lastname = '')
         {
             if ($text->type)
                 $pdf->SetFont('', $text->type);
@@ -286,12 +286,12 @@ function questionnaire_report_shortcode($atts)
                                   $pageHeight, $pageWidth, $path)
         {
             $y = $image->y;
-            $y = $y? ($y < 0)?
+            $y = ($y)? ($y < 0)?
                $pageHeight - $margin - $image->height: $y: $margin;
             $width = $image->width;
-            $width = $width? $width: $textWidth;
+            $width = ($width)? $width: $textWidth;
             $x = $image->x;
-            $x = $x? ($x < 0)? $pageWidth - $margin - $width: $x: $margin;
+            $x = ($x)? ($x < 0)? $pageWidth - $margin - $width: $x: $margin;
             $pdf->Image($path . $image->src, $x, $y, $width, $image->height,
                         $image->type, $image->link);
         };
