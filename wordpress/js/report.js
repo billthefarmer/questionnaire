@@ -12,11 +12,6 @@ jQuery(document).ready(function($) {
     // Style button
     $("#download-report").button();
 
-    // Create cookie, if not present
-    if (readCookie(cookieName) == null ||
-        readCookie(cookieName) != cookieValue)
-        createCookie(cookieName, cookieValue, 30);
-
     // Create cookie
     function createCookie(name, value, days)
     {
