@@ -15,6 +15,9 @@
  * Copyright (C) 2018 Bill Farmer
  */
 
+if (empty(session_id()))
+    session_start();
+
 // Include TCPDF, if present
 $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
