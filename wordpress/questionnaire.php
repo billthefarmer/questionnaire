@@ -18,6 +18,8 @@
 // Include TCPDF, if present
 $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
+$vendor_present = include_once 'vendor/autoload.php;
+
 // Add scripts hook, also adds shortcodes and further action
 add_action('wp_enqueue_scripts', 'questionnaire_enqueue_scripts', 11);
 
@@ -400,7 +402,7 @@ function questionnaire_report_shortcode($atts)
     send_email($usermail, $forename, $lastname, $username, $filename);
 
     ?>
-
+<pre style="width: 960px;"><?php echo "Session id " . session_id() ?></pre>
 <div class="report-content">
   <fieldset>
     <h2 id="user-name" class="user-name"><?php echo $username ?></h2>
