@@ -433,7 +433,9 @@ function questionnaire_report_shortcode($atts)
 <?php
 
         $message = ob_get_clean();
-        $headers = "From: $from";
+        $content = "Content-Type: text/html";
+        $headers = ["From: $from",
+                    $content];
 
         // Get attachment path
         $path = plugin_dir_path(__FILE__);
