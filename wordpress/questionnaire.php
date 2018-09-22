@@ -434,7 +434,7 @@ function questionnaire_report_shortcode($atts)
 
         $message = ob_get_clean();
         $content = "Content-Type: text/html";
-        $charset = "charset=utf-8"
+        $charset = "charset=utf-8";
         $headers = ["From: $from",
                     $content,
                     $charset];
