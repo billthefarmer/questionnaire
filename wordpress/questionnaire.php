@@ -15,6 +15,9 @@
  * Copyright (C) 2018 Bill Farmer
  */
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Start session
 // if (empty(session_id()))
 //     session_start();
@@ -250,19 +253,19 @@ function questionnaire_report_shortcode($atts)
         // Add text
         function add_text_object($pdf, $text, $forename = '', $lastname = '')
         {
-            if ($text->type)
+            if (!empty($text->type))
                 $pdf->SetFont('', $text->type);
 
             else
                 $pdf->SetFont('', '');
 
-            if ($text->size)
+            if (!empty($text->size))
                 $pdf->SetFontSize($text->size);
 
-            if ($text->color)
+            if (!empty($text->color))
                 $pdf->SetTextColor($text->color);
 
-            if ($text->y)
+            if (!empty($text->y))
                 $pdf->SetY($text->y);
 
             $subst = str_replace(['~forename~', '~lastname~'],
@@ -292,15 +295,16 @@ function questionnaire_report_shortcode($atts)
         function add_image_object($pdf, $image, $margin, $textWidth,
                                   $pageHeight, $pageWidth, $path)
         {
-            $y = $image->y;
-            $y = ($y)? ($y < 0)?
-               $pageHeight - $margin - $image->height: $y: $margin;
-            $width = $image->width;
-            $width = ($width)? $width: $textWidth;
-            $x = $image->x;
-            $x = ($x)? ($x < 0)? $pageWidth - $margin - $width: $x: $margin;
-            $pdf->Image($path . $image->src, $x, $y, $width, $image->height,
-                        $image->type, $image->link);
+            $y = (!empty($image->y))? ($image->y < 0)?
+               $pageHeight - $margin - $image->height: $image->y: $margin;
+            $width = (!empty($image->width))? $image->width: $textWidth;
+            $height = (!empty($image->height))? $image->height: 0;
+            $x = (!empty($image->x))? ($image->x < 0)?
+               $pageWidth - $margin - $width: $image->x: $margin;
+            $type = (!empty($image->type))? $image->type: '';
+            $link = (!empty($image->link))? $image->link: '';
+            $pdf->Image($path . $image->src, $x, $y, $width, $height,
+                        $type, $link);
         };
 
         // Preamble
@@ -361,7 +365,8 @@ function questionnaire_report_shortcode($atts)
         // Set fields
         $to = "$username <$usermail>";
         $from_email = "hello@catleblanc.com";
-        $from_name = "Cat LeBlanc"
+        $from_name = "Cat LeBlanc";
+        $from = "$from_name <$from_email>";
         $subject = "$forename, Your Entrepreneurial Design Profile is attached!";
 
         // Buffer the output
@@ -442,7 +447,7 @@ function questionnaire_report_shortcode($atts)
         apply_filters('wp_mail_content_type', 'text/html');
         wp_mail($to, $subject, $message, $headers,
                 $attachments);
-        apply_filters('wp_mail_content_type', 'text/plain');
+        // apply_filters('wp_mail_content_type', 'text/plain');
     };
 
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
