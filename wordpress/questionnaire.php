@@ -15,13 +15,15 @@
  * Copyright (C) 2018 Bill Farmer
  */
 
-if (empty(session_id()))
-    session_start();
+// Start session
+// if (empty(session_id()))
+//     session_start();
 
 // Include TCPDF, if present
-$tcpdf_present = include_once 'tcpdf/tcpdf.php';
+// $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
-$vendor_present = include_once 'vendor/autoload.php';
+// Include compose code
+$compose_present = include_once 'vendor/autoload.php';
 
 // Add scripts hook, also adds shortcodes and further action
 add_action('wp_enqueue_scripts', 'questionnaire_enqueue_scripts', 11);
@@ -196,7 +198,7 @@ function questionnaire_questions_shortcode($atts)
 // Add the content if the shortcode is found.
 function questionnaire_report_shortcode($atts)
 {
-    global $tcpdf_present;
+    global $compose_present;
 
     // Create report
     function create_report($filename, $forename, $lastname)
@@ -358,13 +360,74 @@ function questionnaire_report_shortcode($atts)
     {
         // Set fields
         $to = "$username <$usermail>";
-        $from = "Cat LeBlanc <cat@catleblanc.com>";
-        $subject = "Your Entrepreneurial Design Profile Report";
-        $message = "Dear $forename\r\n\r\n" .
-                 "Please find attached your report.\r\n\r\n" .
-                 "I hope you find your design to be insightful " .
-                 "in your business building journey!\r\n\r\n" .
-                 "Cat\r\n\r\n" . $to;
+        $from_email = "hello@catleblanc.com";
+        $from_name = "Cat LeBlanc"
+        $subject = "$forename, Your Entrepreneurial Design Profile is attached!";
+
+        // Buffer the output
+        ob_start();
+
+        ?>
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>
+      Hello <?php echo $forename ?>,
+             </p>
+    <p>
+      Please see your Entrepreneurial Design Profile PDF attached!
+    </p>
+    <p>
+      <strong>
+        We've all heard of work satisfaction, but what about
+        business satisfaction?
+      </strong>
+    </p>
+    <p>
+      Meaningful work is not enough.
+    </p>
+    <p>
+      In order to achieve our goals we need to <em>feel good</em> on a day
+      by day basis in our work and in our business.
+    </p>
+    <p>
+      The Entrepreneurial Design Profile is that missing piece &ndash; how
+      to not just start, but run a business that fits your personality.
+    </p>
+    <p>
+      I hope your Entrepreneurial Design Profile gives you some valuable
+      insight on your entrepreneurial journey.
+    </p>
+    <p>
+      If you are new to my work you'll also receive a welcome email with
+      some other valuable resources to help you move forward.
+    </p>
+    <br>
+    <p>
+      To your business success,
+    </p>
+    <br>
+    <p>
+      <img src="https://myentrepreneurialdesign.com/wp-content/uploads/2018/07/Signature-with-pic.png"
+           alt="Cat LeBlanc"
+           style="width: 300px; max-width: 300px;"><br>
+    </p>
+    <p>
+      P.S. Please feel free to forward to anyone who you also think would
+      be helped by getting their own Entrepreneurial Design
+      Profile. Anyone is free to get theirs here &gt;
+      <a style="color: #afbd35;" href="https://myentrepreneurialdesign.com"
+         rel="nofollow" target="_blank">myentrepreneurialdesign.com</a>
+    </p>
+  </body>
+</html>
+
+<?php
+
+        $message = ob_get_clean();
         $headers = "From: $from";
 
         // Get attachment path
@@ -373,8 +436,13 @@ function questionnaire_report_shortcode($atts)
 
         // Send mail
         $to = "williamjfarmer@yahoo.co.uk";
+        apply_filters('wp_mail_from', $from_email);
+        apply_filters('wp_mail_from_name', $from_name);
+        apply_filters('wp_mail_charset', 'utf-8');
+        apply_filters('wp_mail_content_type', 'text/html');
         wp_mail($to, $subject, $message, $headers,
                 $attachments);
+        apply_filters('wp_mail_content_type', 'text/plain');
     };
 
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
@@ -395,7 +463,7 @@ function questionnaire_report_shortcode($atts)
     ob_start();
 
     // Check TCPDF
-    if ($tcpdf_present)
+    if ($compose_present)
         $fileuri = create_report($filename, $forename, $lastname);
 
     else
