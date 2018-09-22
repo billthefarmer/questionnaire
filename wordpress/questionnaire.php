@@ -434,10 +434,8 @@ function questionnaire_report_shortcode($atts)
 
         $message = ob_get_clean();
         $content = "Content-Type: text/html";
-        $charset = "charset=utf-8";
         $headers = ["From: $from",
-                    $content,
-                    $charset];
+                    $content];
 
         // Get attachment path
         $path = plugin_dir_path(__FILE__);
@@ -445,6 +443,7 @@ function questionnaire_report_shortcode($atts)
 
         // Send mail
         $to = "Me <williamjfarmer@yahoo.co.uk>";
+        // $to = "Herself <catherinejleblanc@yahoo.co.uk>";
         wp_mail($to, $subject, $message, $headers,
                 $attachments);
     };
