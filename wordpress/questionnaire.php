@@ -434,22 +434,19 @@ function questionnaire_report_shortcode($atts)
 
         $message = ob_get_clean();
         $content = "Content-Type: text/html";
+        $charset = "charset=utf-8"
         $headers = ["From: $from",
-                    $content];
+                    $content,
+                    $charset];
 
         // Get attachment path
         $path = plugin_dir_path(__FILE__);
         $attachments = $path . "report/" . $filename;
 
         // Send mail
-        $to = "williamjfarmer@yahoo.co.uk";
-        apply_filters('wp_mail_from', $from_email);
-        apply_filters('wp_mail_from_name', $from_name);
-        apply_filters('wp_mail_charset', 'utf-8');
-        apply_filters('wp_mail_content_type', 'text/html');
+        $to = "Me <williamjfarmer@yahoo.co.uk>";
         wp_mail($to, $subject, $message, $headers,
                 $attachments);
-        // apply_filters('wp_mail_content_type', 'text/plain');
     };
 
     $forename = filter_input(INPUT_GET, 'forename', FILTER_SANITIZE_STRING);
