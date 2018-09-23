@@ -18,10 +18,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Start session
-// if (empty(session_id()))
-//     session_start();
-
 // Include TCPDF, if present
 // $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
@@ -381,7 +377,7 @@ function questionnaire_report_shortcode($atts)
   <body>
     <p>
       Hello <?php echo $forename ?>,
-             </p>
+    </p>
     <p>
       Please see your Entrepreneurial Design Profile PDF attached!
     </p>
@@ -474,6 +470,39 @@ function questionnaire_report_shortcode($atts)
 
     // Send email
     send_email($usermail, $forename, $lastname, $username, $filename);
+
+    // Start session
+    if (empty(session_id()))
+        session_start();
+
+    // Check for Infusionsoft ids
+    $clientId = post_custom('clientId');
+    $clientSecret = post_custom('clientSecret');
+
+    $infusionsoft = new \Infusionsoft\Infusionsoft(array(
+        'clientId'     => $clienId,
+        'clientSecret' => $clientSecret,
+        'redirectUri'  => 'http://example.com/'));
+
+    // If the serialized token is available in the session storage, we
+    // tell the SDK to use that token for subsequent requests.
+    if (isset($_SESSION['token']))
+        $infusionsoft->setToken(unserialize($_SESSION['token']));
+
+    // If we are returning from Infusionsoft we need to exchange the
+    // code for an access token.
+    if (isset($_GET['code']) and !$infusionsoft->getToken())
+        $_SESSION['token'] = serialize($infusionsoft->requestAccessToken($_GET['code']));
+
+    if ($infusionsoft->getToken())
+        // Save the serialized token to the current session for
+        // subsequent requests
+        $_SESSION['token'] = serialize($infusionsoft->getToken());
+
+        // MAKE INFUSIONSOFT REQUEST
+
+    else
+        echo '<p><a href="' . $infusionsoft->getAuthorizationUrl() . '">Click here to authorize</a></p>';
 
     ?>
 <pre style="width: 960px;"><?php echo "Session id " . session_id(); ?></pre>
