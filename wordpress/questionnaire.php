@@ -18,10 +18,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Start session
-if (empty(session_id()))
-    session_start();
-
 // Include TCPDF, if present
 // $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
@@ -474,6 +470,10 @@ function questionnaire_report_shortcode($atts)
 
     // Send email
     send_email($usermail, $forename, $lastname, $username, $filename);
+
+    // Start session
+    if (empty(session_id()))
+        session_start();
 
     // Check for Infusionsoft ids
     $clientId = post_custom('clientId');
