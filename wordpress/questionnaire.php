@@ -18,6 +18,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Start session
+if (empty(session_id()))
+    session_start();
+
 // Include TCPDF, if present
 // $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
@@ -471,16 +475,12 @@ function questionnaire_report_shortcode($atts)
     // Send email
     send_email($usermail, $forename, $lastname, $username, $filename);
 
-    // Start session
-    if (empty(session_id()))
-        session_start();
-
     // Check for Infusionsoft ids
     $clientId = post_custom('clientId');
     $clientSecret = post_custom('clientSecret');
 
     $infusionsoft = new \Infusionsoft\Infusionsoft(array(
-        'clientId'     => $clienId,
+        'clientId'     => $clientId,
         'clientSecret' => $clientSecret,
         'redirectUri'  => 'http://example.com/'));
 
@@ -499,13 +499,13 @@ function questionnaire_report_shortcode($atts)
         // subsequent requests
         $_SESSION['token'] = serialize($infusionsoft->getToken());
 
-        // MAKE INFUSIONSOFT REQUEST
-
     else
+        // MAKE INFUSIONSOFT REQUEST
         echo '<p><a href="' . $infusionsoft->getAuthorizationUrl() . '">Click here to authorize</a></p>';
 
     ?>
 <pre style="width: 960px;"><?php echo "Session id " . session_id(); ?></pre>
+    <pre style="width: 960px;"><?php echo print_r($_SESSION); ?></pre>
 <div class="report-content">
   <fieldset>
     <h2 id="user-name" class="user-name"><?php echo $username ?></h2>
