@@ -291,12 +291,12 @@ function questionnaire_report_shortcode($atts)
         function add_image_object($pdf, $image, $margin, $textWidth,
                                   $pageHeight, $pageWidth, $path)
         {
-            $y = (!empty($image->y))? ($image->y < 0)?
-               $pageHeight - $margin - $image->height: $image->y: $margin;
             $width = (!empty($image->width))? $image->width: $textWidth;
             $height = (!empty($image->height))? $image->height: 0;
             $x = (!empty($image->x))? ($image->x < 0)?
                $pageWidth - $margin - $width: $image->x: $margin;
+            $y = (!empty($image->y))? ($image->y < 0)?
+               $pageHeight - $margin - $height: $image->y: $margin;
             $type = (!empty($image->type))? $image->type: '';
             $link = (!empty($image->link))? $image->link: '';
             $pdf->Image($path . $image->src, $x, $y, $width, $height,
@@ -322,20 +322,40 @@ function questionnaire_report_shortcode($atts)
         $pdf->AddPage();
 
         if ($B)
+            $pdf->SetTextColor(246, 228, 96);
+            $pdf->MultiCell(0, 0, "$forename's B-TYPE", 0, 'L');
+            $pdf->SetTextColor(0);
+            new_text_line($pdf);
             add_entry($pdf, $answers->B, $B);
 
         if ($C)
+            $pdf->SetTextColor(174, 188, 53);
+            $pdf->MultiCell(0, 0, "$forename's C-TYPE", 0, 'L');
+            $pdf->SetTextColor(0);
+            new_text_line($pdf);
             add_entry($pdf, $answers->C, $C);
 
         if ($D)
+            $pdf->SetTextColor(225, 110, 48);
+            $pdf->MultiCell(0, 0, "$forename's D-TYPE", 0, 'L');
+            $pdf->SetTextColor(0);
+            new_text_line($pdf);
             add_entry($pdf, $answers->D, $D);
 
         $pdf->AddPage();
 
         if ($E)
+            $pdf->SetTextColor(246, 228, 96);
+            $pdf->MultiCell(0, 0, "$forename's E-TYPE", 0, 'L');
+            $pdf->SetTextColor(0);
+            new_text_line($pdf);
             add_entry($pdf, $answers->E, $E);
 
         if ($F)
+            $pdf->SetTextColor(246, 228, 96);
+            $pdf->MultiCell(0, 0, "$forename's F-TYPE", 0, 'L');
+            $pdf->SetTextColor(0);
+            new_text_line($pdf);
             add_entry($pdf, $answers->F, $F);
 
         $pdf->AddPage();
@@ -469,8 +489,8 @@ function questionnaire_report_shortcode($atts)
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
 
     // Send email
-    send_email($usermail, $forename, $lastname, $username, $filename);
-
+    // send_email($usermail, $forename, $lastname, $username, $filename);
+    /*
     // Start session
     if (empty(session_id()))
         session_start();
@@ -502,7 +522,7 @@ function questionnaire_report_shortcode($atts)
     else
         // MAKE INFUSIONSOFT REQUEST
         echo '<p><a href="' . $infusionsoft->getAuthorizationUrl() . '">Click here to authorize</a></p>';
-
+    */
     ?>
 <pre style="width: 960px;"><?php echo "Session id " . session_id(); ?></pre>
     <pre style="width: 960px;"><?php echo print_r($_SESSION); ?></pre>
