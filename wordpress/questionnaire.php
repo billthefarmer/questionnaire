@@ -341,7 +341,7 @@ function questionnaire_report_shortcode($atts)
             // $pdf->MultiCell(0, 0, "$forename's C-TYPE", 0, 'L');
             // $pdf->SetTextColor(0);
             // new_text_line($pdf);
-            add_entry($pdf, $answers->C, $C);
+            add_entry($pdf, $answers->C, $C, $margin, $textWidth);
 
         if ($D)
             // $pdf->SetTextColor(225, 110, 48);
