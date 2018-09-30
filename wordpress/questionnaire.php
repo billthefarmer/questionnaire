@@ -289,8 +289,8 @@ function questionnaire_report_shortcode($atts)
 
             // $pdf->SetFont('', 'B');
             // $pdf->MultiCell(0, 0, $type, 0, 'L');
-            new_text_line($pdf);
-            $pdf->SetFont('', '');
+            // new_text_line($pdf);
+            // $pdf->SetFont('', '');
             $pdf->MultiCell(0, 0, $desc, 0, 'L');
             new_text_line($pdf);
             $pdf->MultiCell(0, 0, $text, 0, 'L');
