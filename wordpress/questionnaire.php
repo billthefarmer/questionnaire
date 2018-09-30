@@ -532,8 +532,6 @@ function questionnaire_report_shortcode($atts)
         echo '<p><a href="' . $infusionsoft->getAuthorizationUrl() . '">Click here to authorize</a></p>';
     */
     ?>
-<!--<pre style="width: 960px;"><?php echo "Session id " . session_id(); ?></pre>
-    <pre style="width: 960px;"><?php echo print_r($_SESSION); ?></pre>-->
 <div class="report-content">
   <fieldset>
     <h2 id="user-name" class="user-name"><?php echo $username ?></h2>
