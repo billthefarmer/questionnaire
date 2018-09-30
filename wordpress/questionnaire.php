@@ -339,7 +339,7 @@ function questionnaire_report_shortcode($atts)
         if ($D)
             add_entry($pdf, $answers->D, $D, $margin, $textWidth, $path);
 
-        $pdf->AddPage();
+        // $pdf->AddPage();
 
         if ($E)
             add_entry($pdf, $answers->E, $E, $margin, $textWidth, $path);
