@@ -294,7 +294,7 @@ function questionnaire_report_shortcode($atts)
             $pdf->MultiCell(0, 0, $desc, 0, 'L');
             new_text_line($pdf);
             $pdf->MultiCell(0, 0, $text, 0, 'L');
-            new_text_line($pdf);
+            // new_text_line($pdf);
         };
 
         // Add image
