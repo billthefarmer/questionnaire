@@ -243,6 +243,7 @@ function questionnaire_report_shortcode($atts)
 
         // Set margins
         $pdf->SetMargins($margin, $margin, $margin);
+        $pdf->SetAutoPageBreak(true, $margin);
 
         // New line
         function new_text_line($pdf)
