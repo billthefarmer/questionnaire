@@ -275,7 +275,7 @@ function questionnaire_report_shortcode($atts)
         };
 
         // Add report entry
-        function add_entry($pdf, $entry, $value, $margin, $textWidth)
+        function add_entry($pdf, $entry, $value, $margin, $textWidth, $path)
         {
             $desc = $entry->desc;
             $type = $entry->$value->type;
@@ -283,7 +283,7 @@ function questionnaire_report_shortcode($atts)
             $image = $entry->$value->image;
 
             $y = $pdf->GetY();
-            $pdf->Image($image, $margin, $y, $textWidth, 0, 'png');
+            $pdf->Image($path . $image, $margin, $y, $textWidth, 0, 'png');
 
             // $pdf->SetFont('', 'B');
             // $pdf->MultiCell(0, 0, $type, 0, 'L');
@@ -334,21 +334,21 @@ function questionnaire_report_shortcode($atts)
             // $pdf->MultiCell(0, 0, "$forename's B-TYPE", 0, 'L');
             // $pdf->SetTextColor(0);
             // new_text_line($pdf);
-            add_entry($pdf, $answers->B, $B, $margin, $textWidth);
+            add_entry($pdf, $answers->B, $B, $margin, $textWidth, $path);
 
         if ($C)
             // $pdf->SetTextColor(174, 188, 53);
             // $pdf->MultiCell(0, 0, "$forename's C-TYPE", 0, 'L');
             // $pdf->SetTextColor(0);
             // new_text_line($pdf);
-            add_entry($pdf, $answers->C, $C, $margin, $textWidth);
+            add_entry($pdf, $answers->C, $C, $margin, $textWidth, $path);
 
         if ($D)
             // $pdf->SetTextColor(225, 110, 48);
             // $pdf->MultiCell(0, 0, "$forename's D-TYPE", 0, 'L');
             // $pdf->SetTextColor(0);
             // new_text_line($pdf);
-            add_entry($pdf, $answers->D, $D, $margin, $textWidth);
+            add_entry($pdf, $answers->D, $D, $margin, $textWidth, $path);
 
         $pdf->AddPage();
 
@@ -357,14 +357,14 @@ function questionnaire_report_shortcode($atts)
             // $pdf->MultiCell(0, 0, "$forename's E-TYPE", 0, 'L');
             // $pdf->SetTextColor(0);
             // new_text_line($pdf);
-            add_entry($pdf, $answers->E, $E, $margin, $textWidth);
+            add_entry($pdf, $answers->E, $E, $margin, $textWidth, $path);
 
         if ($F)
             // $pdf->SetTextColor(246, 228, 96);
             // $pdf->MultiCell(0, 0, "$forename's F-TYPE", 0, 'L');
             // $pdf->SetTextColor(0);
             // new_text_line($pdf);
-            add_entry($pdf, $answers->F, $F, $margin, $textWidth);
+            add_entry($pdf, $answers->F, $F, $margin, $textWidth, $path);
 
         $pdf->AddPage();
 
