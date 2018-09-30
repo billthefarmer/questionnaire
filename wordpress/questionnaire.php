@@ -221,7 +221,7 @@ function questionnaire_report_shortcode($atts)
 
         // Get data
         $path = plugin_dir_path(__FILE__);
-        $json = file_get_contents($path . 'js/answers.min.json');
+        $json = file_get_contents($path . 'js/answers.json');
         $data = json_decode($json);
 
         $pages = $data->pages;
