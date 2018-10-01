@@ -337,19 +337,19 @@ function questionnaire_report_shortcode($atts)
         if ($C)
             add_entry($pdf, $answers->C, $C, $margin, $textWidth, $path);
 
-        if ($pdf>GetY() >= $pageHeight - ($margin * 2))
+        if ($pdf->GetY() >= $pageHeight - ($margin * 2))
             $pdf->AddPage();
 
         if ($D)
             add_entry($pdf, $answers->D, $D, $margin, $textWidth, $path);
 
-        if ($pdf>GetY() >= $pageHeight - ($margin * 2))
+        if ($pdf->GetY() >= $pageHeight - ($margin * 2))
             $pdf->AddPage();
 
         if ($E)
             add_entry($pdf, $answers->E, $E, $margin, $textWidth, $path);
 
-        if ($pdf>GetY() >= $pageHeight - ($margin * 2))
+        if ($pdf->GetY() >= $pageHeight - ($margin * 2))
             $pdf->AddPage();
 
         if ($F)
