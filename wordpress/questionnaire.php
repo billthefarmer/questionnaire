@@ -487,7 +487,7 @@ function questionnaire_report_shortcode($atts)
 
     // Send email
     // send_email($usermail, $forename, $lastname, $username, $filename);
-    /*
+
     // Start session
     if (empty(session_id()))
         session_start();
@@ -499,7 +499,7 @@ function questionnaire_report_shortcode($atts)
     $infusionsoft = new \Infusionsoft\Infusionsoft(array(
         'clientId'     => $clientId,
         'clientSecret' => $clientSecret,
-        'redirectUri'  => 'http://example.com/'));
+        'redirectUri'  => 'report'));
 
     // If the serialized token is available in the session storage, we
     // tell the SDK to use that token for subsequent requests.
@@ -519,7 +519,7 @@ function questionnaire_report_shortcode($atts)
     else
         // MAKE INFUSIONSOFT REQUEST
         echo '<p><a href="' . $infusionsoft->getAuthorizationUrl() . '">Click here to authorize</a></p>';
-    */
+
     ?>
 <div class="report-content">
   <fieldset>
