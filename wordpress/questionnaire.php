@@ -24,6 +24,10 @@ ini_set('display_errors', 1);
 // Include compose code
 $compose_present = include_once 'vendor/autoload.php';
 
+// Start session
+if (empty(session_id()))
+    session_start();
+
 // Add scripts hook, also adds shortcodes and further action
 add_action('wp_enqueue_scripts', 'questionnaire_enqueue_scripts', 11);
 
@@ -489,8 +493,8 @@ function questionnaire_report_shortcode($atts)
     // send_email($usermail, $forename, $lastname, $username, $filename);
 
     // Start session
-    if (empty(session_id()))
-        session_start();
+    // if (empty(session_id()))
+    //     session_start();
 
     // Check for Infusionsoft ids
     $clientId = post_custom('clientId');
