@@ -496,13 +496,13 @@ function questionnaire_report_shortcode($atts)
     else
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
 
-    echo "<p>Instance $report_instance</p>";
+    // echo "<p>Instance $report_instance</p>";
 
     // Send email
-    if (empty($_SESSION['email']))
+    if (empty($_SESSION[$report_instance]))
     {
         send_email($usermail, $forename, $lastname, $username, $filename);
-        $_SESSION['email'] = 1;
+        $_SESSION[$report_instance] = 1;
     }
 
     ?>
