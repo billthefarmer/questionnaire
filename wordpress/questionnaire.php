@@ -202,10 +202,13 @@ function questionnaire_questions_shortcode($atts)
 function questionnaire_report_shortcode($atts)
 {
     global $vendor_present;
+    global $report_instance;
 
     // Create report
     function create_report($filename, $forename, $lastname)
     {
+        global $report_instance;
+
         // ?A=10%2C12&B=10&C=8&D=6&E=12&F=8&S=10
         // &forename=Jeremiah&lastname=Fundament
         // &email=jerry%40fundament.com
@@ -222,6 +225,9 @@ function questionnaire_report_shortcode($atts)
         // Check parameters present
         if (empty($B) or empty($C) or empty($D) or empty($E) or empty($F))
             return;
+
+        // Generate code
+        $report_instance = md5($B . $C . $D . $E . $F);
 
         // Get data
         $path = plugin_dir_path(__FILE__);
@@ -477,7 +483,8 @@ function questionnaire_report_shortcode($atts)
     $forename = str_replace("+", " ", $forename);
     $lastname = str_replace("+", " ", $lastname);
     $username = $forename . " " . $lastname;
-    $filename = str_replace(" ", "_", $username . ".pdf");
+    $filename = str_replace(" ", "_", $username .
+                            "_Entrepreneurial_Design_Profile.pdf");
 
     // Buffer the output
     ob_start();
@@ -489,8 +496,14 @@ function questionnaire_report_shortcode($atts)
     else
         echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
 
+    echo "<p>Instance $report_instance</p>";
+
     // Send email
-    // send_email($usermail, $forename, $lastname, $username, $filename);
+    if (empty($_SESSION['email']))
+    {
+        send_email($usermail, $forename, $lastname, $username, $filename);
+        $_SESSION['email'] = 1;
+    }
 
     ?>
 <div class="report-content">
