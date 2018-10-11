@@ -21,7 +21,7 @@ ini_set('display_errors', 1);
 // Include TCPDF, if present
 // $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
-// Include compose code
+// Include compose libraries
 $vendor_present = include_once 'vendor/autoload.php';
 
 // Start session
@@ -191,8 +191,10 @@ function questionnaire_questions_shortcode($atts)
     $questions = plugins_url('/js/questions.min.js', __FILE__);
     $questionnaire = plugins_url('/js/questionnaire.min.js', __FILE__);
 
-    echo "<script type=\"text/javascript\" src=\"$questions\"></script>
-<script type=\"text/javascript\" src=\"$questionnaire\"></script>";
+    ?>
+<script type="text/javascript" src="<?php echo $questions ?>"></script>
+<script type="text/javascript" src="<?php echo $questionnaire ?>"></script>
+<?php
 
     // Return the output
     return ob_get_clean();
@@ -396,7 +398,6 @@ function questionnaire_report_shortcode($atts)
         ob_start();
 
         ?>
-
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -452,7 +453,6 @@ function questionnaire_report_shortcode($atts)
     </p>
   </body>
 </html>
-
 <?php
 
         $message = ob_get_clean();
@@ -516,19 +516,16 @@ function questionnaire_report_shortcode($atts)
     <br /><br />
   </fieldset>
 </div>
-
 <?php
 
     if (!wp_is_mobile())
     {
         ?>
-
 <div class="report-preview">
   <object id="report-preview" class="report-preview" type="application/pdf"
           data="<?php echo $fileuri ?>" width="640" height="878">
   </object>
 </div>
-
 <?php
 
     }
@@ -537,9 +534,7 @@ function questionnaire_report_shortcode($atts)
     $report = plugins_url('/js/report.min.js', __FILE__);
 
     ?>
-
 <script type="text/javascript" src="<?php echo $report ?>"></script>
-
 <?php
 
     // Return the output
