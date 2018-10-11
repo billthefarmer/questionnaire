@@ -184,6 +184,7 @@ function questionnaire_questions_shortcode($atts)
                  class="questionnaire-button" value="Report" />
         </fieldset>
       </form>
+    </fieldset>
   </div>
 </div>
 <?php
