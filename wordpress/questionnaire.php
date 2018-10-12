@@ -388,75 +388,26 @@ function questionnaire_report_shortcode($atts)
 
     function send_email($usermail, $forename, $lastname, $username, $filename)
     {
+        // Get data
+        $path = plugin_dir_path(__FILE__);
+        $json = file_get_contents($path . 'js/email.min.json');
+        $data = json_decode($json);
+
         // Set fields
         $to = "$username <$usermail>";
-        $from_email = "hello@catleblanc.com";
-        $from_name = "Cat LeBlanc";
+        $from_email = $data->from_email;
+        $from_name = $data->from_name;
         $from = "$from_name <$from_email>";
-        $subject = "$forename, Your Entrepreneurial Design Profile is attached!";
-
+        $subject = str_replace('~forename~', $forename, $data->subject);
+        /*
         // Buffer the output
         ob_start();
 
         ?>
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>
-      Hello <?php echo $forename ?>,
-    </p>
-    <p>
-      Please see your Entrepreneurial Design Profile PDF attached!
-    </p>
-    <p>
-      <strong>
-        We've all heard of work satisfaction, but what about
-        business satisfaction?
-      </strong>
-    </p>
-    <p>
-      Meaningful work is not enough.
-    </p>
-    <p>
-      In order to achieve our goals we need to <em>feel good</em> on a day
-      by day basis in our work and in our business.
-    </p>
-    <p>
-      The Entrepreneurial Design Profile is that missing piece &ndash; how
-      to not just start, but run a business that fits your personality.
-    </p>
-    <p>
-      I hope your Entrepreneurial Design Profile gives you some valuable
-      insight on your entrepreneurial journey.
-    </p>
-    <p>
-      If you are new to my work you'll also receive a welcome email with
-      some other valuable resources to help you move forward.
-    </p>
-    <br>
-    <p>
-      To your business success,
-    </p>
-    <br>
-    <p>
-      <img src="https://myentrepreneurialdesign.com/wp-content/uploads/2018/07/Signature-with-pic.png"
-           alt="Cat LeBlanc"
-           style="width: 300px; max-width: 300px;"><br>
-    </p>
-    <p>
-      P.S. Please feel free to forward to anyone who you also think would
-      be helped by getting their own Entrepreneurial Design
-      Profile. Anyone is free to get theirs here &gt;
-      <a style="color: #afbd35;" href="https://myentrepreneurialdesign.com"
-         rel="nofollow" target="_blank">myentrepreneurialdesign.com</a>
-    </p>
-  </body>
-</html>
 <?php
-
-        $message = ob_get_clean();
+        */
+        // $message = ob_get_clean();
+        $message = str_replace('~forename~', $forename, $data->message);
         $content = "Content-Type: text/html";
         $headers = ["From: $from",
                     $content];
