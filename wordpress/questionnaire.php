@@ -15,13 +15,14 @@
  * Copyright (C) 2018 Bill Farmer
  */
 
+// Show errors
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Include TCPDF, if present
 // $tcpdf_present = include_once 'tcpdf/tcpdf.php';
 
-// Include compose libraries
+// Include libraries
 $vendor_present = include_once 'vendor/autoload.php';
 
 // Start session
@@ -399,14 +400,6 @@ function questionnaire_report_shortcode($atts)
         $from_name = $data->from_name;
         $from = "$from_name <$from_email>";
         $subject = str_replace('~forename~', $forename, $data->subject);
-        /*
-        // Buffer the output
-        ob_start();
-
-        ?>
-<?php
-        */
-        // $message = ob_get_clean();
         $message = str_replace('~forename~', $forename, $data->message);
         $content = "Content-Type: text/html";
         $headers = ["From: $from",
@@ -446,11 +439,9 @@ function questionnaire_report_shortcode($atts)
         $fileuri = create_report($filename, $forename, $lastname);
 
     else
-        echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf'</code></p>";
+        echo "<p>TCPDF not found - please install php-tcpdf: <code>'sudo apt install php-tcpdf', or <code>'php compose.phar require tecnickcom/tcpdf'</code></p>";
 
-    // echo "<p>Instance $report_instance</p>";
-
-    // Send email
+    // Send email, if not already sent
     if (empty($_SESSION[$report_instance]))
     {
         send_email($usermail, $forename, $lastname, $username, $filename);
