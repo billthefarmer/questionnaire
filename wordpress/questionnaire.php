@@ -311,6 +311,30 @@ function questionnaire_report_shortcode($atts)
             // new_text_line($pdf);
         };
 
+        // Add report stage
+        function add_stage($pdf, $entry, $value, $margin, $textWidth, $path)
+        {
+            $stage = $entry->$value->stage;
+            $steps = $entry->$value->steps;
+            $class = $entry->$value->class;
+            $link = $entry->$value->link;
+            $image = $entry->$value->image;
+            $text = $entry->$value->text;
+
+            $pdf->MultiCell(0, 0, $stage, 0, 'L');
+            new_text_line($pdf);
+            $pdf->MultiCell(0, 0, $steps, 0, 'L');
+            new_text_line($pdf);
+            $pdf->Cell(0, 0, $class, 0, 0, 'L', false, $link);
+            new_text_line($pdf);
+            $pdf->MultiCell(0, 0, $text, 0, 'L');
+            new_text_line($pdf);
+
+            $y = $pdf->GetY();
+            $pdf->Image($path . $image, $margin, $y, $textWidth, 0,
+                        'png', $link, 'N');
+        };
+
         // Add image
         function add_image_object($pdf, $image, $margin, $textWidth,
                                   $pageHeight, $pageWidth, $path)
