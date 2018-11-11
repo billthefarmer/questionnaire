@@ -325,6 +325,7 @@ function questionnaire_report_shortcode($atts)
             $pdf->SetFont('', 'B');
             $pdf->MultiCell(0, 0, "NEXT STEPS", 0, 'L');
             $pdf->SetFont('', '');
+            new_text_line($pdf);
             $pdf->MultiCell(0, 0, $stage, 0, 'L');
             new_text_line($pdf);
             $pdf->MultiCell(0, 0, $steps, 0, 'L');
@@ -405,7 +406,7 @@ function questionnaire_report_shortcode($atts)
         if ($S)
             add_stage($pdf, $answers->S, $S, $margin, $textWidth, $path);
 
-        $pdf->AddPage();
+        // $pdf->AddPage();
 
         // Last page text
         foreach ($last->text as $text)
