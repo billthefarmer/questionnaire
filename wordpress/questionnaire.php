@@ -343,6 +343,7 @@ function questionnaire_report_shortcode($atts)
             $y = $pdf->GetY();
             $pdf->Image($path . $image, $margin, $y, $textWidth, 0,
                         'jpg', $link, 'N');
+            new_text_line($pdf);
         };
 
         // Add image
