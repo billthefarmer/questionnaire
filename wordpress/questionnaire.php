@@ -323,7 +323,7 @@ function questionnaire_report_shortcode($atts)
 
             new_text_line($pdf);
             $pdf->SetFont('', 'B');
-            $pdf->MultiCell(0, 0, "NEXT STEPS", 0, 'L');
+            $pdf->MultiCell(0, 0, "Next Steps", 0, 'L');
             $pdf->SetFont('', '');
             new_text_line($pdf);
             $pdf->MultiCell(0, 0, $stage, 0, 'L');
