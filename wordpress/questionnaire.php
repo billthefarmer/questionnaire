@@ -393,6 +393,9 @@ function questionnaire_report_shortcode($atts)
         if ($F)
             add_entry($pdf, $answers->F, $F, $margin, $textWidth, $path);
 
+        if ($S)
+            add_stage($pdf, $answers->S, $S, $margin, $textWidth, $path);
+
         $pdf->AddPage();
 
         // Last page text
@@ -400,9 +403,9 @@ function questionnaire_report_shortcode($atts)
             add_text_object($pdf, $text);
 
         // Last page images
-        foreach ($last->images as $image)
-            add_image_object($pdf, $image, $margin, $textWidth,
-                             $pageHeight, $pageWidth, $path);
+        // foreach ($last->images as $image)
+        //     add_image_object($pdf, $image, $margin, $textWidth,
+        //                      $pageHeight, $pageWidth, $path);
 
         // Output document
         $pdf->Output($path . 'report/' . $filename, 'F');
