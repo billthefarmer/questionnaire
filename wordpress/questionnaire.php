@@ -321,11 +321,20 @@ function questionnaire_report_shortcode($atts)
             $image = $entry->$value->image;
             $text = $entry->$value->text;
 
+            new_text_line($pdf);
+            $pdf->SetFont('', 'B');
+            $pdf->MultiCell(0, 0, "NEXT STEPS", 0, 'L');
+            $pdf->SetFont('', '');
             $pdf->MultiCell(0, 0, $stage, 0, 'L');
             new_text_line($pdf);
             $pdf->MultiCell(0, 0, $steps, 0, 'L');
             new_text_line($pdf);
+            $pdf->SetFont('', 'B');
+            $pdf->SetTextColor(175, 189, 53);
             $pdf->Cell(0, 0, $class, 0, 0, 'L', false, $link);
+            $pdf->SetFont('', '');
+            $pdf->SetTextColor(0);
+            new_text_line($pdf);
             new_text_line($pdf);
             $pdf->MultiCell(0, 0, $text, 0, 'L');
             new_text_line($pdf);
