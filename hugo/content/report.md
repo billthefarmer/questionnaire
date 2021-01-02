@@ -6,7 +6,7 @@ header: images/EDPS-Front-Page-Image.png
 footer: images/EDPS-Footer.png
 answers: js/answers.min.js
 report: js/report.min.js
-jspdf: js/jspdf.min.js
+jspdf: js/jspdf.umd.min.js
 ---
 
 {{< report >}}

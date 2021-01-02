@@ -9,14 +9,16 @@
 
 jQuery(document).ready(function($) {
 
+    const jsPDF = window.jspdf.jsPDF;
+
     // Page parameters
-    let A = getURLParameter('A');
-    let B = getURLParameter('B');
-    let C = getURLParameter('C');
-    let D = getURLParameter('D');
-    let E = getURLParameter('E');
-    let F = getURLParameter('F');
-    let S = getURLParameter('S');
+    const A = getURLParameter('A');
+    const B = getURLParameter('B');
+    const C = getURLParameter('C');
+    const D = getURLParameter('D');
+    const E = getURLParameter('E');
+    const F = getURLParameter('F');
+    const S = getURLParameter('S');
 
     let forename = getURLParameter('forename');
     let lastname = getURLParameter('lastname');
@@ -80,9 +82,9 @@ jQuery(document).ready(function($) {
         let desc = answers['B'].desc;
         let type = answers['B'][B].type;
         let text = answers['B'][B].text;
-        doc.setFontType('bold');
+        doc.setFont('helvetica', 'bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFontType('normal');
+        doc.setFont('helvetica', 'normal');
         y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
@@ -92,9 +94,9 @@ jQuery(document).ready(function($) {
         let desc = answers['C'].desc;
         let type = answers['C'][C].type;
         let text = answers['C'][C].text;
-        doc.setFontType('bold');
+        doc.setFont('helvetica', 'bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFontType('normal');
+        doc.setFont('helvetica', 'normal');
         y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
@@ -104,9 +106,9 @@ jQuery(document).ready(function($) {
         let desc = answers['D'].desc;
         let type = answers['D'][D].type;
         let text = answers['D'][D].text;
-        doc.setFontType('bold');
+        doc.setFont('helvetica', 'bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFontType('normal');
+        doc.setFont('helvetica', 'normal');
         y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
@@ -120,9 +122,9 @@ jQuery(document).ready(function($) {
         let desc = answers['E'].desc;
         let type = answers['E'][E].type;
         let text = answers['E'][E].text;
-        doc.setFontType('bold');
+        doc.setFont('helvetica', 'bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFontType('normal');
+        doc.setFont('helvetica', 'normal');
         y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
@@ -132,9 +134,9 @@ jQuery(document).ready(function($) {
         let desc = answers['F'].desc;
         let type = answers['F'][F].type;
         let text = answers['F'][F].text;
-        doc.setFontType('bold');
+        doc.setFont('helvetica', 'bold');
         y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFontType('normal');
+        doc.setFont('helvetica', 'normal');
         y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
         y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
     }
@@ -186,7 +188,7 @@ jQuery(document).ready(function($) {
         if (text.size)
             doc.setFontSize(text.size);
         if (text.type)
-            doc.setFontType(text.type);
+            doc.setFont('helvetica', text.type);
         if (text.color)
             doc.setTextColor(text.color);
         y = text.y? text.y: y;
