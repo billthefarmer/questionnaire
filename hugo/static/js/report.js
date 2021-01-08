@@ -9,6 +9,7 @@
 
 jQuery(document).ready(function($) {
 
+    // jsPDF
     const jsPDF = window.jspdf.jsPDF;
 
     // Page parameters
@@ -36,13 +37,14 @@ jQuery(document).ready(function($) {
 
     let pages = data.pages;
     let answers = data.answers;
-    let notes = data.notes;
+    // let notes = data.notes;
+    let penult = data.penult;
     let last = data.last;
 
     // Dimensions in points
     let pageWidth = 595;
     let pageHeight = 842;
-    let margin = 72;
+    let margin = 36;
     let textWidth = pageWidth - (margin * 2);
 
     // Style buttons
@@ -77,69 +79,45 @@ jQuery(document).ready(function($) {
     let y = margin;
     pageno++;
 
+    // B type
     if (B)
-    {
-        let desc = answers['B'].desc;
-        let type = answers['B'][B].type;
-        let text = answers['B'][B].text;
-        doc.setFont('helvetica', 'bold');
-        y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFont('helvetica', 'normal');
-        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
-        y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
-    }
+        y = addAnswer(answers['B'], B, y);
 
+    // C type
     if (C)
-    {
-        let desc = answers['C'].desc;
-        let type = answers['C'][C].type;
-        let text = answers['C'][C].text;
-        doc.setFont('helvetica', 'bold');
-        y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFont('helvetica', 'normal');
-        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
-        y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
-    }
-
-    if (D)
-    {
-        let desc = answers['D'].desc;
-        let type = answers['D'][D].type;
-        let text = answers['D'][D].text;
-        doc.setFont('helvetica', 'bold');
-        y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFont('helvetica', 'normal');
-        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
-        y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
-    }
+        y = addAnswer(answers['C'], C, y);
 
     doc.addPage();
     y = margin;
     pageno++;
 
-    if (E)
-    {
-        let desc = answers['E'].desc;
-        let type = answers['E'][E].type;
-        let text = answers['E'][E].text;
-        doc.setFont('helvetica', 'bold');
-        y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFont('helvetica', 'normal');
-        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
-        y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
-    }
+    // D type
+        y = addAnswer(answers['D'], D, y);
 
+    // E type
+    if (E)
+        y = addAnswer(answers['E'], E, y);
+
+    doc.addPage();
+    y = margin;
+    pageno++;
+
+    // F type
     if (F)
-    {
-        let desc = answers['F'].desc;
-        let type = answers['F'][F].type;
-        let text = answers['F'][F].text;
-        doc.setFont('helvetica', 'bold');
-        y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
-        doc.setFont('helvetica', 'normal');
-        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
-        y = addText(text, doc, margin, y, textWidth) + doc.getLineHeight();
-    }
+        y = addAnswer(answers['F'], F, y);
+
+    // Penult page
+    doc.addPage();
+    y = margin;
+    pageno++;
+
+    // Images
+    for (let image of penult.images)
+        addImageObject(image, doc, pageno, update);
+
+    // Text
+    for (let text of penult.text)
+        y = addTextObject(text, doc, y);
 
     // Last page
     doc.addPage();
@@ -183,6 +161,21 @@ jQuery(document).ready(function($) {
         }
     }
 
+    function addAnswer(answer, value, y)
+    {
+        let desc = answer.desc;
+        let type = answer[value].type;
+        let text = answer[value].text;
+        let image = answer[value].image
+        addImage(image, 'png', doc, pageno, margin, y, textWidth);
+        y += 92;
+        y = addText(desc, doc, margin, y, textWidth) + doc.getLineHeight();
+        doc.setFont('helvetica', 'bold');
+        y = addText(type, doc, margin, y, textWidth) + doc.getLineHeight();
+        doc.setFont('helvetica', 'normal');
+        return addText(text, doc, margin, y, textWidth);
+    }
+
     function addTextObject(text, doc, y)
     {
         if (text.size)
@@ -190,13 +183,19 @@ jQuery(document).ready(function($) {
         if (text.type)
             doc.setFont('helvetica', text.type);
         if (text.color)
-            doc.setTextColor(text.color);
+        {
+            if (Array.isArray(text.color))
+                doc.setTextColor(text.color[0], text.color[1], text.color[2]);
+            else
+                doc.setTextColor(text.color);
+        }
         y = text.y? text.y: y;
+        width = text.width? text.width: textWidth;
         let string = text.text;
         if (string.match(/~[a-z]+~/))
             string = string.replace(/~forename~/g, forename)
             .replace(/~lastname~/g, lastname);
-        return addText(string, doc, margin, y, textWidth);
+        return addText(string, doc, margin, y, width, text.link);
     }
 
     function addImageObject(image, doc, pageno, func)
@@ -219,11 +218,18 @@ jQuery(document).ready(function($) {
      * @param x      X location on page
      * @param y      Y location on page
      * @param width  Text width on page
+     * @param link   Link to add to text
      * @returns Y location of bottom of text
      */
-    function addText(text, doc, x, y, width) {
+    function addText(text, doc, x, y, width, link) {
         let textLines = doc.splitTextToSize(text, width);
-        doc.text(textLines, x, y);
+        if (link)
+        {
+            let options = {url: link};
+            doc.textWithLink(text, x, y, options);
+        }
+        else
+            doc.text(textLines, x, y);
         return y + (textLines.length * doc.getLineHeight());
     }
 
