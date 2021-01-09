@@ -36,7 +36,6 @@ jQuery(document).ready(function($) {
 
     let pages = data.pages;
     let answers = data.answers;
-    // let notes = data.notes;
     let penult = data.penult;
     let last = data.last;
 
@@ -46,11 +45,85 @@ jQuery(document).ready(function($) {
     let margin = 36;
     let textWidth = pageWidth - (margin * 2);
 
-    // Style buttons
-    $("#update, #report").button();
+    // Style button
+    $("#report").button();
 
     // Add name
     $("#name").html(name);
+
+    // Create HTML preview
+    // $("#preview").replaceWith("<div id='preview' class='preview'></div>");
+
+    // Create front page and explanatory letter
+    for (let page of pages)
+    {
+        let pageno = page.pageno;
+        switch (pageno)
+        {
+            // First page
+            case 1:
+            addHTMLImage(page.images[0], "#preview");
+            for (let text of page.text)
+                addHTMLText(text, "#preview");
+            addHTMLImage(page.images[1], "#preview");
+            addHTMLBreak("#preview");
+            break;
+
+            // Second page
+            case 2:
+            addHTMLImage(page.images[0], "#preview");
+            for (let text of page.text)
+                addHTMLText(text, "#preview", true);
+            addHTMLImage(page.images[1], "#preview");
+            addHTMLBreak("#preview");
+            break;
+
+            // Third page
+            case 3:
+            addHTMLImage(page.images[0], "#preview");
+            for (let text of page.text)
+                addHTMLText(text, "#preview");
+            addHTMLImage(page.images[1], "#preview");
+            addHTMLBreak("#preview");
+            break;
+        }
+    }
+
+    // Create report
+
+    // B type
+    if (B)
+        addHTMLAnswer(answers['B'], B, "#preview");
+
+    // C type
+    if (C)
+        addHTMLAnswer(answers['C'], C, "#preview");
+
+    // D type
+        addHTMLAnswer(answers['D'], D, "#preview");
+
+    // E type
+    if (E)
+        addHTMLAnswer(answers['E'], E, "#preview");
+
+    // F type
+    if (F)
+        addHTMLAnswer(answers['F'], F, "#preview");
+    addHTMLBreak("#preview");
+
+    // Penult page
+    addHTMLText(penult.text[0], "#preview");
+    addHTMLImage(penult.images[0], "#preview");
+    addHTMLText(penult.text[1], "#preview");
+    addHTMLBreak("#preview");
+
+    // Last page
+    addHTMLText(last.text[0], "#preview");
+    addHTMLText(last.text[1], "#preview");
+    addHTMLText(last.text[2], "#preview");
+    addHTMLText(last.text[3], "#preview");
+    addHTMLImage(last.images[0], "#preview");
+    addHTMLText(last.text[4], "#preview");
 
     // Create document
     let doc = jsPDF({unit: 'pt',
@@ -105,33 +178,21 @@ jQuery(document).ready(function($) {
     if (F)
         y = addAnswer(answers['F'], F, y);
 
-    // Penult page
-    doc.addPage();
-    y = margin;
-    pageno++;
+    // Last pages
+    for (page of [penult, last])
+    {
+        doc.addPage();
+        y = margin;
+        pageno++;
 
-    // Images
-    for (let image of penult.images)
-        addImageObject(image, doc, pageno, update);
+        // Images
+        for (let image of page.images)
+            addImageObject(image, doc, pageno, update);
 
-    // Text
-    for (let text of penult.text)
-        y = addTextObject(text, doc, y);
-
-    // Last page
-    doc.addPage();
-    y = margin;
-    pageno++;
-
-    // Images
-    for (let image of last.images)
-        addImageObject(image, doc, pageno, update);
-
-    // Text
-    for (let text of last.text)
-        y = addTextObject(text, doc, y);
-
-    $("#update").click(update);
+        // Text
+        for (let text of page.text)
+            y = addTextObject(text, doc, y);
+    }
 
     $('#report').click(function() {
         doc.save('report.pdf');
@@ -139,7 +200,7 @@ jQuery(document).ready(function($) {
 
     function update() {
         let string = doc.output('bloburi');
-	$('#preview').attr('src', string);
+	// $('#preview').attr('src', string);
     }
 
     /**
@@ -160,6 +221,90 @@ jQuery(document).ready(function($) {
         }
     }
 
+    function addHTMLBreak(element)
+    {
+        $(element).append("<div><br /></div>");
+    }
+
+    function addHTMLAnswer(answer, value, element)
+    {
+        let desc = answer.desc;
+        let type = answer[value].type;
+        let text = answer[value].text;
+        let image = answer[value].image
+        $(element).append("<img src='" + baseURL + image + "'>");
+        $(element).append("<p>" + desc + "<p/>");
+        $(element).append("<p style='font-weight: bold;'>" + type + "<p/>");
+        text = text.replace(/\n\n/g, "<\p><p>");
+        $(element).append("<p>" + text + "<p/>");
+    }
+
+    function addHTMLText(text, element, blanks)
+    {
+        let size = text.size;
+        let type = text.type;
+        let color = text.color;
+        let link = text.link;
+        let style = "";
+        if (size || type || color)
+        {
+            style = " style='";
+            if (size && type != "normal")
+                style += "font-size: " + size + "px;";
+            if (type)
+                style += "font-weight: " + type + ";";
+            if (color)
+            {
+                if (Array.isArray(text.color))
+                    style += "color: rgb(" + color[0] + "," + color[1] +
+                    "," + color[2] + ");";
+                else
+                    style += "color: rgb(" + color + "," + color +
+                    "," + color + ");";
+            }
+            style += "'";
+        }
+        let string = text.text;
+        if (string.match(/~[a-z]+~/))
+            string = string.replace(/~forename~/g, forename)
+            .replace(/~lastname~/g, lastname);
+        if (string.match(/\n/))
+            string = string.replace(/\n\n/g, "<\p><p>")
+            .replace(/^\n/, "").replace(/\n$/, "");
+        if (blanks)
+            string = string.replace(/\n/g, " ");
+        else
+            string = string.replace(/\n/g, "<br />");
+        if (link)
+            $(element).append("<p><a href='" + link + "'" + style + ">" +
+                              string + "</a></p>");
+        else
+            $(element).append("<div" + style + "><p>" + string + "</p></div>");
+    }
+
+    function addHTMLImage(image, element)
+    {
+        let x = image.x;
+        let width = image.width;
+        let link = image.link;
+        let style = "";
+        if (x || width)
+        {
+            style = " style='";
+            if (width)
+                style += "width: " + width + "px;";
+            if (x && (x < 0))
+                style += "float: right; margin-left: 10px;";
+            style += "'";
+        }
+        if (link)
+            $(element).append("<a href='" + link + "'><img src='" +
+                              baseURL + image.src + "'" + style + "></a>");
+        else
+            $(element).append("<img src='" + baseURL + image.src + "'" +
+                              style + ">");
+    }
+
     function addAnswer(answer, value, y)
     {
         let desc = answer.desc;
@@ -177,19 +322,23 @@ jQuery(document).ready(function($) {
 
     function addTextObject(text, doc, y)
     {
-        if (text.size)
-            doc.setFontSize(text.size);
-        if (text.type)
-            doc.setFont('helvetica', text.type);
-        if (text.color)
+        let size = text.size;
+        if (size)
+            doc.setFontSize(size);
+        let type = text.type;
+        if (type)
+            doc.setFont('helvetica', type);
+        let color = text.color;
+        if (color)
         {
-            if (Array.isArray(text.color))
-                doc.setTextColor(text.color[0], text.color[1], text.color[2]);
+            if (Array.isArray(color))
+                doc.setTextColor(color[0], color[1], color[2]);
             else
-                doc.setTextColor(text.color);
+                doc.setTextColor(color);
         }
         y = text.y? text.y: y;
-        width = text.width? text.width: textWidth;
+        let width = text.width;
+        width = width? width: textWidth;
         let string = text.text;
         if (string.match(/~[a-z]+~/))
             string = string.replace(/~forename~/g, forename)
