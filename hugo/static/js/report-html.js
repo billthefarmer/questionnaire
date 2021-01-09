@@ -52,8 +52,6 @@ jQuery(document).ready(function($) {
     $("#name").html(name);
 
     // Create HTML preview
-    // $("#preview").replaceWith("<div id='preview' class='preview'></div>");
-
     // Create front page and explanatory letter
     for (let page of pages)
     {
@@ -90,7 +88,6 @@ jQuery(document).ready(function($) {
     }
 
     // Create report
-
     // B type
     if (B)
         addHTMLAnswer(answers['B'], B, "#preview");
@@ -131,7 +128,6 @@ jQuery(document).ready(function($) {
 
     // Print front page and explanatory letter
     let pageno = 1;
-    let images = 0;
     for (let page of pages)
     {
         pageno = page.pageno;
@@ -139,7 +135,7 @@ jQuery(document).ready(function($) {
             doc.addPage();
 
         for (let image of page.images)
-            addImageObject(image, doc, pageno, update);
+            addImageObject(image, doc, pageno);
 
         let y = margin;
         for (let text of page.text)
@@ -187,21 +183,17 @@ jQuery(document).ready(function($) {
 
         // Images
         for (let image of page.images)
-            addImageObject(image, doc, pageno, update);
+            addImageObject(image, doc, pageno);
 
         // Text
         for (let text of page.text)
             y = addTextObject(text, doc, y);
     }
 
+    // Download report
     $('#report').click(function() {
         doc.save('report.pdf');
     });
-
-    function update() {
-        let string = doc.output('bloburi');
-	// $('#preview').attr('src', string);
-    }
 
     /**
      * Gets URL parameter value.
@@ -221,11 +213,13 @@ jQuery(document).ready(function($) {
         }
     }
 
+    // addHTMLBreak
     function addHTMLBreak(element)
     {
         $(element).append("<div><br /></div>");
     }
 
+    // addHTMLAnswer
     function addHTMLAnswer(answer, value, element)
     {
         let desc = answer.desc;
@@ -239,6 +233,7 @@ jQuery(document).ready(function($) {
         $(element).append("<p>" + text + "<p/>");
     }
 
+    // addHTMLText
     function addHTMLText(text, element, blanks)
     {
         let size = text.size;
@@ -282,6 +277,7 @@ jQuery(document).ready(function($) {
             $(element).append("<div" + style + "><p>" + string + "</p></div>");
     }
 
+    // addHTMLImage
     function addHTMLImage(image, element)
     {
         let x = image.x;
@@ -305,6 +301,7 @@ jQuery(document).ready(function($) {
                               style + ">");
     }
 
+    // addAnswer
     function addAnswer(answer, value, y)
     {
         let desc = answer.desc;
@@ -320,6 +317,7 @@ jQuery(document).ready(function($) {
         return addText(text, doc, margin, y, textWidth);
     }
 
+    // addTextObject
     function addTextObject(text, doc, y)
     {
         let size = text.size;
@@ -346,7 +344,8 @@ jQuery(document).ready(function($) {
         return addText(string, doc, margin, y, width, text.link);
     }
 
-    function addImageObject(image, doc, pageno, func)
+    // addImageObject
+    function addImageObject(image, doc, pageno)
     {
         let y = image.y;
         y = y? (y < 0)? -pageHeight + margin: y: margin;
@@ -355,7 +354,7 @@ jQuery(document).ready(function($) {
         let width = image.width;
         width = width? width: textWidth;
         addImage(image.src, image.type, doc, pageno, x, y,
-                 width, image.height, image.link, func);
+                 width, image.height, image.link);
     }
 
     /**
@@ -393,7 +392,6 @@ jQuery(document).ready(function($) {
      * @param width  Image width on page
      * @param height Image height on  page
      * @param link   Link to add to image
-     * @param func   Function to call after image added
      * @description
      * If the x parameter is negative, used as right edge of image.
      * If the y parameter is negative, used as bottom edge of image.
@@ -401,7 +399,6 @@ jQuery(document).ready(function($) {
      * preserve image aspect ratio.
      */
     function addImage(src, type, doc, page, x, y, width, height, link, func) {
-        images++;
         let img = new Image();
         img.src = baseURL + src;
         img.addEventListener('load', function(event) {
@@ -416,8 +413,6 @@ jQuery(document).ready(function($) {
                 let options = {url: link};
                 doc.link(x, y, width, height, options);
             }
-            if (--images == 0 && func)
-                func();
         });
     }
 
