@@ -122,7 +122,7 @@ jQuery(document).ready(function($) {
     addHTMLImage(last.images[0], "#preview");
     addHTMLText(last.text[4], "#preview");
 
-    // Create document
+    // Create PDF document
     let doc = jsPDF({unit: 'pt',
                      compress: true});
 
@@ -227,10 +227,10 @@ jQuery(document).ready(function($) {
         let text = answer[value].text;
         let image = answer[value].image
         $(element).append("<img src='" + baseURL + image + "'>");
-        $(element).append("<p>" + desc + "<p/>");
-        $(element).append("<p style='font-weight: bold;'>" + type + "<p/>");
-        text = text.replace(/\n\n/g, "<\p><p>");
-        $(element).append("<p>" + text + "<p/>");
+        $(element).append("<p>" + desc + "</p>");
+        $(element).append("<p style='font-weight: bold;'>" + type + "</p>");
+        text = text.replace(/\n\n/g, "</p><p>");
+        $(element).append("<p>" + text + "</p>");
     }
 
     // addHTMLText
@@ -264,7 +264,7 @@ jQuery(document).ready(function($) {
             string = string.replace(/~forename~/g, forename)
             .replace(/~lastname~/g, lastname);
         if (string.match(/\n/))
-            string = string.replace(/\n\n/g, "<\p><p>")
+            string = string.replace(/\n\n/g, "</p><p>")
             .replace(/^\n/, "").replace(/\n$/, "");
         if (blanks)
             string = string.replace(/\n/g, " ");
