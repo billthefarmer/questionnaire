@@ -402,12 +402,12 @@ jQuery(document).ready(function($) {
         let img = new Image();
         img.src = baseURL + src;
         img.addEventListener('load', function(event) {
-            let data = getDataUrl(event.currentTarget, type);
-            height = height? height: width * data.height / data.width;
+            let url = getDataUrl(img, type);
+            height = height? height: width * img.height / img.width;
             x = x < 0? -x - width: x;
             y = y < 0? -y - height: y;
             doc.setPage(page);
-            doc.addImage(data.url, type, x, y, width, height);
+            doc.addImage(url, type, x, y, width, height);
             if (link)
             {
                 let options = {url: link};
@@ -421,9 +421,7 @@ jQuery(document).ready(function($) {
      * @name  getDataUrl
      * @param img  Image object
      * @param type Type of image, 'png' or 'jpeg'
-     * @returns {url: data URL,
-     *           width: image width,
-     *           height: image height}
+     * @returns url: data URL
      */
     function getDataUrl(img, type) {
         let canvas = document.createElement('canvas');
@@ -431,8 +429,6 @@ jQuery(document).ready(function($) {
         canvas.height = img.height;
         let context = canvas.getContext('2d');
         context.drawImage(img, 0, 0);
-        return {url: canvas.toDataURL('image/' + type),
-                width: img.width,
-                height: img.height};
+        return canvas.toDataURL('image/' + type);
     }
 });
