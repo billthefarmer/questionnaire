@@ -36,7 +36,6 @@ jQuery(document).ready(function($) {
 
     let pages = data.pages;
     let answers = data.answers;
-    // let notes = data.notes;
     let penult = data.penult;
     let last = data.last;
 
@@ -134,7 +133,7 @@ jQuery(document).ready(function($) {
     $("#update").click(update);
 
     $('#report').click(function() {
-        doc.save('report.pdf');
+        doc.save(forename + '_' + lastname + '_Entrepreneurial_Design.pdf');
     });
 
     function update() {

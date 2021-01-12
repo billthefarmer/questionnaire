@@ -116,10 +116,8 @@ jQuery(document).ready(function($) {
 
     // Last page
     addHTMLText(last.text[0], "#preview");
-    addHTMLText(last.text[1], "#preview");
-    addHTMLText(last.text[2], "#preview");
-    addHTMLText(last.text[3], "#preview");
-    addHTMLImage(last.images[0], "#preview");
+    if (S)
+        addHTMLStage(answers['S'], S, '#preview');
     addHTMLText(last.text[4], "#preview");
 
     // Create PDF document
@@ -174,25 +172,32 @@ jQuery(document).ready(function($) {
     if (F)
         y = addAnswer(answers['F'], F, y);
 
-    // Last pages
-    for (page of [penult, last])
-    {
-        doc.addPage();
-        y = margin;
-        pageno++;
+    // Penult page
+    doc.addPage();
+    y = margin;
+    pageno++;
 
-        // Images
-        for (let image of page.images)
-            addImageObject(image, doc, pageno);
+    // Images
+    for (let image of penult.images)
+        addImageObject(image, doc, pageno);
 
-        // Text
-        for (let text of page.text)
-            y = addTextObject(text, doc, y);
-    }
+    // Text
+    for (let text of penult.text)
+        y = addTextObject(text, doc, y);
+
+    // Last page
+    doc.addPage();
+    y = margin;
+    pageno++;
+
+    y = addTextObject(last.text[0], doc, y);
+    if (S)
+        y = addStage(answers['S'], S, y);
+    y = addTextObject(last.text[4], doc, y);
 
     // Download report
     $('#report').click(function() {
-        doc.save('report.pdf');
+        doc.save(forename + '_' + lastname + '_Entrepreneurial_Design.pdf');
     });
 
     /**
@@ -217,6 +222,28 @@ jQuery(document).ready(function($) {
     function addHTMLBreak(element)
     {
         $(element).append("<div><br /></div>");
+    }
+
+    //addHTMLStage
+    function addHTMLStage(answer, value, element)
+    {
+        let color = answer.color;
+        let stage = answer[value].stage;
+        let steps = answer[value].steps;
+        let clazz = answer[value].class;
+        let link = answer[value].link;
+        let image = answer[value].image;
+        let text = answer[value].text;
+        $(element).append("<p>" + stage + "</p>");
+        $(element).append("<p>" + steps + "</p>");
+        $(element).append("<p><a href='" + link +
+                          "' style='font-weight: bold; color: rgb(" +
+                          color[0] + "," + color[1] + "," + color[2] +
+                          ");'>" + clazz + "</a></p>");
+        text = text.replace(/\n\n/g, "</p><p>");
+        $(element).append("<p>" + text + "</p>");
+        $(element).append("<a href='" + link + "'><img src='" +
+                          baseURL + image + "'></a>");
     }
 
     // addHTMLAnswer
@@ -299,6 +326,35 @@ jQuery(document).ready(function($) {
         else
             $(element).append("<img src='" + baseURL + image.src + "'" +
                               style + ">");
+    }
+
+    // addStage
+    function addStage(answer, value, y)
+    {
+        let color = answer.color;
+        let type = answer.type;
+        let stage = answer[value].stage;
+        let steps = answer[value].steps;
+        let clazz = answer[value].class;
+        let link = answer[value].link;
+        let image = answer[value].image;
+        let text = answer[value].text;
+        doc.setFont('helvetica', 'normal');
+        y += doc.getLineHeight();
+        y = addText(stage, doc, margin, y, textWidth) + doc.getLineHeight();
+        y = addText(steps, doc, margin, y, textWidth) + doc.getLineHeight();
+        doc.setFont('helvetica', 'bold');
+        if (Array.isArray(color))
+            doc.setTextColor(color[0], color[1], color[2]);
+        else
+            doc.setTextColor(color);
+        y = addText(clazz, doc, margin, y, textWidth, link) +
+            doc.getLineHeight();
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        y = addText(text, doc, margin, y, textWidth);
+        addImage(image, type, doc, pageno, margin, y, textWidth);
+        return y;
     }
 
     // addAnswer

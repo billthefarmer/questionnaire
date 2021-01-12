@@ -1,24 +1,16 @@
 <!-- Report shortcode -->
 <!-- Report -->
 <div class="report">
-  <div class="left">
-    {{ if .Page.Params.header }}
-    <img src="{{ .Site.BaseURL }}{{ .Page.Params.header }}">
-    {{ end }}
-    <fieldset>
-      <h2 id="name" class="name"></h2>
-      <input type="button" id="report" name="report"
-             value="Download Report" />
-      <br /><br />
-    </fieldset>
-    {{ if .Page.Params.footer }}
-    <img src="{{ .Site.BaseURL }}{{ .Page.Params.footer }}">
-    {{ end }}
-  </div>
   <div class="right">
     <div id="preview" class="preview">
       <!-- Preview goes here -->
     </div>
+    <fieldset>
+      <br />
+      <input type="button" id="report" name="report"
+             value="Download Report" />
+      <br /><br />
+    </fieldset>
   </div>
 </div>
 <script type="text/javascript"
