@@ -353,7 +353,7 @@ jQuery(document).ready(function($) {
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(0, 0, 0);
         y = addText(text, doc, margin, y, textWidth);
-        addImage(image, type, doc, pageno, margin, y, textWidth);
+        addImage(image, type, doc, pageno, margin, y, textWidth, null, link);
         return y;
     }
 
