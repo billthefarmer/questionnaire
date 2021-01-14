@@ -8,5 +8,4 @@ answers: js/answers.min.js
 report: js/report.min.js
 jspdf: js/jspdf.umd.min.js
 ---
-
 {{< report >}}
