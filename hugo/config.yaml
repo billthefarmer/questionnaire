@@ -6,3 +6,4 @@ publishDir: d:/billthefarmer.github.io/questionnaire/
 metaDataFormat: yaml
 params:
   copyright: Copyright 2018 Bill Farmer
+  background: images/Cat150713_067A.jpg

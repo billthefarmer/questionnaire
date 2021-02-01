@@ -7,7 +7,9 @@
   {{ end }}
   <title>{{ .Page.Title }}</title>
   <link rel="stylesheet" href="{{ .Site.BaseURL }}css/jquery-ui.min.css">
-  <link rel="stylesheet" href="{{ .Site.BaseURL }}css/styles.css">
+  {{ $template := resources.Get "css/styles.css" }}
+  {{ $styles := $template | resources.ExecuteAsTemplate "css/styles.css" . }}
+  <link rel="stylesheet" href="{{ $styles.Permalink }}">
   <script type="text/javascript"
           src="{{ .Site.BaseURL }}js/jquery.min.js">
   </script>

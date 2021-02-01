@@ -7,7 +7,13 @@ html {
 }
 
 body {
+    {{ if .Site.Params.background }}
+    background: url({{ .Site.BaseURL }}{{ .Site.Params.background }})
+                   no-repeat center fixed;
+    background-size: cover;
+    {{ else }}
     background: white;
+    {{ end }}
     font-family: Verdana, Helvetica, sans-serif;
 }
 

@@ -105,7 +105,8 @@ jQuery(document).ready(function($) {
             addHTMLAnswer(answers['C'], C, "#preview");
 
         // D type
-        addHTMLAnswer(answers['D'], D, "#preview");
+        if (D)
+            addHTMLAnswer(answers['D'], D, "#preview");
 
         // E type
         if (E)
